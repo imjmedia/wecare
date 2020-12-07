@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="addendum_city_fresko" model="account.move.addendum">
+        <field name="name">City Fresko</field>
+        <field name="is_jinja">True</field>
+        <field name="manual">True</field>
+        <field name="template_internal">l10n_mx_addendum.addendum_citi_fresko_body</field>
+    </record>
+</odoo>

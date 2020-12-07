@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="account_move_addendum_view_form" model="ir.ui.view">
+        <field name="name">account.move.addendum.view.form</field>
+        <field name="model">account.move.addendum</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="template_internal" invisible="1"/>
+                    <button name="reload_from_file" type="object" string="Reload from File" attrs="{'invisible': [('template_internal', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </group>
+                    <group>
+                        <field name="manual"/>
+                        <field name="is_jinja"/>
+                    </group>
+                    <notebook>
+                        <page name="template" string="Addendum">
+                            <field name="raw_template" widget="ace" options="{'mode': 'xml'}"/>
+                        </page>
+                        <page name="fields" string="Fields">
+                            <field name="field_ids"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="account_move_addendum_action" model="ir.actions.act_window">
+        <field name="name">Addendums</field>
+        <field name="res_model">account.move.addendum</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem
+        id="account_move_addendum_menu"
+        action="account_move_addendum_action"
+        name="Addendums"
+        parent="account.account_invoicing_menu"
+    />
+</odoo>

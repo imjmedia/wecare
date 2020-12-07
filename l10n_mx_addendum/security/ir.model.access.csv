@@ -1,0 +1,3 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+access_account_move_addendum,access_account_move_addendum,model_account_move_addendum,base.group_user,1,1,1,1
+access_account_move_addendum_field,access_account_move_addendum_field,model_account_move_addendum_field,base.group_user,1,1,1,1

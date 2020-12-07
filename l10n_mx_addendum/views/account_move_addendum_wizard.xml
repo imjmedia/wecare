@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="account_move_addendum_wizard_view_form" model="ir.ui.view">
+        <field name="name">account.move.addendum.wizard.view.form</field>
+        <field name="model">account.move.addendum.wizard</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <h1>
+                        <field name="move_id"/>
+                    </h1>
+                </group>
+                <field name="field_value_ids"/>
+                <footer>
+                    <button name="generate_addendum_manual" type="object" string="Generate" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="account_move_addendum_wizard"
+        name="Generate Addendum"
+        res_model="account.move.addendum.wizard"
+        view_mode="form"
+        target="new"/>
+</odoo>
