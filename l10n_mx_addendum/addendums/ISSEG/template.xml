@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="addendum_body_isseg">
+    <cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+      {%set orden =''%}
+      {%set compra = ''%}
+      {%if OrdenCompra is defined and OrdenCompra|length>0%}
+        {% set orden= '<cfdi:InfoAdicional OrdenCompra="' + OrdenCompra + '"/>'%}
+      {%endif%}
+      {%if CompraaPiso is defined and CompraPiso|length>0%}
+      {%set compra='<cfdi:InfoAdicional ComprasPiso="' + CompraPiso + '"/>'%}
+      {%endif%}
+      {{orden}}
+      {{compra}}
+    </cfdi:Addenda>
+  </template>
+</odoo>

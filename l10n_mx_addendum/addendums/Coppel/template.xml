@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="addendum_body_coppel">
+    <Addenda>
+      <requestForPayment type="SimpleInvoiceType" contentVersion="1.0" documentStructureVersion="CPLR1.0" documentStatus="ORIGINAL" DeliveryDate="{{o.invoice_date}}">
+        <requestForPaymentIdentification>
+          <entityType>INVOICE</entityType>
+          <uniqueCreatorIdentification>{{o.name[(o.journal_id.code|length)+1:]}}</uniqueCreatorIdentification>
+        </requestForPaymentIdentification>
+        <orderIdentification>
+          <referenceIdentification type="ON">{{identificacion}}</referenceIdentification>
+          <ReferenceDate>{{fechaReferencia}}</ReferenceDate>
+        </orderIdentification>
+        <seller>
+          <gln>{{GLNCliente}}</gln>
+          <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY">{{alternatePartyIdentification}}</alternatePartyIdentification>
+          <IndentificaTipoProv>{{tipoProveedor}}</IndentificaTipoProv>
+        </seller>
+        <shipTo>
+          <gln>{{GLNEntrega}}</gln>
+          <nameAndAddress>
+            <name>{{o.partner_shipping_id.name}}</name>
+            <streetAddressOne>{{o.partner_shipping_id.street_name}}</streetAddressOne>
+            <city>{{o.partner_shipping_id.township_sat_id.name}}</city>
+            <postalCode>{{o.partner_shipping_id.zip_sat_id.code}}</postalCode>
+          </nameAndAddress>
+          <bodegaEnt>{{GLNEntrega}}</bodegaEnt>
+        </shipTo>
+        <currency currencyISOCode="{{o.currency_id.name}}">
+          <currencyFunction>BILLING_CURRENCY</currencyFunction>
+          <rateOfChange>{{o.currency_id.rate}}</rateOfChange>
+        </currency>
+        <TotalLotes>
+          <cantidad>{{totalLotes}}</cantidad>
+        </TotalLotes>
+        {% set totalAmountXUnit = {"value": 0.00} %} {% set number = {"value": 1} %} {% for l in o.invoice_line_ids %}
+        <lineItem type="SimpleInvoiceLineItemType" number="{{number.value}}">
+          {% if number.update({"value": (number.value + 1)}) %} {% endif %} {% set datosLista = l.product_id.description.split('|') %}
+          <tradeItemIdentification>
+            <gtin>{{l.product_id.default_code}}</gtin>
+          </tradeItemIdentification>
+          <alternateTradeItemIdentification type="BUYER_ASSIGNED">{{datosLista[0]}}</alternateTradeItemIdentification>
+          <codigoTallaInternoCop>
+            <codigo>{{datosLista[0]}}</codigo>
+            <talla>{{datosLista[4]}}</talla>
+            <pedimento>{{l.import_ids.id.name}}</pedimento>
+            <fechapedimento>{{l.import_ids.id.date}}</fechapedimento>
+            <aduana>{{l.import_ids.id.sat_aduana_id}}</aduana>
+          </codigoTallaInternoCop>
+          <tradeItemDescriptionInformation language="ES">
+            <longText>{{l.product_id.display_name}}</longText>
+          </tradeItemDescriptionInformation>
+          <invoicedQuantity unitOfMeasure="{{l.product_uom_id.name}}">{{l.quantity}}</invoicedQuantity>
+          <grossPrice>
+            <Amount>{{l.price_unit}}</Amount>
+          </grossPrice>
+          <netPrice>
+            <Amount>{{l.price_unit}}</Amount>
+          </netPrice>
+          <palletInformation>
+            <transport>
+              <methodOfPayment>PREPAID_BY_SELLER</methodOfPayment>
+            </transport>
+            <prepactCant>{{datosLista[1]}}</prepactCant>
+          </palletInformation>
+          <allowanceCharge allowanceChargeType="ALLOWANCE_GLOBAL">
+            <specialServicesType>PAD</specialServicesType>
+            <monetaryAmountOrPercentage>
+              <percentagePerUnit>{{datosLista[2]}}</percentagePerUnit>
+              <ratePerUnit>
+                <amountPerUnit>{{datosLista[3]}}</amountPerUnit>
+                {% set amtUnit = datosLista[3] | float %} {% if totalAmountXUnit.update({"value": (totalAmountXUnit.value + amtUnit )}) %} {% endif %}
+              </ratePerUnit>
+            </monetaryAmountOrPercentage>
+          </allowanceCharge>
+          <totalLineAmount>
+            <grossAmount>
+              <Amount>{{l.price_subtotal}}</Amount>
+            </grossAmount>
+            <netAmount>
+              <Amount>{{l.price_subtotal}}</Amount>
+            </netAmount>
+          </totalLineAmount>
+        </lineItem>
+        {% endfor %}
+        <totalAmount>
+          <Amount>{{o.amount_untaxed + totalAmountXUnit.value }}</Amount>
+        </totalAmount>
+        <TotalAllowanceCharge allowanceOrChargeType="ALLOWANCE">
+          <specialServicesType>TD</specialServicesType>
+          <Amount>{{totaldiscount}}</Amount>
+        </TotalAllowanceCharge>
+        <baseAmount>
+          <Amount>{{o.amount_untaxed}}</Amount>
+        </baseAmount>
+        {% for tax in o.amount_by_group %}
+        <tax type="VAT">
+          <taxPercentage>{{(tax[1] / tax[2]) * 100 if tax[2] else 0}}</taxPercentage>
+          <taxAmount>{{tax[1]}}</taxAmount>
+          <taxCategory>Transferido</taxCategory>
+        </tax>
+        {% endfor %}
+        <payableAmount>
+          <Amount>{{o.amount_total}}</Amount>
+        </payableAmount>
+        <cadenaOriginal>
+          <Cadena>{{o.cfdi_cadena_original}}</Cadena>
+        </cadenaOriginal>
+      </requestForPayment>
+    </Addenda>
+  </template>
+</odoo>

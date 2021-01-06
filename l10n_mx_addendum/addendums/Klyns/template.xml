@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="addendum_body_klyns">
+    <cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+    <cfdi:Klyns>
+    {%if FolioPedido != false and FolioPedido|length>0%}
+      {{'<cfdi:Pedido Folio="' + FolioPedido +'"/>'}}
+    {%else%}
+      {{'<cfdi:Pedido Folio=""/>'}}    
+    {%endif%}
+    </cfdi:Klyns>
+  </cfdi:Addenda>
+</template>
+</odoo>

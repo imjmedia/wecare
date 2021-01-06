@@ -42,9 +42,11 @@ class AccountMoveAddendum(models.Model):
     def reload_from_file(self):
         if self.template_internal:
             self.raw_template = self.env.ref(self.template_internal).render()
-            self.raw_template = self.raw_template.replace("<Addenda>", "<cfdi:Addenda>").replace(
-                "</Addenda>", "</cfdi:Addenda>"
-            )
+            self.raw_template = (
+                self.raw_template.replace("<Addenda", "<cfdi:Addenda")
+                .replace("</Addenda>", "</cfdi:Addenda>")
+                .replace("\n    ", "\n")  # Remove spaces generated from <odoo> & <template> tags
+            )[1:]
 
     @api.constrains("raw_template")
     def validate_addendum(self):
@@ -69,7 +71,7 @@ class AccountMoveAddendum(models.Model):
 
     def generate(self, args):
         try:
-            template = jinja2.Template(self.raw_template)
+            template = jinja2.Template(self.raw_template, trim_blocks=True, lstrip_blocks=True)
             render = template.render(**args)
         except jinja2.TemplateSyntaxError:
             raise ValidationError(_("Invalid Jinja template"))

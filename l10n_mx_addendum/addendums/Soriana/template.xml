@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="addendum_body_soriana">
+    <Addenda>
+      <DSCargaRemisionProv>
+        {%set number = {"value": 1}%}
+        {%set descuento={"value":0}%}
+        {%set cantidadProductos={"value":0}%}
+        <Remision RowOrder="0" Id="Remision0">
+          <Proveedor>{{proveedor}}</Proveedor>
+          <Remision>{{o.name[(o.journal_id.code|length)+1:]}}</Remision>
+          <Consecutivo>0</Consecutivo>
+          <FechaRemision>{{o.invoice_date.strftime('%Y-%m-%d') ~ 'T00:00:00'}}</FechaRemision>
+          <Tienda>{{ NumeroTienda }}</Tienda>
+          <TipoMoneda>{{NumeroMoneda}}</TipoMoneda>
+          <TipoBulto>{{tipoBulto}}</TipoBulto>
+          <EntregaMercancia>{{EntregaMercancia}}</EntregaMercancia>
+          <CumpleReqFiscales>true</CumpleReqFiscales>
+          <CantidadBultos>{{CantidadBultos}}</CantidadBultos>
+          <Subtotal>{{o.amount_untaxed}}</Subtotal>
+          {%set valorIEPS ={"value" : '<IEPS>0.00</IEPS>'}%}
+          {%set valorIVA ={"value" : '<IVA>0.00</IVA>'}%}
+          {%set valorOtros = {"value" : '<OtrosImpuestos>0.00</OtrosImpuestos>'}%}
+          {%set cantidadIEPS ={"value" : 0.00}%}
+          {%set cantidadIVA ={"value" : 0.00}%}
+          {%set cantidadOtros = {"value" :0.00}%}
+          
+          {%for l in o.invoice_line_ids%}
+            {% if descuento.update({"value": (descuento.value + l.discount)}) %}{% endif %}
+            {% if cantidadProductos.update({"value": (cantidadProductos.value + 1)}) %} {% endif %}
+            
+            {%for i in l.tax_ids%}
+              {%if i.name.startswith('IEPS')%}
+                {%if i.amount > 0%}
+                {% if cantidadIEPS.update({"value": cantidadIEPS.value + ((i.amount/100) * (l.price_subtotal)) })%}{% endif %}
+              {%endif%}
+              {%endif%}
+              {%if i.name.startswith('IVA')%}
+                {%if i.amount > 0%}
+                  {% if cantidadIVA.update({"value": cantidadIVA.value + ((i.amount/100) * (l.price_subtotal)) })%}{% endif %}
+                {%endif%}
+              {%endif%}
+              
+            
+              {%endfor%}
+            {%for i in l.tax_ids%}
+              {%if not i.name.startswith('IVA') and not i.name.startswith('IEPS') %}
+                {%if i.amount > 0%}
+                  {% if cantidadOtros.update({"value": cantidadOtros.value + ((i.amount/100) * (l.price_subtotal)) })%}{% endif %}
+                {%endif%}
+              {%endif%}
+            {%endfor%}
+            
+          {%endfor%}
+          {%if valorIEPS.update({"value":'<IEPS>' ~ cantidadIEPS.value ~ '</IEPS>'})%}{%endif%}
+          {%if valorIVA.update({"value":'<IVA>' ~ cantidadIVA.value ~ '</IVA>'})%}{%endif%}
+          {%if valorOtros.update({"value":'<OtrosImpuestos>' ~ cantidadOtros.value ~ '</OtrosImpuestos>'})%}{%endif%}
+          <Descuentos>{{descuento.value}}</Descuentos>
+          {{valorIEPS.value}}
+          {{valorIVA.value}}
+          {{valorOtros.value}}
+          <Total>{{o.amount_total}}</Total>
+          <CantidadPedidos>1</CantidadPedidos>
+          <FechaEntregaMercancia>{{FechaEntregaMercacia}}</FechaEntregaMercancia>
+          <Cita>{{NumeroCita}}</Cita>
+        </Remision>
+        <Pedidos RowOrder="1" Id="Pedidos1">
+          <Proveedor>{{proveedor}}</Proveedor>
+          <Remision>{{o.name[(o.journal_id.code|length)+1:]}}</Remision>
+          <FolioPedido>{{folioPedido}}</FolioPedido>
+          <Tienda>{{NumeroTienda}}</Tienda>
+          <CantidadArticulos>{{cantidadProductos.value}}</CantidadArticulos>
+        </Pedidos>
+        {% set number = {"value": 1} %}
+        {%set CodigoProducto={"value":''}%}
+        {%for l in o.invoice_line_ids%}
+        {%if l.product_id.barcode!= false%}
+          {%if CodigoProducto.update({"value":l.product_id.barcode})%}{%endif%}
+        {%else%}
+          {%if CodigoProducto.update({"value":''})%}{%endif%}
+        {%endif%}
+        <Articulos RowOrder="{{number.value}}" Id="{{CodigoProducto.value}}">
+          {% if number.update({"value": (number.value + 1)}) %} {% endif %}
+          <Proveedor>{{proveedor}}</Proveedor>
+          <Remision>{{o.name[(o.journal_id.code|length)+1:]}}</Remision>
+          <FolioPedido>{{folioPedido}}</FolioPedido>
+          <Tienda>{{NumeroTienda}}</Tienda>
+          {%if CodigoProducto.value != ""%}
+          <Codigo>{{CodigoProducto.value}}</Codigo>
+          {%else%}
+          <Codigo/>
+          {%endif%}
+          <CantidadUnidadCompra>{{l.quantity}}</CantidadUnidadCompra>
+          <CostoNetoUnidadCompra>{{l.price_unit}}</CostoNetoUnidadCompra>
+          
+          {% set porcentajeIVA = {"value" : '<PorcentajeIVA>0.0</PorcentajeIVA>'}%}
+          {% set porcentajeIEPS = {"value" : '<PorcentajeIEPS>0.0</PorcentajeIEPS>'}%}
+          {%for i in l.tax_ids%}
+            {%if i.name.startswith('IEPS')%}
+              {% if porcentajeIEPS.update({"value":'<PorcentajeIEPS>' ~ i.amount ~ '</PorcentajeIEPS>'})%}{% endif %}
+              
+            {%endif%}
+            {%if i.name.startswith('IVA')%}
+              {%if porcentajeIVA.update({"value":'<PorcentajeIVA>' ~ i.amount ~ '</PorcentajeIVA>'})%}{%endif%}
+            {%endif%}
+            
+          {%endfor%}
+          {{porcentajeIEPS.value}}
+          {{porcentajeIVA.value}}
+        </Articulos>
+        {%endfor%}
+      </DSCargaRemisionProv>
+    </Addenda>
+  </template>
+</odoo>
