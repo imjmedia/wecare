@@ -46,15 +46,6 @@ class account_invoice_line(models.Model):
                 'credit': balance < 0.0 and -balance or 0.0,
             }
 
-    @api.onchange('product_id')
-    def _onchange_product_id(self):
-        res = super(account_invoice_line, self)._onchange_product_id()
-        for line in self:
-            if line.move_id.manual_currency_rate_active:
-                manual_currency_rate = line.price_unit / line.move_id.manual_currency_rate
-                line.price_unit = manual_currency_rate
-        return res
-
     def _get_price_total_and_subtotal(self, price_unit=None, quantity=None, discount=None, currency=None, product=None,
                                       partner=None, taxes=None, move_type=None):
         self.ensure_one()
