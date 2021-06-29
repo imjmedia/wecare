@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="l10n_mx_edi_factoring" inherit_id="l10n_mx_edi.payment10">
+        <xpath expr="//*[local-name()='Receptor']" position="before">
+            <t t-if="record.l10n_mx_edi_factoring_id">
+                <t t-set="customer" t-value="record.l10n_mx_edi_factoring_id.commercial_partner_id"/>
+                <t t-set="customer_rfc" t-value="'XEXX010101000' if customer.country_id and customer.country_id.code != 'MX' else customer.vat.strip() if customer.vat else 'XAXX010101000' if customer.country_id.code in (False, 'MX') else 'XEXX010101000'"/>
+                <t t-set="customer_fiscal_residence" t-value="customer.country_id.l10n_mx_edi_code if customer.country_id.l10n_mx_edi_code != 'MEX' and customer_rfc not in ('XEXX010101000', 'XAXX010101000') else None"/>
+            </t>
+        </xpath>
+    </template>
+</odoo>
