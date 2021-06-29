@@ -96,5 +96,16 @@
                 </field>
             </field>
         </record>
+
+        <record id="pago_dividido_account_payment" model="ir.ui.view">
+            <field name="name">pago.dividido.account.payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <field name="ref" position="before">
+                    <field name="pago_dividido" attrs="{'readonly':('state','!=','draft')}"/>
+                </field>
+            </field>
+        </record>
     </data>
 </odoo>
