@@ -103,7 +103,7 @@
             <field name="inherit_id" ref="account.view_account_payment_form"/>
             <field name="arch" type="xml">
                 <field name="ref" position="before">
-                    <field name="pago_dividido" attrs="{'readonly':('state','!=','draft')}"/>
+                    <field name="pago_dividido" invisible="1" attrs="{'readonly':('state','!=','draft')}"/>
                 </field>
             </field>
         </record>
