@@ -22,6 +22,7 @@ class account_invoice_line(models.Model):
         company_currency = company.currency_id
         product_uom = self.product_id.uom_id
         fiscal_position = self.move_id.fiscal_position_id
+        tipo_de_cambio = self.move_id.manual_currency_rate
         is_refund_document = self.move_id.move_type in ('out_refund', 'in_refund')
         move_date = self.move_id.date or fields.Date.context_today(self)
 
@@ -73,8 +74,8 @@ class account_invoice_line(models.Model):
                             product_price_unit += tax_res['amount']
 
         # Apply currency rate.
-        if self.move_id.manual_currency_rate_active:
-            product_price_unit = product_price_unit / self.move_id.manual_currency_rate
+        if currency != company_currency and self.move_id.manual_currency_rate_active:
+            product_price_unit = company_currency._convert(product_price_unit, tipo_de_cambio, company, move_date)
         elif currency and currency != company_currency:
             product_price_unit = company_currency._convert(product_price_unit, currency, company, move_date)
 
