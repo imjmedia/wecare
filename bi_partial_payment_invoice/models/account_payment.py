@@ -54,114 +54,8 @@ class AccontPayment(models.Model):
             * account_id:   The account on which create the write-off.
         :return: A list of python dictionary to be passed to the account.move.line's 'create' method.
         '''
-        if self.pago_dividido == True:
-            if self._context.get('amount_to_pay') or self._context.get('amount_remain'):
+        if self._context.get('amount_to_pay') or self._context.get('amount_remain'):
 
-                self.ensure_one()
-                write_off_line_vals = write_off_line_vals or {}
-
-                if not self.journal_id.payment_debit_account_id or not self.journal_id.payment_credit_account_id:
-                    raise UserError(_(
-                        "You can't create a new payment without an outstanding payments/receipts account set on the %s journal.",
-                        self.journal_id.display_name))
-
-                if self._context.get('amount_to_pay'):
-                    amount = self._context.get('amount_to_pay')
-                    in_payment = True
-                else:
-                    amount = self._context.get('amount_remain')
-                    in_payment = False
-
-                payment_type = self._context.get('payment_type')
-
-                currency_id = self._context.get('currency_id', False)
-                # Compute amounts.
-                write_off_amount = write_off_line_vals.get('amount', 0.0)
-
-                if self.payment_type == 'inbound':
-                    # Receive money.
-                    counterpart_amount = -amount
-                    write_off_amount *= -1
-                elif self.payment_type == 'outbound':
-                    # Send money.
-                    counterpart_amount = amount
-                else:
-                    counterpart_amount = 0.0
-                    write_off_amount = 0.0
-
-                balance = self.currency_id._convert(counterpart_amount, self.company_id.currency_id, self.company_id, self.date)
-                counterpart_amount_currency = counterpart_amount
-                write_off_balance = self.currency_id._convert(write_off_amount, self.company_id.currency_id, self.company_id, self.date)
-                write_off_amount_currency = write_off_amount
-                currency_id = self.currency_id.id
-
-                if self.is_internal_transfer:
-                    if self.payment_type == 'inbound':
-                        liquidity_line_name = _('Transfer to %s', self.journal_id.name)
-                    else:
-                        liquidity_line_name = _('Transfer from %s', self.journal_id.name)
-                else:
-                    liquidity_line_name = self.payment_reference
-
-
-                if not self.partner_id:
-                    partner_id = self._context.get('partner_id').id
-                else:
-                    partner_id = self.partner_id.id
-
-                if self._context.get('account_id'):
-                    account_id = self._context.get('account_id')
-                else:
-                    account_id = self.destination_account_id.id
-                # Compute a default label to set on the journal items.
-
-                payment_display_name = {
-                    'outbound-customer': _("Customer Reimbursement"),
-                    'inbound-customer': _("Customer Payment"),
-                    'outbound-supplier': _("Vendor Payment"),
-                    'inbound-supplier': _("Vendor Reimbursement"),
-                }
-
-                default_line_name = self.env['account.move.line']._get_default_line_name(
-                    _("Internal Transfer") if self.is_internal_transfer else payment_display_name['%s-%s' % (self.payment_type, self.partner_type)],
-                    self.amount,
-                    self.currency_id,
-                    self.date,
-                    partner=self.partner_id,
-                )
-
-                line_vals_list = [
-
-                    # Receivable / Payable.
-                    {
-                        'name': self.payment_reference or default_line_name,
-                        'date_maturity': self.date,
-                        'amount_currency': counterpart_amount_currency + write_off_amount_currency if currency_id else 0.0,
-                        'currency_id': currency_id,
-                        'debit': balance + write_off_balance > 0.0 and balance + write_off_balance or 0.0,
-                        'credit': balance + write_off_balance < 0.0 and -balance - write_off_balance or 0.0,
-                        'partner_id': partner_id or False,
-                        'account_id': account_id,
-                        'in_payment': in_payment,
-                        'last_line_number' : int(self._context.get('last_line_number', 0)),
-
-                    },
-                ]
-                if write_off_balance:
-                    # Write-off line.
-                    line_vals_list.append({
-                        'name': write_off_line_vals.get('name') or default_line_name,
-                        'amount_currency': -write_off_amount_currency,
-                        'currency_id': currency_id,
-                        'debit': write_off_balance < 0.0 and -write_off_balance or 0.0,
-                        'credit': write_off_balance > 0.0 and write_off_balance or 0.0,
-                        'partner_id': self.partner_id.id,
-                        'account_id': write_off_line_vals.get('account_id'),
-                    })
-                return line_vals_list
-            else:
-                return super(AccontPayment, self)._prepare_move_line_default_vals(False)
-        else:
             self.ensure_one()
             write_off_line_vals = write_off_line_vals or {}
 
@@ -170,43 +64,54 @@ class AccontPayment(models.Model):
                     "You can't create a new payment without an outstanding payments/receipts account set on the %s journal.",
                     self.journal_id.display_name))
 
+            if self._context.get('amount_to_pay'):
+                amount = self._context.get('amount_to_pay')
+                in_payment = True
+            else:
+                amount = self._context.get('amount_remain')
+                in_payment = False
+
+            payment_type = self._context.get('payment_type')
+
+            currency_id = self._context.get('currency_id', False)
             # Compute amounts.
-            write_off_amount_currency = write_off_line_vals.get('amount', 0.0)
+            write_off_amount = write_off_line_vals.get('amount', 0.0)
 
             if self.payment_type == 'inbound':
                 # Receive money.
-                liquidity_amount_currency = self.amount
+                counterpart_amount = -amount
+                write_off_amount *= -1
             elif self.payment_type == 'outbound':
                 # Send money.
-                liquidity_amount_currency = -self.amount
-                write_off_amount_currency *= -1
+                counterpart_amount = amount
             else:
-                liquidity_amount_currency = write_off_amount_currency = 0.0
+                counterpart_amount = 0.0
+                write_off_amount = 0.0
 
-            write_off_balance = self.currency_id._convert(
-                write_off_amount_currency,
-                self.company_id.currency_id,
-                self.company_id,
-                self.date,
-            )
-            liquidity_balance = self.currency_id._convert(
-                liquidity_amount_currency,
-                self.company_id.currency_id,
-                self.company_id,
-                self.date,
-            )
-            counterpart_amount_currency = -liquidity_amount_currency - write_off_amount_currency
-            counterpart_balance = -liquidity_balance - write_off_balance
+            balance = self.currency_id._convert(counterpart_amount, self.company_id.currency_id, self.company_id, self.date)
+            counterpart_amount_currency = counterpart_amount
+            write_off_balance = self.currency_id._convert(write_off_amount, self.company_id.currency_id, self.company_id, self.date)
+            write_off_amount_currency = write_off_amount
             currency_id = self.currency_id.id
 
             if self.is_internal_transfer:
                 if self.payment_type == 'inbound':
                     liquidity_line_name = _('Transfer to %s', self.journal_id.name)
-                else:  # payment.payment_type == 'outbound':
+                else:
                     liquidity_line_name = _('Transfer from %s', self.journal_id.name)
             else:
                 liquidity_line_name = self.payment_reference
 
+
+            if not self.partner_id:
+                partner_id = self._context.get('partner_id').id
+            else:
+                partner_id = self.partner_id.id
+
+            if self._context.get('account_id'):
+                account_id = self._context.get('account_id')
+            else:
+                account_id = self.destination_account_id.id
             # Compute a default label to set on the journal items.
 
             payment_display_name = {
@@ -217,8 +122,7 @@ class AccontPayment(models.Model):
             }
 
             default_line_name = self.env['account.move.line']._get_default_line_name(
-                _("Internal Transfer") if self.is_internal_transfer else payment_display_name[
-                    '%s-%s' % (self.payment_type, self.partner_type)],
+                _("Internal Transfer") if self.is_internal_transfer else payment_display_name['%s-%s' % (self.payment_type, self.partner_type)],
                 self.amount,
                 self.currency_id,
                 self.date,
@@ -226,41 +130,36 @@ class AccontPayment(models.Model):
             )
 
             line_vals_list = [
-                # Liquidity line.
-                {
-                    'name': liquidity_line_name or default_line_name,
-                    'date_maturity': self.date,
-                    'amount_currency': liquidity_amount_currency,
-                    'currency_id': currency_id,
-                    'debit': liquidity_balance if liquidity_balance > 0.0 else 0.0,
-                    'credit': -liquidity_balance if liquidity_balance < 0.0 else 0.0,
-                    'partner_id': self.partner_id.id,
-                    'account_id': self.journal_id.payment_credit_account_id.id if liquidity_balance < 0.0 else self.journal_id.payment_debit_account_id.id,
-                },
+
                 # Receivable / Payable.
                 {
                     'name': self.payment_reference or default_line_name,
                     'date_maturity': self.date,
-                    'amount_currency': counterpart_amount_currency,
+                    'amount_currency': counterpart_amount_currency + write_off_amount_currency if currency_id else 0.0,
                     'currency_id': currency_id,
-                    'debit': counterpart_balance if counterpart_balance > 0.0 else 0.0,
-                    'credit': -counterpart_balance if counterpart_balance < 0.0 else 0.0,
-                    'partner_id': self.partner_id.id,
-                    'account_id': self.destination_account_id.id,
+                    'debit': balance + write_off_balance > 0.0 and balance + write_off_balance or 0.0,
+                    'credit': balance + write_off_balance < 0.0 and -balance - write_off_balance or 0.0,
+                    'partner_id': partner_id or False,
+                    'account_id': account_id,
+                    'in_payment': in_payment,
+                    'last_line_number' : int(self._context.get('last_line_number', 0)),
+
                 },
             ]
-            if not self.currency_id.is_zero(write_off_amount_currency):
+            if write_off_balance:
                 # Write-off line.
                 line_vals_list.append({
                     'name': write_off_line_vals.get('name') or default_line_name,
-                    'amount_currency': write_off_amount_currency,
+                    'amount_currency': -write_off_amount_currency,
                     'currency_id': currency_id,
-                    'debit': write_off_balance if write_off_balance > 0.0 else 0.0,
-                    'credit': -write_off_balance if write_off_balance < 0.0 else 0.0,
+                    'debit': write_off_balance < 0.0 and -write_off_balance or 0.0,
+                    'credit': write_off_balance > 0.0 and write_off_balance or 0.0,
                     'partner_id': self.partner_id.id,
                     'account_id': write_off_line_vals.get('account_id'),
                 })
             return line_vals_list
+        else:
+            return super(AccontPayment, self)._prepare_move_line_default_vals(False)
 
 class AccountBankStatementLine(models.Model):
     _inherit = "account.bank.statement.line"
