@@ -55,6 +55,36 @@ class account_invoice_line(models.Model):
                 line.price_unit = manual_currency_rate
         return res
 
+    def _get_price_total_and_subtotal(self, price_unit=None, quantity=None, discount=None, currency=None, product=None,
+                                      partner=None, taxes=None, move_type=None):
+        self.ensure_one()
+        if not self.move_id.manual_currency_rate_active:
+            return self._get_price_total_and_subtotal_model(
+                price_unit=price_unit or self.price_unit,
+                quantity=quantity or self.quantity,
+                discount=discount or self.discount,
+                currency=currency or self.currency_id,
+                product=product or self.product_id,
+                partner=partner or self.partner_id,
+                taxes=taxes or self.tax_ids,
+                move_type=move_type or self.move_id.move_type,
+            )
+        else:
+            if self.tax_ids:
+                manual_currency_rate = self.price_unit
+            else:
+                manual_currency_rate = self.price_unit / self.move_id.manual_currency_rate
+            return self._get_price_total_and_subtotal_model(
+                price_unit=price_unit or manual_currency_rate,
+                quantity=quantity or self.quantity,
+                discount=discount or self.discount,
+                currency=currency or self.currency_id,
+                product=product or self.product_id,
+                partner=partner or self.partner_id,
+                taxes=taxes or self.tax_ids,
+                move_type=move_type or self.move_id.move_type,
+            )
+
 class account_invoice(models.Model):
     _inherit ='account.move'
 
