@@ -5,7 +5,7 @@
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="l10n_mx_edi.res_partner_form_inherit_l10n_mx_edi"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='l10n_mx_edi_addenda']/../.." position="attributes">
+            <xpath expr="//field[@name='l10n_mx_edi_addenda']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
         </field>
