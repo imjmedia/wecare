@@ -32,6 +32,9 @@ class Pago(models.Model):
     def action_register_payment(self):
         None
 
+    def preview_invoice(self):
+        None
+
 
 class Banco(models.Model):
     _inherit = ['account.bank.statement.line']
