@@ -41,6 +41,9 @@ class Pago(models.Model):
     def button_cancel(self):
         None
 
+    def button_draft(self):
+        None
+
 
 class Banco(models.Model):
     _inherit = ['account.bank.statement.line']
