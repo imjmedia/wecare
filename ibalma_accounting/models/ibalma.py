@@ -38,6 +38,9 @@ class Pago(models.Model):
     def action_reverse(self):
         None
 
+    def button_cancel(self):
+        None
+
 
 class Banco(models.Model):
     _inherit = ['account.bank.statement.line']
