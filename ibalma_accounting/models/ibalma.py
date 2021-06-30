@@ -26,6 +26,9 @@ class Pago(models.Model):
     x_referencia_para_pago = fields.Char(string="Referencia para Pago",related="move_id.x_referencia_para_pago")
     x_sale_order_id = fields.Many2one(string="Sale Order",related="move_id.x_sale_order_id",readonly=True)
 
+    def action_invoice_sent(self):
+        None
+
 
 class Banco(models.Model):
     _inherit = ['account.bank.statement.line']
