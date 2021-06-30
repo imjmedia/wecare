@@ -211,7 +211,7 @@
                     </div>
                 </t>
             </xpath>
-            <xpath expr="//div[hasclass('page')]//t[@t-if='o.l10n_mx_edi_cfdi_uuid']//table[hasclass('table', 'table-sm')][2]" position="after">
+            <xpath expr="//t[@t-if='o.move_id.l10n_mx_edi_cfdi_uuid']//table[hasclass('table', 'table-sm')][2]" position="after">
                 <style>
                     .mx-box{
                         page-break-inside:avoid;
