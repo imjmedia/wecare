@@ -17,10 +17,11 @@
             </form>
         </field>
     </record>
-
-    <act_window id="account_move_addendum_wizard"
-        name="Generate Addendum"
-        res_model="account.move.addendum.wizard"
-        view_mode="form"
-        target="new"/>
+    
+    <record id="account_move_addendum_wizard" model="ir.actions.act_window">
+            <field name="name">Generate Addendum</field>
+            <field name="res_model">account.move.addendum.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
 </odoo>
