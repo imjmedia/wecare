@@ -41,7 +41,7 @@ class AccountMoveAddendum(models.Model):
 
     def reload_from_file(self):
         if self.template_internal:
-            self.raw_template = self.env.ref(self.template_internal).render(self)
+            self.raw_template = self.env.ref(self.template_internal).update()
             self.raw_template = self.raw_template.replace("<Addenda>", "<cfdi:Addenda>").replace(
                 "</Addenda>", "</cfdi:Addenda>"
             )
@@ -70,7 +70,7 @@ class AccountMoveAddendum(models.Model):
     def generate(self, args):
         try:
             template = jinja2.Template(self.raw_template)
-            render = template.render(**args)
+            render = template.update(**args)
         except jinja2.TemplateSyntaxError:
             raise ValidationError(_("Invalid Jinja template"))
         except jinja2.UndefinedError:
