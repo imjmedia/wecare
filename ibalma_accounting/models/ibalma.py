@@ -24,13 +24,13 @@ class Pago(models.Model):
     x_nombre_banco_ordext = fields.Char(string="Nombre Banco OrdExt")
     x_linea_cp = fields.Many2one('product.template',string="Linea CP",store=True)
     x_referencia_para_pago = fields.Char(string="Referencia para Pago",related="move_id.x_referencia_para_pago")
-    x_sale_order_id = fields.Char(string="Sale Order",related="move_id.x_sale_order_id",readonly=True)
+    x_sale_order_id = fields.Many2one(string="Sale Order",related="move_id.x_sale_order_id",readonly=True)
 
 
 class Banco(models.Model):
     _inherit = ['account.bank.statement.line']
 
-    x_sale_order_id = fields.Char(string="Sale Order", related="move_id.x_sale_order_id", readonly=True)
+    x_sale_order_id = fields.Many2one(string="Sale Order", related="move_id.x_sale_order_id", readonly=True)
     x_referencia_para_pago = fields.Char(string="Referencia para Pago",related="move_id.x_referencia_para_pago")
 
 class Contacto(models.Model):
