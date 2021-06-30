@@ -35,6 +35,9 @@ class Pago(models.Model):
     def preview_invoice(self):
         None
 
+    def action_reverse(self):
+        None
+
 
 class Banco(models.Model):
     _inherit = ['account.bank.statement.line']
