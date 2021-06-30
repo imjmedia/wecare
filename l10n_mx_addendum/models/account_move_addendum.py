@@ -33,11 +33,11 @@ class AccountMoveAddendum(models.Model):
         inverse_name="addendum_id",
     )
 
-    def _inverse_template_internal(self):
-        for addendum in self:
-            if addendum.raw_template:
-                return
-            addendum.reload_from_file()
+    # def _inverse_template_internal(self):
+    #     for addendum in self:
+    #         if addendum.raw_template:
+    #             return
+    #         addendum.reload_from_file()
 
     # def reload_from_file(self):
     #     if self.template_internal:
@@ -46,26 +46,26 @@ class AccountMoveAddendum(models.Model):
     #             "</Addenda>", "</cfdi:Addenda>"
     #         )
 
-    @api.constrains("raw_template")
-    def validate_addendum(self):
-        """Checks the integrity of the Addendum Template
-
-        Raises:
-            ValidationError: If the addendum has invalid content
-        """
-        for addendum in self:
-            if not addendum.raw_template:
-                continue
-            if addendum.is_jinja:
-                try:
-                    jinja2.Template(addendum.raw_template)
-                except jinja2.TemplateSyntaxError:
-                    raise ValidationError(_("Invalid Jinja template"))
-            else:
-                try:
-                    xml.dom.minidom.parseString(addendum.raw_template)
-                except xml.parsers.expat.ExpatError:
-                    raise ValidationError(_("Invalid XML template"))
+    # @api.constrains("raw_template")
+    # def validate_addendum(self):
+    #     """Checks the integrity of the Addendum Template
+    #
+    #     Raises:
+    #         ValidationError: If the addendum has invalid content
+    #     """
+    #     for addendum in self:
+    #         if not addendum.raw_template:
+    #             continue
+    #         if addendum.is_jinja:
+    #             try:
+    #                 jinja2.Template(addendum.raw_template)
+    #             except jinja2.TemplateSyntaxError:
+    #                 raise ValidationError(_("Invalid Jinja template"))
+    #         else:
+    #             try:
+    #                 xml.dom.minidom.parseString(addendum.raw_template)
+    #             except xml.parsers.expat.ExpatError:
+    #                 raise ValidationError(_("Invalid XML template"))
 
     # def generate(self, args):
     #     try:
