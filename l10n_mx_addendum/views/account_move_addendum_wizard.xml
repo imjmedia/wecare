@@ -17,7 +17,7 @@
             </form>
         </field>
     </record>
-    
+
     <record id="account_move_addendum_wizard" model="ir.actions.act_window">
             <field name="name">Generate Addendum</field>
             <field name="res_model">account.move.addendum.wizard</field>
