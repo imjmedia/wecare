@@ -7,6 +7,7 @@
     "depends": [
         "account",
         "base",
+        "sale",
     ],
     "data": [
         "views/ibalma.xml",
