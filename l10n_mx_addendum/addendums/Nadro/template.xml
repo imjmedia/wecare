@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="addendum_body_nadro">
+    <Addenda>
+      {% for l in o.invoice_line_ids %} {%if l.product_id.default_code !=false%} {% set datosLista = l.product_id.default_code%} {%else%} {% set datosLista = ''%} {%endif%}
+      <DatosNadro>
+        {% if Orden != false %}
+        <Orden>{{Orden}}</Orden>
+        {%else%}
+        <Orden/>
+        {%endif%}
+        <Plazo>{{o.invoice_payment_term_id.name}}</Plazo>
+        {% if EntregaEntrante !=false %}
+        <EntregaEntrante>{{ EntregaEntrante }}</EntregaEntrante>
+        {%else%}
+        <EntregaEntrante/>
+        {%endif%} {% if PosicionOC != false %}
+        <PosicionOC>{{ PosicionOC }}</PosicionOC>
+        {%else%}
+        <PosicionOC/>
+        {%endif%}
+        <TotalOC>{{ l.price_total }}</TotalOC>
+        {% if datosLista is defined and datosLista|length>0 %}
+        <CodEAN>{{datosLista}}</CodEAN>
+        {%else%}
+        <CodEAN/>
+        {%endif%}
+      </DatosNadro>
+      {% endfor %}
+    </Addenda>
+  </template>
+</odoo>

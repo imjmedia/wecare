@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="addendum_body_hemsa">
+    <Addenda>
+      <VERSION>
+        <TIPO>B2B</TIPO>
+        <NUMERO>2.0</NUMERO>
+      </VERSION>
+      <FISCAL>
+        <TIPO_DOCUMENTO>{{tipoDocumento}}</TIPO_DOCUMENTO>
+        <SERIE>{{o.journal_id.code}}</SERIE>
+        <FOLIO>{{o.name[(o.journal_id.code|length)+1:]}}</FOLIO>
+        <SUSTITUYE>{{sustituye}}</SUSTITUYE>
+        <MONEDA>{{o.currency_id.name}}</MONEDA>
+        <TC>{{o.currency_id.rate}}</TC>
+      </FISCAL>
+      <NEGOCIO>
+        <DIVISION>{{division}}</DIVISION>
+        <INST_ESP>{{instruccionEspecial}}</INST_ESP>
+        <TIPO>{{tipo}}</TIPO>
+        {% set nodo='<GASTO/>' %}
+        {% if gasto %}
+          {% set nodo='<GASTO>'+gasto+'</GASTO>' %}
+        {% endif %}
+        {{nodo}}
+        {% set nodo='<PRESUPUESTO/>' %}
+        {% if presupuesto %}
+          {% set nodo='<PRESUPUESTO>'+presupuesto+'</PRESUPUESTO>' %}
+        {% endif %}
+        {{nodo}}
+      </NEGOCIO>
+      <COMERCIAL>
+        <OC>{{ordenCompra}}</OC>
+        <FOC>{{fechaCompra}}</FOC>
+        <CC>{{codigoComprador}}</CC>
+      </COMERCIAL>
+      <PROVEEDOR>
+        <NOM_PROV>{{o.company_emitter_id.name}}</NOM_PROV>
+        <CORREO_CONT>{{o.company_emitter_id.email}}</CORREO_CONT>
+        <VERIFICACION_RFC>{{o.company_emitter_id.vat}}</VERIFICACION_RFC>
+        <TELEFONO>{{o.company_emitter_id.phone}}</TELEFONO>
+        <GLN_COMP>{{GLNComprador}}</GLN_COMP>
+        <GLN_PROV>{{GLNProveedor}}</GLN_PROV>
+        <VENDOR>{{vendor}}</VENDOR>
+      </PROVEEDOR>
+      <ALMACEN>
+        {% set nodo='<ENTREGA/>' %}
+        {% if codAlmacen %}
+          {% set nodo='<ENTREGA>'+codAlmacen+'</ENTREGA>' %}
+        {% endif %}
+        {{nodo}}
+        {% set nodo='<ENTREGA_GLN/>' %}
+        {% if GLNEntregaAlmacen %}
+          {% set nodo='<ENTREGA_GLN>'+GLNEntregaAlmacen+'</ENTREGA_GLN>' %}
+        {% endif %}
+        {{nodo}}
+        {% set nodo='<NOMBRE_ALM/>' %}
+        {% if nombreAlmacen %}
+          {% set nodo='<NOMBRE_ALM>'+nombreAlmacen+'</NOMBRE_ALM>' %}
+        {% endif %}
+        {{nodo}}
+        {% set nodo='<DIR_ALM/>' %}
+        {% if direccionAlmacen %}
+          {% set nodo='<DIR_ALM>'+direccionAlmacen+'</DIR_ALM>' %}
+        {% endif %}
+        {{nodo}}
+        {% set nodo='<CD_ALM/>' %}
+        {% if cdAlmacen %}
+          {% set nodo='<CD_ALM>'+cdAlmacen+'</CD_ALM>' %}
+        {% endif %}
+        {{nodo}}
+      </ALMACEN>
+      <DETALLE>
+        {% set number = {"value": 1} %}
+        {% for l in o.invoice_line_ids %}
+        {% set datosLista = l.product_id.description.split('|') %}
+        <NUM_LIN>{{number.value}}</NUM_LIN>
+        {% if number.update({"value": (number.value + 1)}) %} {% endif %}
+        <COD_INT>{{datosLista[0]}}</COD_INT>
+        <COD_EXT>{{datosLista[1]}}</COD_EXT>
+        <CANT_FACT>{{l.quantity}}</CANT_FACT>
+        <PRECIO_U>{{l.price_unit}}</PRECIO_U>
+        <TOTAL_LIN_OUT>{{l.price_subtotal}}</TOTAL_LIN_OUT>
+        <TOTAL_LIN_IMP>{{l.price_total}}</TOTAL_LIN_IMP>
+        <RA>{{datosLista[2]}}</RA>
+        <FE>{{datosLista[3]}}</FE>
+        {% endfor %}
+      </DETALLE>
+    </Addenda>
+  </template>
+</odoo>

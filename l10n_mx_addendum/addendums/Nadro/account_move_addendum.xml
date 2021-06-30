@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="addendum_nadro" model="account.move.addendum">
+        <field name="name">Nadro</field>
+        <field name="is_jinja">True</field>
+        <field name="manual">True</field>
+        <field name="template_internal">l10n_mx_addendum.addendum_body_nadro</field>
+    </record>
+</odoo>

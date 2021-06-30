@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="addendum_body_cityfresko">
+    <Addenda>
+      <requestForPayment DeliveryDate="{{o.invoice_date}}" documentStatus="ORIGINAL" documentStructureVersion="AMC7.1" contentVersion="1.3.1" type="SimpleInvoiceType">
+        <requestForPaymentIdentification>
+          <entityType>INVOICE</entityType>
+          <uniqueCreatorIdentification>{{o.name[(o.journal_id.code|length)+1:]}}</uniqueCreatorIdentification>
+        </requestForPaymentIdentification>
+        <specialInstruction code="ZZZ">
+          <text>{{o.currency_id.amount_to_text(o.amount_total)}}</text>
+        </specialInstruction>
+        <orderIdentification>
+          <referenceIdentification type="ON">{{orderReferenceIdentification}}</referenceIdentification>
+          <ReferenceDate>{{fechaReferencia}}</ReferenceDate>
+        </orderIdentification>
+        <AdditionalInformation>
+          <referenceIdentification type="IV">{{referenceIdentification}}</referenceIdentification>
+        </AdditionalInformation>
+        <buyer>
+          <gln>{{GLNComprador}}</gln>
+          <contactInformation>
+            <personOrDepartmentName>
+              <text>{{textoComprador}}</text>
+            </personOrDepartmentName>
+          </contactInformation>
+        </buyer>
+        <seller>
+          <gln>{{GLNProveedor}}</gln>
+          <alternatePartyIdentification type="SELLER_ASSIGNED_IDENTIFIER_FOR_A_PARTY">{{identificacionAlternaProveedor}}</alternatePartyIdentification>
+        </seller>
+        <shipTo>
+          <gln>{{GLNAlmacen}}</gln>
+          <nameAndAddress>
+            <name>{{o.partner_shipping_id.name}}</name>
+            <streetAddressOne>{{o.partner_shipping_id.street_name}}</streetAddressOne>
+            <city>{{o.partner_shipping_id.township_sat_id.name}}</city>
+            <postalCode>{{o.partner_shipping_id.zip_sat_id.code}}</postalCode>
+          </nameAndAddress>
+        </shipTo>
+        <InvoiceCreator>
+          <gln>{{glnSeller}}</gln>
+          <alternatePartyIdentification type="IA">{{identificacionAlternaEmisor}}</alternatePartyIdentification>
+          <nameAndAddress>
+            <name>{{o.company_emitter_id.name}}</name>
+            <streetAddressOne>{{o.company_emitter_id.street_name}}</streetAddressOne>
+            <city>{{o.company_emitter_id.township_sat_id.name}}</city>
+            <postalCode>{{o.company_emitter_id.zip_sat_id.code}}</postalCode>
+          </nameAndAddress>
+        </InvoiceCreator>
+        <currency currencyISOCode="{{o.currency_id.name}}">
+          <currencyFunction>BILLING_CURRENCY</currencyFunction>
+          <rateOfChange>{{o.currency_id.rate}}</rateOfChange>
+        </currency>
+        <paymentTerms PaymentTermsRelationTime="REFERENCE_AFTER" paymentTermsEvent="DATE_OF_INVOICE">
+          <discountPayment discountType="ALLOWANCE_BY_PAYMENT_ON_TIME">
+            {% set valorNodo = 0.00 %} {% if percentageCharge %} {% set valorNodo = percentageCharge %} {% endif %}
+            <percentage>{{valorNodo}}</percentage>
+          </discountPayment>
+        </paymentTerms>
+        <allowanceCharge allowanceChargeType="ALLOWANCE_GLOBAL" settlementType="BILL_BACK">
+          <specialServicesType>AJ</specialServicesType>
+          <monetaryAmountOrPercentage>
+            <rate base="INVOICE_VALUE">
+              {% set valorNodo = 0.00 %} {% if percentagePayment %} {% set valorNodo = percentagePayment %} {% endif %}
+              <percentage>{{valorNodo}}</percentage>
+            </rate>
+          </monetaryAmountOrPercentage>
+        </allowanceCharge>
+        {% set number = {"value": 1} %} {% for l in o.invoice_line_ids %}
+        <lineItem type="SimpleInvoiceLineItemType" number="{{number.value}}">
+          {% if number.update({"value": (number.value + 1)}) %} {% endif %}
+          <tradeItemIdentification>
+            <gtin>{{l.product_id.default_code}}</gtin>
+          </tradeItemIdentification>
+          <alternateTradeItemIdentification type="BUYER_ASSIGNED">{{l.product_id.default_code}}</alternateTradeItemIdentification>
+          <tradeItemDescriptionInformation language="ES">
+            <longText>{{l.product_id.name}}</longText>
+          </tradeItemDescriptionInformation>
+          <invoicedQuantity unitOfMeasure="{{l.product_uom_id.name}}">{{l.quantity}}</invoicedQuantity>
+          <grossPrice>
+            <Amount>{{l.price_unit}}</Amount>
+          </grossPrice>
+          <netPrice>
+            <Amount>{{l.price_unit}}</Amount>
+          </netPrice>
+          <AdditionalInformation>
+            <referenceIdentification type="ON">{orderReferenceIdentification}}</referenceIdentification>
+          </AdditionalInformation>
+          <totalLineAmount>
+            <grossAmount>
+              <Amount>{{l.price_subtotal}}</Amount>
+            </grossAmount>
+            <netAmount>
+              <Amount>{{l.price_subtotal}}</Amount>
+            </netAmount>
+          </totalLineAmount>
+        </lineItem>
+        {% endfor %}
+        <totalAmount>
+          <Amount>{{o.amount_untaxed}}</Amount>
+        </totalAmount>
+        <baseAmount>
+          <Amount>{{o.amount_untaxed}}</Amount>
+        </baseAmount>
+        {% for tax in o.amount_by_group %}
+        <tax type="VAT">
+          <taxPercentage>{{(tax[1] / tax[2]) * 100 if tax[2] else 0}}</taxPercentage>
+          <taxAmount>{{tax[1]}}</taxAmount>
+          <taxCategory>Transferido</taxCategory>
+        </tax>
+        {% endfor %}
+        <payableAmount>
+          <Amount>{{o.amount_total}}</Amount>
+        </payableAmount>
+      </requestForPayment>
+    </Addenda>
+  </template>
+</odoo>
