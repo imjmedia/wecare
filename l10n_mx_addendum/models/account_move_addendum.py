@@ -25,7 +25,7 @@ class AccountMoveAddendum(models.Model):
         help="Addendum template to be use in the XML generation.",
     )
     template_internal = fields.Char(
-        inverse="_inverse_template_internal",
+        #inverse="_inverse_template_internal",
         readonly=True,
     )
     field_ids = fields.One2many(
