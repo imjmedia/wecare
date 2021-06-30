@@ -39,12 +39,12 @@ class AccountMoveAddendum(models.Model):
                 return
             addendum.reload_from_file()
 
-    def reload_from_file(self):
-        if self.template_internal:
-            self.raw_template = self.env.ref(self.template_internal).update(self)
-            self.raw_template = self.raw_template.replace("<Addenda>", "<cfdi:Addenda>").replace(
-                "</Addenda>", "</cfdi:Addenda>"
-            )
+    # def reload_from_file(self):
+    #     if self.template_internal:
+    #         self.raw_template = self.env.ref(self.template_internal).render()
+    #         self.raw_template = self.raw_template.replace("<Addenda>", "<cfdi:Addenda>").replace(
+    #             "</Addenda>", "</cfdi:Addenda>"
+    #         )
 
     @api.constrains("raw_template")
     def validate_addendum(self):
@@ -67,12 +67,12 @@ class AccountMoveAddendum(models.Model):
                 except xml.parsers.expat.ExpatError:
                     raise ValidationError(_("Invalid XML template"))
 
-    def generate(self, args):
-        try:
-            template = jinja2.Template(self.raw_template)
-            render = template.update(**args)
-        except jinja2.TemplateSyntaxError:
-            raise ValidationError(_("Invalid Jinja template"))
-        except jinja2.UndefinedError:
-            raise ValidationError(_("Invalid Jinja structure"))
-        return render
+    # def generate(self, args):
+    #     try:
+    #         template = jinja2.Template(self.raw_template)
+    #         render = template.render(**args)
+    #     except jinja2.TemplateSyntaxError:
+    #         raise ValidationError(_("Invalid Jinja template"))
+    #     except jinja2.UndefinedError:
+    #         raise ValidationError(_("Invalid Jinja structure"))
+    #     return render
