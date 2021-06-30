@@ -41,7 +41,7 @@ class AccountMoveAddendum(models.Model):
 
     def reload_from_file(self):
         if self.template_internal:
-            self.raw_template = self.env.ref(self.template_internal).update()
+            self.raw_template = self.env.ref(self.template_internal).update(self)
             self.raw_template = self.raw_template.replace("<Addenda>", "<cfdi:Addenda>").replace(
                 "</Addenda>", "</cfdi:Addenda>"
             )
