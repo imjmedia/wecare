@@ -14,7 +14,7 @@ class account_payment(models.TransientModel):
             self.manual_currency_rate = (1/self.tipo_de_cambio)
 
     manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
-    manual_currency_rate = fields.Float('Tarifa', digits=(12,6), compute="cambio", default=0.0)
+    manual_currency_rate = fields.Float('Tarifa', digits=(12,6), compute="cambio", store=True)
     tipo_de_cambio = fields.Float(string="Tipo de Cambio", digits=(12,2), default=0.0)
 
     @api.model
