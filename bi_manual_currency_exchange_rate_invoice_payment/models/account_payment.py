@@ -79,6 +79,7 @@ class AccountPayment(models.Model):
 
     @api.onchange('tipo_de_cambio')
     def cambio(self):
+        self.manual_currency_rate = 0.0
         if self.tipo_de_cambio:
             self.manual_currency_rate = (1/self.tipo_de_cambio)
 
