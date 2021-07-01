@@ -190,7 +190,7 @@
                                 <!--Fecha Hora-->
                                 <tr>
                                     <td class="mx-label"><b>Issue Datetime</b></td>
-                                    <td class="mx-info"><span t-field="o.invoice_date"/></td>
+                                    <td class="mx-info"><span t-field="o.date"/></td>
                                 </tr>
                                 <!--UUID-->
                                 <tr>
@@ -200,7 +200,7 @@
                                 <!--Fecha Y Hora-->
                                 <tr>
                                     <td class="mx-label"><b>Certification Date</b></td>
-                                    <td class="mx-info"><span t-field="o.invoice_date"/></td>
+                                    <td class="mx-info"><span t-field="o.date"/></td>
                                 </tr>
                             </thead>
                         </table>
