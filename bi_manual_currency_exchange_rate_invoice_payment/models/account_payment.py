@@ -7,14 +7,15 @@ from odoo import fields, models,api, _
 class account_payment(models.TransientModel):
     _inherit ='account.payment.register'
 
-    manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
-    manual_currency_rate = fields.Float('Tarifa', digits=(12,6), compute="cambio")
-    tipo_de_cambio = fields.Float(string="Tipo de Cambio", digits=(12,2), default=0.0)
-
     @api.onchange('tipo_de_cambio')
     def cambio(self):
+        self.manual_currency_rate = 0
         if self.tipo_de_cambio:
             self.manual_currency_rate = (1 / self.tipo_de_cambio)
+
+    manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
+    manual_currency_rate = fields.Float(string='Tarifa', digits=(12,6), compute='cambio')
+    tipo_de_cambio = fields.Float(string="Tipo de Cambio", digits=(12,2), default=0.0)
 
     @api.model
     def default_get(self, default_fields):
@@ -82,7 +83,7 @@ class AccountPayment(models.Model):
             self.manual_currency_rate = (1/self.tipo_de_cambio)
 
     manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
-    manual_currency_rate = fields.Float('Tarifa', digits=(12,6), compute="cambio")
+    manual_currency_rate = fields.Float(string='Tarifa', digits=(12,6), compute='cambio')
     tipo_de_cambio = fields.Float(string="Tipo de Cambio", digits=(12, 2))
 
     @api.model
