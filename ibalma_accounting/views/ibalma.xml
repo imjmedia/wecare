@@ -90,19 +90,15 @@
                                 </tr>
                                 <tr>
                                     <td class="mx-label"><b>Datetime</b></td>
-                                    <td class="mx-info"><span t-esc="xml.get('fecha', xml.get('Fecha', '')).replace('T', ' ')"/></td>
+                                    <td class="mx-info"><span t-field="o.invoice_date"/></td>
                                 </tr>
                                 <tr>
                                     <td class="mx-label"><b>Creation Place</b></td>
-                                    <td class="mx-info"><span t-esc="xml.get('LugarExpedicion')"/></td>
-                                </tr>
-                                <tr>
-                                    <td class="mx-label"><b>Certificate Number</b></td>
-                                    <td class="mx-info"><span t-esc="xml.get('noCertificado', xml.get('NoCertificado'))"/></td>
+                                    <td class="mx-info"><span t-field="o.company_id.zip"/></td>
                                 </tr>
                                 <tr>
                                     <td class="mx-label"><b>UUID</b></td>
-                                    <td class="mx-info"><span t-esc="tfd.get('UUID')"/></td>
+                                    <td class="mx-info"><span t-field="o.l10n_mx_edi_cfdi_uuid"/></td>
                                 </tr>
                                 <tr>
                                     <td class="mx-label"><b>Usage of CFDI</b></td>
@@ -141,7 +137,7 @@
                     </p>
                     <!--Metodo de Pago-->
                     <p name="pay_method">
-                        Payment Method: <span t-esc="xml.get('formaDePago', xml.get('MetodoPago'))"/>
+                        Payment Method: <span t-field="o.l10n_mx_edi_payment_method_id.code"/><span>/</span> <span t-field="o.l10n_mx_edi_payment_method_id.name"/>
                     </p>
                     <!--Referencia para pago-->
                     <p name="for_pay">
@@ -149,7 +145,7 @@
                     </p>
                     <!--DEBEMOS Y PAGAREMOS….-->
                     <div style="page-break-inside:avoid;">
-                        <p name="commitment_to_pay">I(WE) OWE AND WILL PAY UNCONDITIONALLY IN ZAPOPAN, JALISCO, TO IBALMA, S.A. DE C.V., THE AMOUNT OF <t t-if="o.amount_total"><span t-field="o.amount_total"/></t>(<t t-if="o.l10n_mx_edi_cfdi_uuid"><span t-esc="o.l10n_mx_edi_amount_to_text()"/></t>) VALUE FOR MERCHANDISE RECIEVED TO MY FULLY AGREEMENT. IF THAT AMOUNT WAS NOT COVERED ON <t t-if="o.invoice_date_due"><span t-field="o.invoice_date_due"/></t>, IT WILL CAUSE INTEREST AT 6% PER MONTH. THIS DOCUMENT IS COMMERCIAL AND IS SUBJECT TO THE GENERAL LAW OF TITLES AND OPERATIONS, ARTICLES 170 TO 174 AND OTHER RELATED. GUADALAJARA, JALISCO, <t t-if="o.invoice_date"><span t-field="o.invoice_date"/></t></p>
+                        <p name="commitment_to_pay">I(WE) OWE AND WILL PAY UNCONDITIONALLY IN ZAPOPAN, JALISCO, TO IBALMA, S.A. DE C.V., THE AMOUNT OF <t t-if="o.amount_total"><span t-field="o.amount_total"/></t> VALUE FOR MERCHANDISE RECIEVED TO MY FULLY AGREEMENT. IF THAT AMOUNT WAS NOT COVERED ON <t t-if="o.invoice_date_due"><span t-field="o.invoice_date_due"/></t>, IT WILL CAUSE INTEREST AT 6% PER MONTH. THIS DOCUMENT IS COMMERCIAL AND IS SUBJECT TO THE GENERAL LAW OF TITLES AND OPERATIONS, ARTICLES 170 TO 174 AND OTHER RELATED. GUADALAJARA, JALISCO, <t t-if="o.invoice_date"><span t-field="o.invoice_date"/></t></p>
                         <p style="text-align:right;"><b><span t-field="o.partner_id.name"/></b></p>
                     </div>
                 </t>
@@ -194,17 +190,17 @@
                                 <!--Fecha Hora-->
                                 <tr>
                                     <td class="mx-label"><b>Issue Datetime</b></td>
-                                    <td class="mx-info"><span t-esc="xml.get('Fecha', '').replace('T', ' ')"/></td>
+                                    <td class="mx-info"><span t-field="o.invoice_date"/></td>
                                 </tr>
                                 <!--UUID-->
                                 <tr>
                                     <td class="mx-label"><b>UUID</b></td>
-                                    <td class="mx-info"><span t-esc="tfd.get('UUID')"/></td>
+                                    <td class="mx-info"><span t-field="o.l10n_mx_edi_cfdi_uuid"/></td>
                                 </tr>
                                 <!--Fecha Y Hora-->
                                 <tr>
                                     <td class="mx-label"><b>Certification Date</b></td>
-                                    <td class="mx-info"><span t-esc="tfd.get('FechaTimbrado', '').replace('T', ' ')"/></td>
+                                    <td class="mx-info"><span t-field="o.invoice_date"/></td>
                                 </tr>
                             </thead>
                         </table>
