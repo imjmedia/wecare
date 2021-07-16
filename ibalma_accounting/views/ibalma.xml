@@ -245,7 +245,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr t-foreach="o.invoice_ids" t-as="inv">
+                        <tr t-foreach="o.reconciled_invoice_ids" t-as="inv">
                             <td><span t-field="inv.l10n_mx_edi_cfdi_uuid"/></td>
                             <td><span t-field="inv.l10n_mx_edi_usage"/></td>
                             <td><span t-field="inv.name"/></td>
@@ -268,7 +268,7 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td><span t-field="o.x_linea_cp.l10n_mx_edi_code_sat_id.code"/></td>
+                            <td><span t-field="o.x_linea_cp.unspsc_code_id.code"/></td>
                             <td>Payment</td>
                         </tr>
                     </tbody>
@@ -279,7 +279,7 @@
                             <!--FechaPago-->
                             <tr>
                                 <td class="mx-label"><b>Payment Date</b></td>
-                                <td class="mx-info"><span t-field="o.payment_date"/></td>
+                                <td class="mx-info"><span t-field="o.date"/></td>
                             </tr>
                             <!--FormaDePagoP-->
                             <tr>
