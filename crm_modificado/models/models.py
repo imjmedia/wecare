@@ -10,9 +10,9 @@ class crmModificado(models.Model):
     @api.depends('expected_revenue')
     def sacar_ingreso(self):
         self.expected_revenue = 0.0
-        vendido = self.env['sale.order'].search([('opportunity_id', '=', self.id), ('state', '!=', 'sale'), ('state', '!=', 'cancel')])
         x = 0
         for record in self:
+            vendido = self.env['sale.order'].search([('opportunity_id', '=', self.id), ('state', '!=', 'sale'), ('state', '!=', 'cancel')])
             if record.quotation_count == 0:
                 if record.sale_amount_total:
                     record.expected_revenue = record.sale_amount_total
