@@ -7,6 +7,7 @@ class crmModificado(models.Model):
 
     expected_revenue = fields.Monetary('Expected Revenue', currency_field='company_currency', tracking=True,compute="sacar_ingreso")
 
+    @api.depends('expected_revenue')
     def sacar_ingreso(self):
         self.expected_revenue = 0.0
         vendido = self.env['sale.order'].search([('opportunity_id', '=', self.id), ('state', '!=', 'sale'), ('state', '!=', 'cancel')])
