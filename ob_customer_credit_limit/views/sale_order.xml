@@ -1,0 +1,25 @@
+<odoo>
+
+    <record id="view_sale_order_form_inherit" model="ir.ui.view">
+        <field name="name">view.sale.order.form.inherit</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="after">
+                <div class="alert alert-danger text-center o_form_header" role="status"
+                     attrs="{'invisible': [('amount_due', '&lt;=', 0)]}">
+                    <a class="close" data-dismiss="alert" href="#" aria-label="Close">x</a>
+                    <div>
+                        <strong>Monto de Deuda de Cliente es
+                            <field name="amount_due"/>
+                        </strong>
+                    </div>
+                </div>
+            </xpath>
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="company_currency_id" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+    o
+</odoo>
