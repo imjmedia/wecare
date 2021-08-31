@@ -19,5 +19,6 @@
     'depends': [
         'crm',
         'sale_crm',
+        'sale',
     ],
 }

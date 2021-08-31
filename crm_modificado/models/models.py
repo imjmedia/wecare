@@ -5,7 +5,7 @@ from odoo import models, fields, api
 class crmModificado(models.Model):
     _inherit = 'crm.lead'
 
-    expected_revenue = fields.Monetary('Expected Revenue', currency_field='company_currency', tracking=True,compute="sacar_ingreso",store=False)
+    expected_revenue = fields.Monetary('Expected Revenue', currency_field='company_currency', tracking=True,compute="sacar_ingreso",store=True)
 
     @api.depends('quotation_count','sale_amount_total')
     def sacar_ingreso(self):
