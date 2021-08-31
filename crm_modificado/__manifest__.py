@@ -19,6 +19,6 @@
     'depends': [
         'crm',
         'sale_crm',
-        'sale',
+        'sale_management',
     ],
 }
