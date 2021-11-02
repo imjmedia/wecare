@@ -1,0 +1,1389 @@
+1.{{my}}/api/product.template/search?domain=[('id','in',[13,10,11,12,14])]&fields=['name','description','product_variant_ids']
+Type = GET
+Response=
+{
+    "object_name": "product.template",
+    "responseCode": 2,
+    "fields": "['name','description','product_variant_ids']",
+    "model_id": 145,
+    "permisssions": {
+        "read": true,
+        "create": true,
+        "delete": true,
+        "write": true
+    },
+    "message": "Allowed all Models Permission: all",
+    "success": true,
+    "domain": "[('id','in',[13,10,11,12,14])]",
+    "data": [
+        {
+            "id": 11,
+            "name": "Bose Mini Bluetooth Speaker",
+            "description": false,
+            "product_variant_ids": [
+                {
+                    "id": 14,
+                    "name": "Bose Mini Bluetooth Speaker"
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "name": "iPad Mini",
+            "description": false,
+            "product_variant_ids": [
+                {
+                    "id": 17,
+                    "name": "iPad Mini"
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "name": "iPad Retina Display",
+            "description": false,
+            "product_variant_ids": [
+                {
+                    "id": 10,
+                    "name": "iPad Retina Display"
+                },
+                {
+                    "id": 11,
+                    "name": "iPad Retina Display"
+                },
+                {
+                    "id": 12,
+                    "name": "iPad Retina Display"
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "name": "Custom Computer (kit)",
+            "description": "Custom computer shipped in kit.",
+            "product_variant_ids": [
+                {
+                    "id": 15,
+                    "name": "Custom Computer (kit)"
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "name": "Parts Replacement",
+            "description": false,
+            "product_variant_ids": [
+                {
+                    "id": 16,
+                    "name": "Parts Replacement"
+                }
+            ]
+        }
+    ]
+}
+
+
+
+2. {{my}}/api/product.template/schema
+Type = GET
+response {
+    "responseCode": 2,
+    "model_id": 145,
+    "permisssions": {
+        "read": true,
+        "create": true,
+        "delete": true,
+        "write": true
+    },
+    "message": "Allowed all Models Permission: all",
+    "object_name": "product.template",
+    "success": true,
+    "data": [
+        {
+            "field_type": "one2many",
+            "label": "Activities",
+            "readonly": false,
+            "required": false,
+            "field_name": "activity_ids"
+        },
+        {
+            "readonly": true,
+            "field_name": "activity_state",
+            "field_type": "selection",
+            "label": "State",
+            "required": false,
+            "selection": [
+                [
+                    "overdue",
+                    "Overdue"
+                ],
+                [
+                    "today",
+                    "Today"
+                ],
+                [
+                    "planned",
+                    "Planned"
+                ]
+            ]
+        },
+        {
+            "field_type": "many2one",
+            "label": "Responsible",
+            "readonly": false,
+            "required": false,
+            "field_name": "activity_user_id"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Next Activity Type",
+            "readonly": false,
+            "required": false,
+            "field_name": "activity_type_id"
+        },
+        {
+            "field_type": "date",
+            "label": "Next Activity Deadline",
+            "readonly": true,
+            "required": false,
+            "field_name": "activity_date_deadline"
+        },
+        {
+            "field_type": "char",
+            "label": "Next Activity Summary",
+            "readonly": false,
+            "required": false,
+            "field_name": "activity_summary"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Customer Taxes",
+            "readonly": false,
+            "required": false,
+            "field_name": "taxes_id"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Vendor Taxes",
+            "readonly": false,
+            "required": false,
+            "field_name": "supplier_taxes_id"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Income Account",
+            "readonly": false,
+            "required": false,
+            "field_name": "property_account_income_id"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Expense Account",
+            "readonly": false,
+            "required": false,
+            "field_name": "property_account_expense_id"
+        },
+        {
+            "field_type": "boolean",
+            "label": "Available in Point of Sale",
+            "readonly": false,
+            "required": false,
+            "field_name": "available_in_pos"
+        },
+        {
+            "field_type": "boolean",
+            "label": "To Weigh With Scale",
+            "readonly": false,
+            "required": false,
+            "field_name": "to_weight"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Point of Sale Category",
+            "readonly": false,
+            "required": false,
+            "field_name": "pos_categ_id"
+        },
+        {
+            "field_type": "char",
+            "label": "Name",
+            "readonly": false,
+            "required": true,
+            "field_name": "name"
+        },
+        {
+            "field_type": "integer",
+            "label": "Sequence",
+            "readonly": false,
+            "required": false,
+            "field_name": "sequence"
+        },
+        {
+            "field_type": "text",
+            "label": "Description",
+            "readonly": false,
+            "required": false,
+            "field_name": "description"
+        },
+        {
+            "field_type": "text",
+            "label": "Purchase Description",
+            "readonly": false,
+            "required": false,
+            "field_name": "description_purchase"
+        },
+        {
+            "field_type": "text",
+            "label": "Sale Description",
+            "readonly": false,
+            "required": false,
+            "field_name": "description_sale"
+        },
+        {
+            "field_type": "boolean",
+            "label": "Can be Rent",
+            "readonly": false,
+            "required": false,
+            "field_name": "rental"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Internal Category",
+            "readonly": false,
+            "required": true,
+            "field_name": "categ_id"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Currency",
+            "readonly": true,
+            "required": false,
+            "field_name": "currency_id"
+        },
+        {
+            "field_type": "float",
+            "label": "Price",
+            "readonly": false,
+            "required": false,
+            "field_name": "price"
+        },
+        {
+            "field_type": "float",
+            "label": "Sales Price",
+            "readonly": false,
+            "required": false,
+            "field_name": "list_price"
+        },
+        {
+            "field_type": "float",
+            "label": "Public Price",
+            "readonly": false,
+            "required": false,
+            "field_name": "lst_price"
+        },
+        {
+            "field_type": "float",
+            "label": "Cost",
+            "readonly": false,
+            "required": false,
+            "field_name": "standard_price"
+        },
+        {
+            "field_type": "float",
+            "label": "Volume",
+            "readonly": false,
+            "required": false,
+            "field_name": "volume"
+        },
+        {
+            "field_type": "float",
+            "label": "Weight",
+            "readonly": false,
+            "required": false,
+            "field_name": "weight"
+        },
+        {
+            "field_type": "boolean",
+            "label": "Can be Sold",
+            "readonly": false,
+            "required": false,
+            "field_name": "sale_ok"
+        },
+        {
+            "field_type": "boolean",
+            "label": "Can be Purchased",
+            "readonly": false,
+            "required": false,
+            "field_name": "purchase_ok"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Pricelist",
+            "readonly": false,
+            "required": false,
+            "field_name": "pricelist_id"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Unit of Measure",
+            "readonly": false,
+            "required": true,
+            "field_name": "uom_id"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Purchase Unit of Measure",
+            "readonly": false,
+            "required": true,
+            "field_name": "uom_po_id"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Company",
+            "readonly": false,
+            "required": false,
+            "field_name": "company_id"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Product Packages",
+            "readonly": false,
+            "required": false,
+            "field_name": "packaging_ids"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Vendors",
+            "readonly": false,
+            "required": false,
+            "field_name": "seller_ids"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Variant Seller",
+            "readonly": false,
+            "required": false,
+            "field_name": "variant_seller_ids"
+        },
+        {
+            "field_type": "boolean",
+            "label": "Active",
+            "readonly": false,
+            "required": false,
+            "field_name": "active"
+        },
+        {
+            "field_type": "integer",
+            "label": "Color Index",
+            "readonly": false,
+            "required": false,
+            "field_name": "color"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Product Attributes",
+            "readonly": false,
+            "required": false,
+            "field_name": "attribute_line_ids"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Products",
+            "readonly": false,
+            "required": true,
+            "field_name": "product_variant_ids"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Product",
+            "readonly": true,
+            "required": false,
+            "field_name": "product_variant_id"
+        },
+        {
+            "field_type": "integer",
+            "label": "# Product Variants",
+            "readonly": true,
+            "required": false,
+            "field_name": "product_variant_count"
+        },
+        {
+            "field_type": "char",
+            "label": "Barcode",
+            "readonly": false,
+            "required": false,
+            "field_name": "barcode"
+        },
+        {
+            "field_type": "char",
+            "label": "Internal Reference",
+            "readonly": false,
+            "required": false,
+            "field_name": "default_code"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Pricelist Items",
+            "readonly": false,
+            "required": false,
+            "field_name": "item_ids"
+        },
+        {
+            "field_type": "binary",
+            "label": "Image",
+            "readonly": false,
+            "required": false,
+            "field_name": "image"
+        },
+        {
+            "field_type": "binary",
+            "label": "Medium-sized image",
+            "readonly": false,
+            "required": false,
+            "field_name": "image_medium"
+        },
+        {
+            "field_type": "binary",
+            "label": "Small-sized image",
+            "readonly": false,
+            "required": false,
+            "field_name": "image_small"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Rating",
+            "readonly": false,
+            "required": false,
+            "field_name": "rating_ids"
+        },
+        {
+            "field_type": "float",
+            "label": "Rating Last Value",
+            "readonly": true,
+            "required": false,
+            "field_name": "rating_last_value"
+        },
+        {
+            "field_type": "text",
+            "label": "Rating Last Feedback",
+            "readonly": false,
+            "required": false,
+            "field_name": "rating_last_feedback"
+        },
+        {
+            "field_type": "binary",
+            "label": "Rating Last Image",
+            "readonly": true,
+            "required": false,
+            "field_name": "rating_last_image"
+        },
+        {
+            "field_type": "integer",
+            "label": "Rating count",
+            "readonly": true,
+            "required": false,
+            "field_name": "rating_count"
+        },
+        {
+            "readonly": false,
+            "field_name": "service_type",
+            "field_type": "selection",
+            "label": "Track Service",
+            "required": false,
+            "selection": [
+                [
+                    "manual",
+                    "Manually set quantities on order"
+                ]
+            ]
+        },
+        {
+            "readonly": false,
+            "field_name": "sale_line_warn",
+            "field_type": "selection",
+            "label": "Sales Order Line",
+            "required": true,
+            "selection": [
+                [
+                    "no-message",
+                    "No Message"
+                ],
+                [
+                    "warning",
+                    "Warning"
+                ],
+                [
+                    "block",
+                    "Blocking Message"
+                ]
+            ]
+        },
+        {
+            "field_type": "text",
+            "label": "Message for Sales Order Line",
+            "readonly": false,
+            "required": false,
+            "field_name": "sale_line_warn_msg"
+        },
+        {
+            "readonly": false,
+            "field_name": "expense_policy",
+            "field_type": "selection",
+            "label": "Re-Invoice Expenses",
+            "required": false,
+            "selection": [
+                [
+                    "no",
+                    "No"
+                ],
+                [
+                    "cost",
+                    "At cost"
+                ],
+                [
+                    "sales_price",
+                    "Sales price"
+                ]
+            ]
+        },
+        {
+            "field_type": "integer",
+            "label": "# Sales",
+            "readonly": true,
+            "required": false,
+            "field_name": "sales_count"
+        },
+        {
+            "readonly": false,
+            "field_name": "invoice_policy",
+            "field_type": "selection",
+            "label": "Invoicing Policy",
+            "required": false,
+            "selection": [
+                [
+                    "order",
+                    "Ordered quantities"
+                ],
+                [
+                    "delivery",
+                    "Delivered quantities"
+                ]
+            ]
+        },
+        {
+            "field_type": "many2one",
+            "label": "Responsible",
+            "readonly": false,
+            "required": true,
+            "field_name": "responsible_id"
+        },
+        {
+            "readonly": false,
+            "field_name": "type",
+            "field_type": "selection",
+            "label": "Product Type",
+            "required": true,
+            "selection": [
+                [
+                    "consu",
+                    "Consumable"
+                ],
+                [
+                    "service",
+                    "Service"
+                ],
+                [
+                    "product",
+                    "Stockable Product"
+                ]
+            ]
+        },
+        {
+            "field_type": "many2one",
+            "label": "Production Location",
+            "readonly": false,
+            "required": false,
+            "field_name": "property_stock_production"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Inventory Location",
+            "readonly": false,
+            "required": false,
+            "field_name": "property_stock_inventory"
+        },
+        {
+            "field_type": "float",
+            "label": "Customer Lead Time",
+            "readonly": false,
+            "required": false,
+            "field_name": "sale_delay"
+        },
+        {
+            "readonly": false,
+            "field_name": "tracking",
+            "field_type": "selection",
+            "label": "Tracking",
+            "required": true,
+            "selection": [
+                [
+                    "serial",
+                    "By Unique Serial Number"
+                ],
+                [
+                    "lot",
+                    "By Lots"
+                ],
+                [
+                    "none",
+                    "No Tracking"
+                ]
+            ]
+        },
+        {
+            "field_type": "text",
+            "label": "Description on Picking",
+            "readonly": false,
+            "required": false,
+            "field_name": "description_picking"
+        },
+        {
+            "field_type": "text",
+            "label": "Description on Delivery Orders",
+            "readonly": false,
+            "required": false,
+            "field_name": "description_pickingout"
+        },
+        {
+            "field_type": "text",
+            "label": "Description on Receptions",
+            "readonly": false,
+            "required": false,
+            "field_name": "description_pickingin"
+        },
+        {
+            "field_type": "float",
+            "label": "Quantity On Hand",
+            "readonly": true,
+            "required": false,
+            "field_name": "qty_available"
+        },
+        {
+            "field_type": "float",
+            "label": "Forecasted Quantity",
+            "readonly": true,
+            "required": false,
+            "field_name": "virtual_available"
+        },
+        {
+            "field_type": "float",
+            "label": "Incoming",
+            "readonly": true,
+            "required": false,
+            "field_name": "incoming_qty"
+        },
+        {
+            "field_type": "float",
+            "label": "Outgoing",
+            "readonly": true,
+            "required": false,
+            "field_name": "outgoing_qty"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Location",
+            "readonly": false,
+            "required": false,
+            "field_name": "location_id"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Warehouse",
+            "readonly": false,
+            "required": false,
+            "field_name": "warehouse_id"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Routes",
+            "readonly": false,
+            "required": false,
+            "field_name": "route_ids"
+        },
+        {
+            "field_type": "integer",
+            "label": "Reordering Rules",
+            "readonly": true,
+            "required": false,
+            "field_name": "nbr_reordering_rules"
+        },
+        {
+            "field_type": "float",
+            "label": "Reordering Min Qty",
+            "readonly": true,
+            "required": false,
+            "field_name": "reordering_min_qty"
+        },
+        {
+            "field_type": "float",
+            "label": "Reordering Max Qty",
+            "readonly": true,
+            "required": false,
+            "field_name": "reordering_max_qty"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Category Routes",
+            "readonly": true,
+            "required": false,
+            "field_name": "route_from_categ_ids"
+        },
+        {
+            "field_type": "char",
+            "label": "Website meta title",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_meta_title"
+        },
+        {
+            "field_type": "text",
+            "label": "Website meta description",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_meta_description"
+        },
+        {
+            "field_type": "char",
+            "label": "Website meta keywords",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_meta_keywords"
+        },
+        {
+            "field_type": "boolean",
+            "label": "Visible in Website",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_published"
+        },
+        {
+            "field_type": "char",
+            "label": "Website URL",
+            "readonly": true,
+            "required": false,
+            "field_name": "website_url"
+        },
+        {
+            "field_type": "html",
+            "label": "Description for the website",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_description"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Alternative Products",
+            "readonly": false,
+            "required": false,
+            "field_name": "alternative_product_ids"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Accessory Products",
+            "readonly": false,
+            "required": false,
+            "field_name": "accessory_product_ids"
+        },
+        {
+            "field_type": "integer",
+            "label": "Size X",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_size_x"
+        },
+        {
+            "field_type": "integer",
+            "label": "Size Y",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_size_y"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Styles",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_style_ids"
+        },
+        {
+            "field_type": "integer",
+            "label": "Website Sequence",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_sequence"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Website Product Category",
+            "readonly": false,
+            "required": false,
+            "field_name": "public_categ_ids"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Images",
+            "readonly": false,
+            "required": false,
+            "field_name": "product_image_ids"
+        },
+        {
+            "field_type": "float",
+            "label": "Website price",
+            "readonly": true,
+            "required": false,
+            "field_name": "website_price"
+        },
+        {
+            "field_type": "float",
+            "label": "Website public price",
+            "readonly": true,
+            "required": false,
+            "field_name": "website_public_price"
+        },
+        {
+            "readonly": false,
+            "field_name": "inventory_availability",
+            "field_type": "selection",
+            "label": "Inventory Availability",
+            "required": false,
+            "selection": [
+                [
+                    "never",
+                    "Sell regardless of inventory"
+                ],
+                [
+                    "always",
+                    "Show inventory on website and prevent sales if not enough stock"
+                ],
+                [
+                    "threshold",
+                    "Show inventory below a threshold and prevent sales if not enough stock"
+                ],
+                [
+                    "custom",
+                    "Show product-specific notifications"
+                ]
+            ]
+        },
+        {
+            "field_type": "float",
+            "label": "Availability Threshold",
+            "readonly": false,
+            "required": false,
+            "field_name": "available_threshold"
+        },
+        {
+            "field_type": "text",
+            "label": "Custom Message",
+            "readonly": false,
+            "required": false,
+            "field_name": "custom_message"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Mobikul Product Category",
+            "readonly": false,
+            "required": false,
+            "field_name": "mobikul_categ_ids"
+        },
+        {
+            "readonly": false,
+            "field_name": "mobikul_status",
+            "field_type": "selection",
+            "label": "Product Availability",
+            "required": false,
+            "selection": [
+                [
+                    "empty",
+                    "Display Nothing"
+                ],
+                [
+                    "in_stock",
+                    "In-Stock"
+                ],
+                [
+                    "out_stock",
+                    "Out-of-Stock"
+                ]
+            ]
+        },
+        {
+            "field_type": "boolean",
+            "label": "Published on App",
+            "readonly": false,
+            "required": false,
+            "field_name": "is_mobikul_available"
+        },
+        {
+            "readonly": false,
+            "field_name": "property_valuation",
+            "field_type": "selection",
+            "label": "Inventory Valuation",
+            "required": false,
+            "selection": [
+                [
+                    "manual_periodic",
+                    "Periodic (manual)"
+                ],
+                [
+                    "real_time",
+                    "Perpetual (automated)"
+                ]
+            ]
+        },
+        {
+            "field_type": "char",
+            "label": "Valuation",
+            "readonly": false,
+            "required": false,
+            "field_name": "valuation"
+        },
+        {
+            "readonly": false,
+            "field_name": "property_cost_method",
+            "field_type": "selection",
+            "label": "Costing Method",
+            "required": false,
+            "selection": [
+                [
+                    "standard",
+                    "Standard Price"
+                ],
+                [
+                    "fifo",
+                    "First In First Out (FIFO)"
+                ],
+                [
+                    "average",
+                    "Average Cost (AVCO)"
+                ]
+            ]
+        },
+        {
+            "field_type": "char",
+            "label": "Cost Method",
+            "readonly": false,
+            "required": false,
+            "field_name": "cost_method"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Stock Input Account",
+            "readonly": false,
+            "required": false,
+            "field_name": "property_stock_account_input"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Stock Output Account",
+            "readonly": false,
+            "required": false,
+            "field_name": "property_stock_account_output"
+        },
+        {
+            "field_type": "char",
+            "label": "HS Code",
+            "readonly": false,
+            "required": false,
+            "field_name": "hs_code"
+        },
+        {
+            "field_type": "boolean",
+            "label": "Is Follower",
+            "readonly": true,
+            "required": false,
+            "field_name": "message_is_follower"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Followers",
+            "readonly": false,
+            "required": false,
+            "field_name": "message_follower_ids"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Followers (Partners)",
+            "readonly": true,
+            "required": false,
+            "field_name": "message_partner_ids"
+        },
+        {
+            "field_type": "many2many",
+            "label": "Followers (Channels)",
+            "readonly": true,
+            "required": false,
+            "field_name": "message_channel_ids"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Messages",
+            "readonly": false,
+            "required": false,
+            "field_name": "message_ids"
+        },
+        {
+            "field_type": "datetime",
+            "label": "Last Message Date",
+            "readonly": false,
+            "required": false,
+            "field_name": "message_last_post"
+        },
+        {
+            "field_type": "boolean",
+            "label": "Unread Messages",
+            "readonly": true,
+            "required": false,
+            "field_name": "message_unread"
+        },
+        {
+            "field_type": "integer",
+            "label": "Unread Messages Counter",
+            "readonly": true,
+            "required": false,
+            "field_name": "message_unread_counter"
+        },
+        {
+            "field_type": "boolean",
+            "label": "Action Needed",
+            "readonly": true,
+            "required": false,
+            "field_name": "message_needaction"
+        },
+        {
+            "field_type": "integer",
+            "label": "Number of Actions",
+            "readonly": true,
+            "required": false,
+            "field_name": "message_needaction_counter"
+        },
+        {
+            "field_type": "one2many",
+            "label": "Website Messages",
+            "readonly": false,
+            "required": false,
+            "field_name": "website_message_ids"
+        },
+        {
+            "field_type": "integer",
+            "label": "ID",
+            "readonly": true,
+            "required": false,
+            "field_name": "id"
+        },
+        {
+            "field_type": "char",
+            "label": "Display Name",
+            "readonly": true,
+            "required": false,
+            "field_name": "display_name"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Created by",
+            "readonly": false,
+            "required": false,
+            "field_name": "create_uid"
+        },
+        {
+            "field_type": "datetime",
+            "label": "Created on",
+            "readonly": false,
+            "required": false,
+            "field_name": "create_date"
+        },
+        {
+            "field_type": "many2one",
+            "label": "Last Updated by",
+            "readonly": false,
+            "required": false,
+            "field_name": "write_uid"
+        },
+        {
+            "field_type": "datetime",
+            "label": "Last Updated on",
+            "readonly": false,
+            "required": false,
+            "field_name": "write_date"
+        },
+        {
+            "field_type": "datetime",
+            "label": "Last Modified on",
+            "readonly": true,
+            "required": false,
+            "field_name": "__last_update"
+        }
+    ]
+}
+
+3.{{my}}/api/product.template/create
+Type = POST
+body = {
+"name":"xyz1",
+"type":"consu"
+}
+response = {
+    "responseCode": 2,
+    "model_id": 145,
+    "permisssions": {
+        "read": true,
+        "create": true,
+        "delete": true,
+        "write": true
+    },
+    "message": "Allowed all Models Permission: all",
+    "create_id": 74,
+    "object_name": "product.template",
+    "success": true
+}
+
+4. {{my}}/api/product.template/<int: id>
+
+Type = delete
+
+{
+    "object_name": "product.template",
+    "responseCode": 2,
+    "model_id": 145,
+    "record_id": 74,
+    "message": "Allowed all Models Permission: all",
+    "success": true,
+    "permisssions": {
+        "read": true,
+        "create": true,
+        "delete": true,
+        "write": true
+    }
+}
+
+
+5.  {{my}}/api/product.template/75
+type = PUT
+body= {
+"name":"change"
+}
+response={
+    "object_name": "product.template",
+    "responseCode": 2,
+    "model_id": 145,
+    "record_id": 75,
+    "message": "Allowed all Models Permission: all",
+    "success": true,
+    "permisssions": {
+        "read": true,
+        "create": true,
+        "delete": true,
+        "write": true
+    }
+}
+
+6. {{my}}/api/sale.order/3
+Type = GET
+respose =   {
+    "object_name": "sale.order",
+    "responseCode": 2,
+    "model_id": 240,
+    "record_id": 3,
+    "message": "Allowed all Models Permission: all",
+    "success": true,
+    "permisssions": {
+        "read": true,
+        "create": true,
+        "delete": true,
+        "write": true
+    },
+    "data": [
+        {
+            "__last_update": "2018-04-27 10:22:30",
+            "activity_type_id": [],
+            "partner_id": [
+                {
+                    "id": 11,
+                    "name": "Delta PC"
+                }
+            ],
+            "amount_tax": 0,
+            "cart_recovery_email_sent": false,
+            "activity_date_deadline": false,
+            "picking_policy": "direct",
+            "fiscal_position_id": [],
+            "date_order": "2017-10-04 11:28:05",
+            "activity_state": false,
+            "has_delivery": false,
+            "payment_acquirer_id": [],
+            "activity_ids": [],
+            "payment_tx_id": [],
+            "only_services": false,
+            "website_order_line": [
+                {
+                    "id": 6,
+                    "name": "On Site Monitoring"
+                },
+                {
+                    "id": 7,
+                    "name": "Toner Cartridge"
+                }
+            ],
+            "delivery_price": 0,
+            "can_directly_mark_as_paid": false,
+            "activity_summary": false,
+            "note": "",
+            "company_id": [
+                {
+                    "id": 1,
+                    "name": "YourCompany"
+                }
+            ],
+            "picking_ids": [],
+            "display_name": "SO003",
+            "client_order_ref": false,
+            "payment_tx_ids": [],
+            "activity_user_id": [],
+            "validity_date": false,
+            "message_is_follower": true,
+            "access_token": "17772a1b-d47f-4c3c-a211-3a2fe13d7a9c",
+            "pricelist_id": [
+                {
+                    "id": 1,
+                    "name": "USD"
+                }
+            ],
+            "write_uid": [
+                {
+                    "id": 1,
+                    "name": "Administrator"
+                }
+            ],
+            "payment_transaction_count": 0,
+            "create_date": "2017-10-04 11:28:01",
+            "currency_id": [
+                {
+                    "id": 3,
+                    "name": "USD"
+                }
+            ],
+            "amount_total": 377.5,
+            "product_id": [
+                {
+                    "id": 7,
+                    "name": "GAP Analysis Service"
+                }
+            ],
+            "portal_url": "/my/orders/3",
+            "message_last_post": false,
+            "warning_stock": false,
+            "is_expired": false,
+            "id": 3,
+            "team_id": [
+                {
+                    "id": 1,
+                    "name": "Europe"
+                }
+            ],
+            "message_ids": [
+                {
+                    "id": 146
+                },
+                {
+                    "id": 145
+                }
+            ],
+            "partner_shipping_id": [
+                {
+                    "id": 11,
+                    "name": "Delta PC"
+                }
+            ],
+            "amount_untaxed": 377.5,
+            "origin": false,
+            "name": "SO003",
+            "delivery_message": false,
+            "procurement_group_id": [],
+            "partner_invoice_id": [
+                {
+                    "id": 11,
+                    "name": "Delta PC"
+                }
+            ],
+            "incoterm": [],
+            "create_uid": [
+                {
+                    "id": 1,
+                    "name": "Administrator"
+                }
+            ],
+            "message_needaction": false,
+            "is_abandoned_cart": false,
+            "order_line": [
+                {
+                    "id": 6,
+                    "name": "On Site Monitoring"
+                },
+                {
+                    "id": 7,
+                    "name": "Toner Cartridge"
+                }
+            ],
+            "amount_delivery": 0,
+            "invoice_status": "no",
+            "carrier_id": [],
+            "user_id": [
+                {
+                    "id": 1,
+                    "name": "Administrator"
+                }
+            ],
+            "delivery_count": 0,
+            "message_follower_ids": [
+                {
+                    "id": 102
+                }
+            ],
+            "cart_count": 11,
+            "payment_term_id": [],
+            "state": "draft",
+            "warehouse_id": [
+                {
+                    "id": 1,
+                    "name": "YourCompany"
+                }
+            ],
+            "invoice_shipping_on_delivery": false,
+            "website_message_ids": [],
+            "message_unread_counter": 0,
+            "confirmation_date": false,
+            "write_date": "2018-04-27 10:22:30",
+            "cart_quantity": 11,
+            "message_unread": false,
+            "analytic_account_id": [],
+            "message_needaction_counter": 0,
+            "delivery_rating_success": false,
+            "invoice_count": 0
+        }
+    ]
+}
+
+
+
+#
+# {
+# 	"domain":"[('id','in',[13,10,11,12])]",
+# 	"fields":"['name','description','product_variant_ids']",
+# 	"offset":0,
+# 	"limit":"4"
+#
+#
+# }
+
+# ['name','description','product_variant_ids','activity_type_id','image_small','alternative_product_ids']
+# ['name','description','product_variant_id','product_variant_ids','create_date','is_active']
