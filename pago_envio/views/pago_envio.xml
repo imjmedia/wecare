@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="pago_envio" model="ir.ui.view">
+        <field name="name">pago.envio</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <field name="group_id" position="after">
+                <field name="pago" invisible="0"/>
+            </field>
+        </field>
+    </record>
+
+
+    <record id="pago_factura" model="ir.ui.view">
+        <field name="name">pago.factura</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="pago" invisible="0"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="abrir_envios_pagados" model="ir.ui.view">
+        <field name="name">envios.pagados</field>
+        <field name="model">stock.picking.type</field>
+        <field name="inherit_id" ref="stock.stock_picking_type_kanban"/>
+        <field name="arch" type="xml">
+            <button name="get_action_picking_tree_ready" position="attributes">
+                <attribute name="attrs">{'invisible': [('name', '=', 'Expediciones')]}</attribute>
+            </button>
+            <a name="get_action_picking_tree_late" position="attributes">
+                <attribute name="attrs">{'invisible': [('name', '=', 'Expediciones')]}</attribute>
+            </a>
+            <button name="get_action_picking_tree_ready" position="after">
+                <button name="return_actions_to_open_ready_pay"
+                        type="object"
+                        class="btn btn-primary"
+                        attrs="{'invisible': [('name', '!=', 'Expediciones')]}"
+                        context="{'xml_id':'action_picking_tree_late'}">
+                        <field name="count_picking_ready_paid"/> Por Procesar
+                </button>
+            </button>
+            <a name="get_action_picking_tree_waiting" position="after">
+                <a name="return_actions_to_open_atrasado"
+                        type="object"
+                        class="oe_kanban_stock_picking_type_list"
+                        attrs="{'invisible': [('name', '!=', 'Expediciones')]}"
+                        context="{'xml_id':'action_picking_tree_late'}">
+                        <field name="count_picking_late_paid"/> Atrasado
+                </a>
+            </a>
+        </field>
+    </record>
+</odoo>

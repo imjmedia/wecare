@@ -1,0 +1,81 @@
+<odoo>
+        <!-- odoorestapi: views -->
+    <record id="odoorestapi_view_form" model="ir.ui.view">
+        <field name="name">odoorestapi_view.form</field>
+        <field name="model">rest.api</field>
+        <field name="arch" type="xml">
+            <form string="Webservice Account">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
+                            <field name="active" widget="boolean_button" options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <div class="oe_edit_only">
+                            <label for="name" string="Name"/>
+                        </div>
+                        <h1>
+                            <field name="name" default_focus="1" placeholder="Key Identifier"/>
+                        </h1>
+                    </div>
+
+                    <div class="oe_title">
+                        <div>
+                            <label for="api_key" string="Api Secret Key"/>
+                        </div>
+                        <div>
+                            <field name="api_key" />
+                            <button name="generate_secret_key" string="Generate Api Secret Key" type="object" class="oe_link" icon="fa-arrow-right"/>
+                        </div>
+                    </div>
+                    <group>
+                        <field name="availabilty"/>
+                    </group>
+                        <separator string="Set the resource permissions for this key:" colspan="4" attrs="{'invisible': [('availabilty', 'in', ['all'])]}"/>
+                        <field name="resource_ids" mode="tree" attrs="{'invisible': [('availabilty', 'in', ['all'])]}">
+                            <tree string="Resources" editable="bottom">
+                                <field name="model_id" options="{'no_create': True}"/>
+                                <field name="read_ok"/>
+                                <field name="write_ok"/>
+                                <field name="create_ok"/>
+                                <field name="unlink_ok"/>
+                            </tree>
+                        </field>
+                        <field name="description" class="oe_inline" placeholder="For Internal purpose Only"/>
+                        <div class="oe_clear"/>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="odoorestapi_view_tree" model="ir.ui.view">
+        <field name="name">odoorestapi_view.tree</field>
+        <field name="model">rest.api</field>
+        <field name="arch" type="xml">
+            <tree string="Webservice Accounts">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="active"/>
+            </tree>
+        </field>
+    </record>
+
+        <!-- odoorestapi : actions -->
+    <record id="odoorestapi_action" model="ir.actions.act_window">
+        <field name="name">REST WEBSERVICE ACCOUNT</field>
+        <field name="res_model">rest.api</field>
+        <field name="view_mode">tree,form</field>
+        <!-- <field name="view_type">form</field> -->
+        <field name="view_id" ref="odoorestapi_view_tree"/>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Click to add a new Rest Webservice Account.
+          </p>
+        </field>
+    </record>
+
+    <menuitem name="Web-Services" id="odoorestapi_main_menu" parent="base.menu_custom" sequence="1"/>
+    <menuitem id="odoorestapi_menu" name="Webservice Accounts" parent="odoorestapi_main_menu" action="odoorestapi_action" sequence="1"/>
+
+</odoo>
