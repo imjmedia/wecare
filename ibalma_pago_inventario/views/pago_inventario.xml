@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="pago_termino_pago" model="ir.ui.view">
+        <field name="name">pago.termino.pago</field>
+        <field name="model">account.payment.term</field>
+        <field name="inherit_id" ref="account.view_payment_term_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group/group[1]" position="after">
+                <group>
+                    <field name="pago" required="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="venta_pago" model="ir.ui.view">
+        <field name="name">venta.pago</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <field name="tag_ids" position="after">
+                <field name="pagado" groups="account.group_account_user"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="stock_pago" model="ir.ui.view">
+        <field name="name">stock.pago</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_stock.view_order_form_inherit_sale_stock"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='action_view_delivery']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|',('delivery_count', '=', 0),('pagado','=',False)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
