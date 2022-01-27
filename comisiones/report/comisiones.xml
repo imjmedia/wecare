@@ -22,18 +22,17 @@
         <field name="arch" type="xml">
             <search string="Analisis de Comisiones">
                 <field name="date"/>
-                <filter string="Fecha" name="year" invisible="1" date="date" default_period="this_year"/>
-                <separator/>
                 <filter name="filter_date" date="date" default_period="this_month"/>
                 <separator/>
-                <field name="user_id"/>
-                <field name="partner_id"/>
+                <filter name="out_invoice" string="Facturas" domain="[('invoice.move_type','=','out_invoice')]"/>
+                <filter name="out_refund" string="Notas de Credito" domain="[('invoice.move_type','=','out_refund')]"/>
+                <separator/>
                 <group expand="1" string="Group By">
                     <filter string="Vendedor" name="User" context="{'group_by':'user_id'}"/>
                     <filter string="Cliente" name="Customer" context="{'group_by':'partner_id'}"/>
                     <filter name="Status" string="Status" context="{'group_by':'state'}"/>
                     <separator/>
-                    <filter string="Fecha Factura" name="date" context="{'group_by':'date'}"/>
+                    <filter string="Fecha de Último Pago" name="date" context="{'group_by':'date'}"/>
                 </group>
             </search>
         </field>
