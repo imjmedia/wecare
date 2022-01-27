@@ -9,6 +9,7 @@ class ReporteComision(models.Model):
     _description = "Reporte de Comisiones de Venta"
     _auto = False
 
+
     date = fields.Datetime('Fecha de Último Pago', readonly=True)
     partner_id = fields.Many2one('res.partner', 'Cliente', readonly=True)
     user_id = fields.Many2one('res.users', 'Vendedor', readonly=True)
@@ -59,7 +60,6 @@ class ReporteComision(models.Model):
             am.state as state, am.move_type as type, rp.create_date, pp.type as pricelist_id,
             pp.name
             from public.account_move as am
-            --join {paid_date} ON paid_date.id = am.id
             inner join public.res_partner as rp on rp.id = am.partner_id
             inner join (SELECT partner_id, MIN(invoice_date) as fecha_factura FROM public.account_move WHERE state = 'posted' GROUP BY partner_id) as fecha on fecha.partner_id = am.partner_id
             inner join public.ir_property as ip on rp.id = cast(substring(ip.res_id, strpos(ip.res_id, ',')+1, length(ip.res_id)) as integer)
