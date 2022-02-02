@@ -76,7 +76,7 @@ class Product(models.Model):
                 prod.qty_available / prod.qty_consumed_6m * 6)
             prod.months_of_inventory_12m = (
                 0.0 if not prod.qty_consumed_12m else
-                prod.qty_available / prod.qty_consumed_12m * 12)
+                prod.qty_available / prod.qty_consumed_12m)
             # Turns / Cycles per Month
             prod.inventory_turns_6m = (
                 0.0 if not prod.months_of_inventory_6m else

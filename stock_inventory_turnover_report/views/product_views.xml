@@ -8,19 +8,17 @@
             <tree >
                 <field name="categ_id" invisible="True"/>
                 <field name="display_name"/>
-                <field name="total_cost" string="Current Cost"/>
-                <field name="standard_price"/>
                 <field name="qty_available"/>
-                <field name="qty_available_6m"/>
-                <field name="qty_available_12m"/>
-                <field name="qty_consumed_6m"/>
-                <field name="qty_consumed_12m"/>
-                <field name="qty_gotten_6m"/>
-                <field name="qty_gotten_12m"/>
-                <field name="months_of_inventory_6m"/>
-                <field name="months_of_inventory_12m"/>
-                <field name="inventory_turns_6m"/>
-                <field name="inventory_turns_12m"/>
+                <field name="qty_available_6m" invisible="1"/>
+                <field name="qty_available_12m" invisible="1"/>
+                <field name="qty_consumed_6m" string="Consumido 6 Meses"/>
+                <field name="qty_consumed_12m" string="Consumido 12 Meses"/>
+                <field name="qty_gotten_6m" invisible="1"/>
+                <field name="qty_gotten_12m" invisible="1"/>
+                <field name="months_of_inventory_6m" invisible="1"/>
+                <field name="months_of_inventory_12m" string="Meses de Inventario"/>
+                <field name="inventory_turns_6m" invisible="1"/>
+                <field name="inventory_turns_12m" string="Inventario Ciclico Anual"/>
             </tree>
         </field>
     </record>
@@ -37,7 +35,7 @@
     </record>
 
     <record id="stock_inv_turns_report" model="ir.actions.act_window">
-        <field name="name">Inventory Turnover</field>
+        <field name="name">Meses de Inventario</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">product.product</field>
         <field name="view_mode">tree,form,pivot,graph</field>
@@ -46,7 +44,7 @@
     </record>
 
     <menuitem id="menu_stock_inv_turns_report"
-          name="Inventory Turnover"
+          name="Meses de Inventario"
           parent="stock.menu_warehouse_report"
           action="stock_inv_turns_report"
           sequence="50"/>
