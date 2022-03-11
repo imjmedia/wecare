@@ -9,7 +9,6 @@ class ReporteComision(models.Model):
     _description = "Reporte de Comisiones de Venta"
     _auto = False
 
-
     date = fields.Datetime('Fecha de Último Pago', readonly=True)
     partner_id = fields.Many2one('res.partner', 'Cliente', readonly=True)
     user_id = fields.Many2one('res.users', 'Vendedor', readonly=True)
@@ -40,21 +39,21 @@ class ReporteComision(models.Model):
             CASE WHEN pp.type = 'vip' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.015)
             WHEN pp.type = 'vip' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.0125)
             WHEN pp.type = 'vip' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.00875)
-            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.03)
-            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.025)
-            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.0175)
-            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.042)
-            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.035)
-            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.0245)
+            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.03)
+            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.025)
+            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.0175)
+            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.042)
+            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.035)
+            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_invoice' THEN (am.amount_untaxed*0.0245)
             WHEN pp.type = 'vip' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.015)
             WHEN pp.type = 'vip' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.0125)
             WHEN pp.type = 'vip' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.00875)
-            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.03)
-            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.025)
-            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.0175)
-            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.042)
-            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.035)
-            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.0245)
+            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.03)
+            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.025)
+            WHEN pp.type = 'mayoreo' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.0175)
+            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) <= 30 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.042)
+            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) <= 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.035)
+            WHEN pp.type = 'final' AND (am.invoice_date - fecha_factura) > 120 AND am.move_type = 'out_refund' THEN (-am.amount_untaxed*0.0245)
             ELSE (am.amount_untaxed*0.0)
             END comision,
             am.state as state, am.move_type as type, rp.create_date, pp.type as pricelist_id,

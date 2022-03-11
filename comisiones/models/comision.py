@@ -5,7 +5,6 @@ import json
 from odoo import api, fields, models, _
 
 
-
 class Comision(models.Model):
     _inherit = ['product.pricelist']
 
