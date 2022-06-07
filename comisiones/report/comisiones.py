@@ -59,10 +59,11 @@ class ReporteComision(models.Model):
             am.state as state, am.move_type as type, rp.create_date, pp.type as pricelist_id,
             pp.name
             from public.account_move as am
+            inner join public.sale_order as so on so.id = am.x_sale_order_id
             inner join public.res_partner as rp on rp.id = am.partner_id
             inner join (SELECT partner_id, MIN(invoice_date) as fecha_factura FROM public.account_move WHERE state = 'posted' GROUP BY partner_id) as fecha on fecha.partner_id = am.partner_id
             inner join public.ir_property as ip on rp.id = cast(substring(ip.res_id, strpos(ip.res_id, ',')+1, length(ip.res_id)) as integer)
-            inner join public.product_pricelist as pp on pp.id = cast(substring(ip.value_reference, strpos(ip.value_reference, ',')+1, length(ip.value_reference)) as integer)
+            inner join public.product_pricelist as pp on pp.id = so.pricelist_id
             where ip.name = 'property_product_pricelist' and am.move_type LIKE 'out%' and am.amount_residual = 0 
             ) as line
             WHERE
