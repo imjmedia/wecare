@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="addendum_body_hemsa">
+  <record model="ir.ui.view" id="addendum_body_hemsa">
+        <field name="name">cityfresko</field>
+        <field name="type">qweb</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
     <Addenda>
       <VERSION>
         <TIPO>B2B</TIPO>
@@ -87,5 +91,6 @@
         {% endfor %}
       </DETALLE>
     </Addenda>
-  </template>
+        </field>
+  </record>
 </odoo>

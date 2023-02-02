@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="addendum_body_coppel">
+  <record model="ir.ui.view" id="addendum_body_coppel">
+        <field name="name">cityfresko</field>
+        <field name="type">qweb</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
     <Addenda>
       <requestForPayment type="SimpleInvoiceType" contentVersion="1.0" documentStructureVersion="CPLR1.0" documentStatus="ORIGINAL" DeliveryDate="{{o.invoice_date}}">
         <requestForPaymentIdentification>
@@ -108,5 +112,6 @@
         </cadenaOriginal>
       </requestForPayment>
     </Addenda>
-  </template>
+        </field>
+  </record>
 </odoo>

@@ -10,4 +10,5 @@
         "views/sale.xml",
     ],
     "auto_install": True,
+    "license": "AGPL-3",
 }

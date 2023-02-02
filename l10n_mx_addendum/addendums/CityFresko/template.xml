@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="addendum_body_cityfresko">
+  <record model="ir.ui.view" id="addendum_body_cityfresko">
+        <field name="name">cityfresko</field>
+        <field name="type">qweb</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
     <Addenda>
       <requestForPayment DeliveryDate="{{o.invoice_date}}" documentStatus="ORIGINAL" documentStructureVersion="AMC7.1" contentVersion="1.3.1" type="SimpleInvoiceType">
         <requestForPaymentIdentification>
@@ -115,5 +119,6 @@
         </payableAmount>
       </requestForPayment>
     </Addenda>
-  </template>
+        </field>
+  </record>
 </odoo>
