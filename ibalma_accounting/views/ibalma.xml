@@ -37,7 +37,7 @@
         </field>
     </record>
 
-    <record id="assets_common_report_ibalma" model="ir.ui.view">
+    <!--<record id="assets_common_report_ibalma" model="ir.ui.view">
         <field name="name">assets_common_report_ibalma</field>
         <field name="type">qweb</field>
         <field name="inherit_id" ref="web.report_assets_pdf"/>
@@ -46,7 +46,7 @@
                 <link rel="stylesheet" type="text/scss" href="/ibalma_accounting/static/src/scss/report_invoice.scss"/>
             </xpath>
         </field>
-    </record>
+    </record>-->
 
     <record id="external_layout_boxed_inherit_ibalma" model="ir.ui.view">
         <field name="name">external_layout_boxed_inherit_ibalma</field>
@@ -313,8 +313,4 @@
             </xpath>
         </field>
     </record>
-
-
-
-
 </odoo>
