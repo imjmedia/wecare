@@ -6,7 +6,7 @@
     "website": "www.itreingenierias.com",
     "depends": [
         "account",
-        "base",
+        "l10n_mx_edi",
         "sale",
     ],
     "data": [
