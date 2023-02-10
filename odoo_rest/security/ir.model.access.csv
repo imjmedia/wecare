@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_odoo_rest_api_odoo_rest_api,odoo_rest_api.odoo_rest_api,model_rest_api,,1,1,1,1
+access_odoo_rest_api_resources,odoo_rest_api.rest.api.resources,model_rest_api_resources,,1,1,1,1

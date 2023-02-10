@@ -1,0 +1,4 @@
+id,name,technical_name,addendum_id:id
+addendum_field_nadro_EntregaEntrante,Entrega Entrante,EntregaEntrante,l10n_mx_addendum.addendum_cityfresko
+addendum_field_nadro_Orden,Orden,Orden,l10n_mx_addendum.addendum_cityfresko
+addendum_field_nadro_PosicionOC,Posición OC,PosicionOC,l10n_mx_addendum.addendum_cityfresko

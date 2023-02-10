@@ -1,0 +1,835 @@
+<section class="oe_container" >
+  <h3 style="font-family:'Open Sans', sans-serif;font-style: normal;font-size: 30px;color:#000000;font-weight: bold;line-height: 41px;text-align: center">Odoo Rest API</h3>
+  <p style="font-family:'Open Sans', sans-serif;font-style: italic;font-weight: 500;font-size: 16px;line-height: 20px;text-align: center;color: #333333;">Now modify your data using HTTP Requests!!
+
+  </p>
+
+  <div class="row mt16 mb16 mp-features" style="margin-left:1%">
+  	<div class="col-md-6 mt16 mb16 border-right" style="font-family:'Open Sans', sans-serif; font-weight:normal; font-size:16px; line-height:24px; color:#484848; display:grid">
+      Odoo REST API Module creates a RESTful API for Odoo and allows you to access and modify data using HTTP requests. The admin can fetch, create, update and delete a record from the database by sending the appropriate request in JSON. The response can be chosen to be in either JSON or XML format.
+    </div>
+  	<div class="col-md-6 mt16 mb16">
+        <p style="font-weight: bold;font-size: 18px;line-height: 30px;font-family:'Open Sans', sans-serif;">Information</p>
+  	     <span class="ml-1 mr-2 my-auto"><img src="icon-user-guide.png" alt="user-guide"></span>
+  	      <span>User Guide</span>
+  	      <p>store.webkul.com/Odoo-REST-API.html</p>
+    </div>
+  </div>
+</section>
+
+<section class="oe_container">
+  <div class="ml16 mr16 card" style="padding:1%">
+      <div>
+        <h3 style="font-weight:600;font-family:'Open Sans', sans-serif;font-size: 18px;color: #555555;line-height: 30px;text-align: left">The RESTful API in Odoo!!</h3>
+        <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">A REST API is an application program interface (API) that uses HTTP requests to GET, PUT, POST and DELETE data.
+        </p>
+        <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">Now, access and modify data using HTTP requests in Odoo. You can easily modify a record from the database as per your wish. Send a request in JSON  and choose the response in either JSON or XML format.
+
+        </p>
+        <br>
+      </div>
+   </div>
+
+</section>
+<br><br>
+<section>
+  <h3 class="ml16 mr16" style="font-family:'Open Sans', sans-serif;font-size: 24px;color: #333333;line-height: 39px;">Highlighted features</h3>
+  <div class="row">
+     <div class="col-md-4 mt3 mb3">
+       <div class="ml16 mr16 card" style="padding:2%;height: 140px;width:335px;">
+         <img src="icon-1.png" alt="icon-1.png" style="width: fit-content;">
+         <br>
+         <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">You can easily create API keys to access Endpoints.</p>
+         <br>
+       </div>
+     </div>
+     <div class="col-md-4  mt3 mb3">
+       <div class="ml16 mr16 card" style="padding:2%;height: 140px;width:335px;">
+         <img src="icon-2.png" alt="icon-2.png" style="width: fit-content;">
+         <br>
+         <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">A Separate API key is generated for end point users.
+         </p>
+       </div>
+     </div>
+     <div class="col-md-4  mt3 mb3">
+       <div class="ml16 mr16 card" style="padding:2%;height: 140px">
+         <img src="icon-3.png" alt="user-guide" style="width: fit-content;">
+         <br>
+         <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">You can give different access rights to multiple API keys.
+         </p>
+       </div>
+     </div>
+
+   </div>
+   <br>
+   <div class="row">
+      <div class="col-md-4 mt3 mb3">
+        <div class="ml16 mr16 card" style="padding:2%;height: 140px;width:335px;">
+          <img src="icon-4.png" alt="user-guide" style="width: fit-content;">
+          <br>
+          <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">Create and fetch a record from Database.</p>
+          <br>
+        </div>
+      </div>
+      <div class="col-md-4  mt3 mb3">
+        <div class="ml16 mr16 card" style="padding:2%;height: 140px;width:335px;">
+          <img src="icon-5.png" alt="user-guide" style="width: fit-content;">
+          <br>
+          <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">You can update or even delete a record in Database.
+          </p>
+        </div>
+      </div>
+      <div class="col-md-4  mt3 mb3">
+        <div class="ml16 mr16 card" style="padding:1%;height: 140px;" >
+          <img src="icon-6.png" alt="user-guide" style="width: fit-content;">
+          <br>
+          <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">Customize App and Export APK/IPA</p>
+        </div>
+      </div>
+
+    </div>
+    <br>
+    <div class="row">
+       <div class="col-md-4 mt3 mb3">
+         <div class="ml16 mr16 card" style="padding:2%;height: 140px;width:335px;">
+           <img src="icon-7.png" alt="user-guide" style="width: fit-content;">
+           <br>
+           <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">Get the Schema of a Table.
+           </p>
+           <br>
+         </div>
+       </div>
+       <div class="col-md-4  mt3 mb3">
+         <div class="ml16 mr16 card" style="padding:2%;height: 140px;width:335px;">
+           <img src="icon-8.png" alt="user-guide" style="width: fit-content;">
+           <br>
+           <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">Trigger your odoo actions.
+           </p>
+         </div>
+       </div>
+       <div class="col-md-4  mt3 mb3">
+         <div class="ml16 mr16 card" style="padding:1%;height: 140px;">
+           <img src="icon-9.png" alt="user-guide" style="width:fit-content;">
+           <br>
+           <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;text-align: justify;line-height: 22px;">View the access rights message in the Endpoint response.
+          </p>
+         </div>
+       </div>
+
+     </div>
+</section>
+<br>
+
+<br>
+<section>
+<h3 class="ml16 mr16" style="font-family:'Open Sans', sans-serif;font-size: 24px;color: #333333;line-height: 39px;">Detailed Features List</h3>
+<p class="ml16 mr16" style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #333333;line-height: 22px;">Below is the list of features odoo module name</p>
+  <div class="row mt16 mb16 mp-features">
+   <div class="col-md-6 mt16 mb16">
+    <div class="ml16 mr16 card" style="padding:1%;height:145px;width:500px;">
+     <div class="container" style="color:#333333;font-size:16px;font-weight:bold;">
+       Access and modify data using HTTP requests in Odoo
+     </div>
+     <div class="container " style="color:#555555;font-size:16px;">
+      <ul style="padding:16px;">
+       <li>
+      <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;line-height: 22px;">The Odoo REST API Module allows you to access and modify data using HTTP requests. </p>
+       </li>
+       <li>
+      <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;line-height: 22px;">You can create, fetch, update and delete a record from the database by sending the appropriate request in JSON.
+</p>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+   <div class="col-md-6 mt16 mb16">
+    <div class="ml16 mr16 card" style="padding:1%;height:145px">
+     <div class="container" style="color:#333333;font-size:16px;font-weight:bold;">
+       Choose the response format in Odoo
+     </div>
+     <div class="container " style="color:#555555;font-size:16px;">
+      <ul style="padding:16px;">
+       <li>
+        <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;line-height: 22px;">The response format can be chosen to be in either JSON or XML format.
+        </p>
+       </li>
+       <li>
+        <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;line-height: 22px;">The schema of the table can also be requested from the database.
+        </p>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+   <div class="col-md-6 mt16 mb16">
+    <div class="ml16 mr16 card" style="padding:1%;height:145px;width:500px;">
+     <div class="container" style="color:#333333;font-size:16px;font-weight:bold;">
+       Create API Key to access the endpoints
+
+     </div>
+     <div class="container " style="color:#555555;font-size:16px;">
+      <ul style="padding:16px;">
+       <li>
+          <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;line-height: 22px;">You can create an API key for accessing the endpoints and set specific data access rights for different users.
+          </p>
+       </li>
+       <li>
+          <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;line-height: 22px;">Separate API keys can be made for different endpoint users.
+          </p>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+   <div class="col-md-6 mt16 mb16">
+    <div class="ml16 mr16 card" style="padding:1%;height:145px">
+     <div class="container" style="color:#333333;font-size:16px;font-weight:bold;">
+       Manage the API Key and it's access rights
+     </div>
+     <div class="container" style="color:#555555;font-size:16px;">
+      <ul style="padding:16px;">
+       <li>
+        <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;line-height: 22px;">You can even restrict specific access rights to different API key users.
+        </p>
+       </li>
+       <li>
+        <p style="font-weight:400;font-family:'Open Sans', sans-serif;font-size: 16px;color: #555555;line-height: 22px;">You can also view the access rights message in the Endpoint response.
+        </p>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+
+  </div>
+</section>
+
+
+<br/>
+<section class="oe_container mp_tabs">
+    <div class="mp-nav-center d-none d-lg-block d-xl-block" style="text-align:center">
+        <ul class="mp-nav nav nav-tabs " style="display:inline-flex">
+            <li class="nav-item active border" style="background-color:#FFAB00">
+                <a href="#odoo_marketplace_view_tab1" class="nav-link active show" role="tab" aria-selected="true" data-toggle="tab" style="color:#232323; padding:7px 20px">
+                    Configuration
+                </a>
+            </li>
+            <li class="nav-item border" style="background-color:#FFAB00">
+                <a href="#odoo_marketplace_view_tab2" class="nav-link" role="tab" aria-selected="true" data-toggle="tab" style="color:#232323; padding:7px 20px">
+                    JSON representaion of Odoo Rest API
+                </a>
+            </li>
+            <li class="nav-item border" style="background-color:#FFAB00">
+                <a href="#odoo_marketplace_view_tab3" class="nav-link" role="tab" aria-selected="true" data-toggle="tab" style="color:#232323; padding:7px 20px">
+                    Postman Collection
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="mp-nav-center d-lg-none d-xl-none bg-secondary" style="text-align:center">
+        <ul class="mp-nav nav nav-tabs " style="display:inline-flex">
+            <li class="nav-item active border" style="background-color:#FFAB00">
+                <a href="#odoo_marketplace_view_tab1" class="nav-link active show" role="tab" aria-selected="true" data-toggle="tab" style="color:#232323; padding:7px 20px">
+                    Configuration
+                </a>
+            </li>
+            <li class="nav-item border" style="background-color:#FFAB00">
+                <a href="#odoo_marketplace_view_tab2" class="nav-link" role="tab" aria-selected="true" data-toggle="tab" style="color:#232323; padding:7px 20px">
+                    JSON representaion of Odoo Rest API
+                </a>
+            </li>
+            <li class="nav-item border" style="background-color:#FFAB00">
+                <a href="#odoo_marketplace_view_tab3" class="nav-link" role="tab" aria-selected="true" data-toggle="tab" style="color:#232323; padding:7px 20px">
+                    Postman Collection
+                </a>
+            </li>
+
+        </ul>
+    </div>
+    <div id="my-tab-content" class="tab-content">
+        <div class="tab-pane container active" id="odoo_marketplace_view_tab1" style="background-color: #FFFFFF;box-shadow: 0 0 2px 1px rgba(0,0,0,0.14);padding:1% 5%;">
+            <section class="oe_container ">
+                <div class="oe_container">
+                    <div class="panel panel-primary" id="wkid0">
+                        <div class="panel-heading">
+                            <h3 class="panel-title d-flex justify-content-center"><b>Webservices Menu</b></h3>
+                        </div>
+                        <div class="panel-body" style="padding:6%;">
+                            <a href="1.jpg">
+                                <img class="img-border img-responsive thumbnail img-fluid" src="1.jpg">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="oe_container ">
+                <div class="oe_container">
+                    <div class="panel panel-primary" id="wkid0">
+                        <div class="panel-heading">
+                            <h3 class="panel-title d-flex justify-content-center"><b>Permission to resources</b></h3>
+                        </div>
+                        <div class="panel-body" style="padding:6%;">
+                            <a href="2.jpg">
+                                <img class="img-border img-responsive thumbnail img-fluid" src="2.jpg">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section class="oe_container ">
+                <div class="oe_container">
+                    <div class="panel panel-primary" id="wkid0">
+                        <div class="panel-heading">
+                            <h3 class="panel-title d-flex justify-content-center"><b>Specific Permission to resource</b></h3>
+                        </div>
+                        <div class="panel-body" style="padding:6%;">
+                            <!-- <div class="alert alert-info"><i class="fa fa-arrow-circle-o-right"></i><b>Marketplace Product Page View </b></div> -->
+                            <a href="3.jpg">
+                                <img class="img-border img-responsive thumbnail img-fluid" src="3.jpg">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <div class="tab-pane container " id="odoo_marketplace_view_tab2" style="background-color: #FFFFFF;box-shadow: 0 0 2px 1px rgba(0,0,0,0.14);padding:1% 5%;">
+            <section class="oe_container ">
+                <div id="wkid0">
+                    <div class="panel-heading">
+                        <h3 class='oe_slogan'><b>JSON representaion of Odoo Rest API</b></h3>
+                    </div>
+                    <p>
+                        <strong>Exapmle 1: Search record from product.product</strong><br>
+                        <strong> Request Type : GET</strong><br>
+                        <strong>End Point : {{base_url}}/api/product.template/search?domain=[('id','in',[13,10,11,12,14])]&amp;fields=['name','description','product_variant_ids']</strong><br>
+                        <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                            {
+                                "object_name": "product.template",
+                                "responseCode": 2,
+                                "fields": "['name','description','product_variant_ids']",
+                                "model_id": 145,
+                                "permisssions": {
+                                    "read": true,
+                                    "create": true,
+                                    "delete": true,
+                                    "write": true
+                                },
+                                "message": "Allowed all Models Permission: all",
+                                "success": true,
+                                "domain": "[('id','in',[13,10,11,12,14])]",
+                                "data": [
+                                    {
+                                        "id": 11,
+                                        "name": "Bose Mini Bluetooth Speaker",
+                                        "description": false,
+                                        "product_variant_ids": [
+                                            {
+                                                "id": 14,
+                                                "name": "Bose Mini Bluetooth Speaker"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": 14,
+                                        "name": "iPad Mini",
+                                        "description": false,
+                                        "product_variant_ids": [
+                                            {
+                                                "id": 17,
+                                                "name": "iPad Mini"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": 10,
+                                        "name": "iPad Retina Display",
+                                        "description": false,
+                                        "product_variant_ids": [
+                                            {
+                                                "id": 10,
+                                                "name": "iPad Retina Display"
+                                            },
+                                            {
+                                                "id": 11,
+                                                "name": "iPad Retina Display"
+                                            },
+                                            {
+                                                "id": 12,
+                                                "name": "iPad Retina Display"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": 12,
+                                        "name": "Custom Computer (kit)",
+                                        "description": "Custom computer shipped in kit.",
+                                        "product_variant_ids": [
+                                            {
+                                                "id": 15,
+                                                "name": "Custom Computer (kit)"
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        "id": 13,
+                                        "name": "Parts Replacement",
+                                        "description": false,
+                                        "product_variant_ids": [
+                                            {
+                                                "id": 16,
+                                                "name": "Parts Replacement"
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                    </pre>
+
+                    <p>
+                        <strong>Exapmle 2: Get schema for table product.product</strong><br>
+                        <strong>Request Type : GET</strong><br>
+                        <strong>End Point : {{base_url}}/api/res.lang/schema</strong><br>
+                        <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                            {
+                                "responseCode": 2,
+                                "model_id": 73,
+                                "permisssions": {
+                                    "read": true,
+                                    "create": true,
+                                    "delete": true,
+                                    "write": true
+                                },
+                                "message": "Allowed all Models Permission: all",
+                                "object_name": "res.lang",
+                                "success": true,
+                                "data": [
+                                    {
+                                        "field_type": "char",
+                                        "label": "Name",
+                                        "readonly": false,
+                                        "required": true,
+                                        "field_name": "name"
+                                    },
+                                    {
+                                        "field_type": "char",
+                                        "label": "Locale Code",
+                                        "readonly": false,
+                                        "required": true,
+                                        "field_name": "code"
+                                    },
+                                    {
+                                        "field_type": "char",
+                                        "label": "ISO code",
+                                        "readonly": false,
+                                        "required": false,
+                                        "field_name": "iso_code"
+                                    },
+                                    {
+                                        "field_type": "boolean",
+                                        "label": "Translatable",
+                                        "readonly": false,
+                                        "required": false,
+                                        "field_name": "translatable"
+                                    },
+                                    {
+                                        "field_type": "boolean",
+                                        "label": "Active",
+                                        "readonly": false,
+                                        "required": false,
+                                        "field_name": "active"
+                                    },
+                                    {
+                                        "readonly": false,
+                                        "field_name": "direction",
+                                        "field_type": "selection",
+                                        "label": "Direction",
+                                        "required": true,
+                                        "selection": [
+                                            [
+                                                "ltr",
+                                                "Left-to-Right"
+                                            ],
+                                            [
+                                                "rtl",
+                                                "Right-to-Left"
+                                            ]
+                                        ]
+                                    },
+                                    {
+                                        "field_type": "char",
+                                        "label": "Date Format",
+                                        "readonly": false,
+                                        "required": true,
+                                        "field_name": "date_format"
+                                    },
+                                    {
+                                        "field_type": "char",
+                                        "label": "Time Format",
+                                        "readonly": false,
+                                        "required": true,
+                                        "field_name": "time_format"
+                                    },
+                                    {
+                                        "field_type": "char",
+                                        "label": "Separator Format",
+                                        "readonly": false,
+                                        "required": true,
+                                        "field_name": "grouping"
+                                    },
+                                    {
+                                        "field_type": "char",
+                                        "label": "Decimal Separator",
+                                        "readonly": false,
+                                        "required": true,
+                                        "field_name": "decimal_point"
+                                    },
+                                    {
+                                        "field_type": "char",
+                                        "label": "Thousands Separator",
+                                        "readonly": false,
+                                        "required": false,
+                                        "field_name": "thousands_sep"
+                                    },
+                                    {
+                                        "field_type": "integer",
+                                        "label": "ID",
+                                        "readonly": true,
+                                        "required": false,
+                                        "field_name": "id"
+                                    },
+                                    {
+                                        "field_type": "char",
+                                        "label": "Display Name",
+                                        "readonly": true,
+                                        "required": false,
+                                        "field_name": "display_name"
+                                    },
+                                    {
+                                        "field_type": "many2one",
+                                        "label": "Created by",
+                                        "readonly": false,
+                                        "required": false,
+                                        "field_name": "create_uid"
+                                    },
+                                    {
+                                        "field_type": "datetime",
+                                        "label": "Created on",
+                                        "readonly": false,
+                                        "required": false,
+                                        "field_name": "create_date"
+                                    },
+                                    {
+                                        "field_type": "many2one",
+                                        "label": "Last Updated by",
+                                        "readonly": false,
+                                        "required": false,
+                                        "field_name": "write_uid"
+                                    },
+                                    {
+                                        "field_type": "datetime",
+                                        "label": "Last Updated on",
+                                        "readonly": false,
+                                        "required": false,
+                                        "field_name": "write_date"
+                                    },
+                                    {
+                                        "field_type": "datetime",
+                                        "label": "Last Modified on",
+                                        "readonly": true,
+                                        "required": false,
+                                        "field_name": "__last_update"
+                                    }
+                                ]
+                            }
+                    </pre>
+
+                    <p>
+                        <strong>Exapmle 3: Create a record of product.template</strong><br>
+                        <strong>Request Type : POST</strong><br>
+                        <strong>End Point : {{base_url}}/api/product.template/create</strong><br>
+                        <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                            response : {
+                              "responseCode": 2,
+                              "model_id": 145,
+                              "permisssions": {
+                                  "read": true,
+                                  "create": true,
+                                  "delete": true,
+                                  "write": true
+                              },
+                              "message": "Allowed all Models Permission: all",
+                              "create_id": 75,
+                              "object_name": "product.template",
+                              "success": true
+                            }
+                    </pre>
+
+                    <p>
+                        <strong>Exapmle 4: Get a record of sale.order.line</strong><br>
+                        <strong>Request Type :GET </strong><br>
+                        <strong>End Point : {{base_url}}/api/sale.order.line/&lt;int: record_id&gt;</strong><br>
+                        <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                            GET
+                          {
+                              "object_name": "sale.order.line",
+                              "responseCode": 2,
+                              "model_id": 241,
+                              "record_id": 2,
+                              "message": "Allowed all Models Permission: all",
+                              "success": true,
+                              "permisssions": {
+                                  "read": true,
+                                  "create": true,
+                                  "delete": true,
+                                  "write": true
+                              },
+                              "data": [
+                                  {
+                                      "sequence": 10,
+                                      "__last_update": "2017-10-04 11:28:01",
+                                      "is_downpayment": false,
+                                      "price_tax": 0,
+                                      "customer_lead": 0,
+                                      "create_uid": [
+                                          {
+                                              "id": 1,
+                                              "name": "Administrator"
+                                          }
+                                      ],
+                                      "price_unit": 145,
+                                      "product_qty": 5,
+                                      "salesman_id": [
+                                          {
+                                              "id": 5,
+                                              "name": "Demo User"
+                                          }
+                                      ],
+                                      "amt_invoiced": 0,
+                                      "id": 2,
+                                      "product_packaging": [],
+                                      "qty_delivered": 0,
+                                      "price_reduce_taxinc": 145,
+                                      "price_reduce": 145,
+                                      "price_total": 725,
+                                      "move_ids": [],
+                                      "layout_category_id": [],
+                                      "route_id": [],
+                                      "create_date": "2017-10-04 11:28:01",
+                                      "currency_id": [
+                                          {
+                                              "id": 1,
+                                              "name": "EUR"
+                                          }
+                                      ],
+                                      "product_id": [
+                                          {
+                                              "id": 5,
+                                              "name": "Datacard"
+                                          }
+                                      ],
+                                      "write_date": "2017-10-04 11:28:01",
+                                      "warning_stock": false,
+                                      "amt_to_invoice": 725,
+                                      "price_reduce_taxexcl": 145,
+                                      "write_uid": [
+                                          {
+                                              "id": 1,
+                                              "name": "Administrator"
+                                          }
+                                      ],
+                                      "company_id": [
+                                          {
+                                              "id": 1,
+                                              "name": "YourCompany"
+                                          }
+                                      ],
+                                      "name": "Pen drive, 16GB",
+                                      "product_uom_qty": 5,
+                                      "qty_to_invoice": 0,
+                                      "price_subtotal": 725,
+                                      "is_delivery": false,
+                                      "invoice_status": "no",
+                                      "product_uom": [
+                                          {
+                                              "id": 1,
+                                              "name": "Unit(s)"
+                                          }
+                                      ],
+                                      "qty_invoiced": 0,
+                                      "state": "draft",
+                                      "order_id": [
+                                          {
+                                              "id": 1,
+                                              "name": "SO001"
+                                          }
+                                      ],
+                                      "display_name": "Pen drive, 16GB",
+                                      "order_partner_id": [
+                                          {
+                                              "id": 9,
+                                              "name": "Agrolait"
+                                          }
+                                      ],
+                                      "product_image":""
+                                      "layout_category_sequence": 0,
+                                      "discount": 0,
+                                      "qty_delivered_updateable": false
+                                  }
+                              ]
+                          }
+                    </pre>
+
+                    <p>
+                        <strong>Exapmle 5: Update a record of product.template </strong><br>
+                        <strong>Type : PUT </strong><br>
+                        <strong>End Point : {{base_url}}/api/product.template/&lt;int: record_id&gt;</strong><br>
+                        <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                          PUT Body:
+                        {
+                            "name" : "test product"
+                        }
+                      </pre>
+                    <pre class="bg-light text-dark">
+                        response : {
+                          "responseCode": 2,
+                          "model_id": 145,
+                          "permisssions": {
+                              "read": true,
+                              "create": true,
+                              "delete": true,
+                              "write": true
+                          },
+                          "message": "Allowed all Models Permission: all",
+                          "create_id": 75,
+                          "object_name": "product.template",
+                          "success": true
+                        }
+                    </pre>
+                    <p>
+                        <strong>Exapmle 6: Delete a record of product.template </strong><br>
+                        <strong>Request Type : DELETE </strong><br>
+                        <strong>End Point : {{base_url}}/api/product.template/&lt;int: record_id&gt;</strong><br>
+                        <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                      response : {
+                        "responseCode": 2,
+                        "model_id": 145,
+                        "permisssions": {
+                            "read": true,
+                            "create": true,
+                            "delete": true,
+                            "write": true
+                        },
+                        "message": "Allowed all Models Permission: all",
+                        "object_name": "product.template",
+                        "success": true
+                      }
+                    </pre>
+
+                    <p>
+                        <strong>Exapmle 7: Trigger your odoo actions. </strong><br>
+                        <strong>Request Type : POST </strong><br>
+                        <strong>End Point : {{base_url}}/api/res.partner/execute_kw</strong><br>
+                        <strong>Header : {"api_key":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}</strong><br>
+                        <strong>Body : {"method":"name_get","args":[[2]],"kw":{}}</strong><br>
+                    </p>
+                    <pre class="bg-light text-dark">
+                  response : {
+                              "model_id": 74,
+                              "success": true,
+                              "message": "Method Successfully Called",
+                              "result": [
+                                  [
+                                      2,
+                                      "OdooBot"
+                                  ]
+                              ],
+                              "responseCode": 2,
+                              "permisssions": {
+                                  "read": true,
+                                  "write": true,
+                                  "delete": true,
+                                  "create": true
+                              },
+                              "object_name": "res.partner"
+                        }
+                    </pre>
+                </div>
+            </section>
+        </div>
+        <div class="tab-pane container " id="odoo_marketplace_view_tab3" style="background-color: #FFFFFF;box-shadow: 0 0 2px 1px rgba(0,0,0,0.14);padding:1% 5%;">
+            <section class="oe_container ">
+                <div id="wkid0">
+                    <div class="panel-heading">
+                        <h3 class='oe_slogan'><b>Postman Collection</b></h3>
+                    </div>
+                    <div>         
+                        <centre>
+                            <strong>1 - Select Import in Postman</strong><br>
+                            <strong>2 - Paste the Postman collection Link</strong><br>                       
+                            <strong>Postman Collection URL is - https://www.getpostman.com/collections/32ec99d148305b9bd390 </strong><br>
+                    </div>
+                    <div class="panel-body" style="padding:6%;">
+                        <a href="postman.png">
+                            <img class="img-border img-responsive thumbnail img-fluid" src="postman.png">
+                        </a>
+                    </div>
+                </div>
+            <section>
+        </div>
+    </div>
+</section>
+
+<br/><br/>
+<section class="mb-5" id="webkul_support">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="text-center">Support</h3>
+            <p class="mb-2 text-center">Get Immediate support for any of your query</p>
+        </div>
+        <div class="col-12">
+            <p class="text-center px-5">You will get 90 days free support for any doubt, queries, and bug fixing (excluding data recovery) or any type of issue related to this module.</p>
+        </div>
+        <br><br>
+        <div class="mx-auto col-lg-9 mb-4 oe_screenshot">
+            <div class="row align-items-center justify-content-center mx-0">
+                <div class="col-xl-2 col-lg-2 col-md-2 sol-sm-2 text-center">
+                    <img src="//apps.odoocdn.com/apps/assets/13.0/odoo_marketplace/mail.png?77fdd07" alt="mail" class="img img-fluid">
+                </div>
+                <div class="col-xl-7 col-lg-10 col-md-10 col-sm-10 pl-0 pr-2">
+                    <p class="my-2" style="font-weight:bold;color:#555555;">Write To Us At</p>
+                    <a style="font-size:18px;" href="mailto:support@webkul.com">support@webkul.com</a>
+                    <p class="my-2" style="font-weight: normal;font-size: 14px;color:#777777;">For any help and doubt or issue regarding the module, Drop a mail to our technical team.</p>
+                </div>
+                <div class="col-xl-3 col-lg-4 text-center">
+                    <a href="mailto:support@webkul.com" style="padding:10px 22px;background-color:#2335D7;font-size:14px;color:#ffffff;"><i class="fa fa-pencil-square-o" style="color:white; margin-right:4px"></i>Write To US</a>
+                </div>
+            </div>
+        </div>
+        <div class="mx-auto col-lg-9 oe_screenshot">
+            <div class="row align-items-center justify-content-center mx-0">
+                <div class="col-xl-2 col-lg-2 col-md-2 text-center">
+                    <img src="//apps.odoocdn.com/apps/assets/13.0/odoo_marketplace/support-icon.png?77fdd07" alt="support-icon" class="img img-fluid">
+                </div>
+                <div class="col-xl-10 col-lg-10 col-md-10 pl-0">
+                    <p class="my-2" style="font-weight:bold;color:#555555;">Raise A Ticket At:</p>
+                    <a class="text-break" style="font-size:18px;" href="mailto:https://webkul.uvdesk.com/en/customer/create-ticket/">https://webkul.uvdesk.com/en/customer/create-ticket/</a>
+                    <p class="my-2" style="font-weight:normal;font-size:14px;color:#777777;">For support or to request customization, Create A Support Ticket by copying the link and opening it in a new tab.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

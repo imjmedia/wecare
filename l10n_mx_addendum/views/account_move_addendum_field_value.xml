@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="account_move_addendum_field_value_view_tree" model="ir.ui.view">
+        <field name="name">account.move.addendum.field.value.view.tree</field>
+        <field name="model">account.move.addendum.field.value</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom" create="0" delete="0">
+                <field name="field_id"/>
+                <field name="value"/>
+            </tree>
+        </field>
+    </record>
+</odoo>
