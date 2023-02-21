@@ -14,4 +14,5 @@
     'depends': [
                 'sale_stock_margin',
                 ],
+    "license": 'LGPL-3',
 }

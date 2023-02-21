@@ -21,4 +21,5 @@
         'sale_crm',
         'sale_management',
     ],
+    "license": 'LGPL-3',
 }

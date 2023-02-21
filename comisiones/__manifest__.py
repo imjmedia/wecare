@@ -19,4 +19,5 @@
         'base',
         'product',
     ],
+    "license": 'LGPL-3',
 }
