@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="addendum_body_walmart">
+  <record model="ir.ui.view" id="addendum_body_walmart">
+        <field name="name">cityfresko</field>
+        <field name="type">qweb</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
     <Addenda>
       {% if anio != false and ordencompra != false and numprov != false and unidadCEDIS != false and folio != true %}
       <WM:AddendaWalmart Anio="{{anio}}" ordenCompra="{{ordencompra}}" numeroProveedor="{{numprov}}" unidadCEDIS="{{unidadCEDIS}}" xmlns:WM="http://www.pegasotecnologia.com/secfd/Schemas/Receptor/Walmart"/>
@@ -8,5 +12,6 @@
       <WM:AddendaWalmart FolioRecibo="{{folio}}" Anio="{{anio}}" ordenCompra="{{ordencompra}}" numeroProveedor="{{numprov}}" unidadCEDIS="{{unidadCEDIS}}" xmlns:WM="http://www.pegasotecnologia.com/secfd/Schemas/Receptor/Walmart"/>
       {% endif %}
     </Addenda>
-  </template>
+        </field>
+  </record>
 </odoo>

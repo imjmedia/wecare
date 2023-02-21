@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="addendum_body_soriana">
+  <record model="ir.ui.view" id="addendum_body_soriana">
+        <field name="name">cityfresko</field>
+        <field name="type">qweb</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
     <Addenda>
       <DSCargaRemisionProv>
         {%set number = {"value": 1}%}
@@ -111,5 +115,6 @@
         {%endfor%}
       </DSCargaRemisionProv>
     </Addenda>
-  </template>
+        </field>
+  </record>
 </odoo>

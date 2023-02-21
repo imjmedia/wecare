@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="addendum_body_farmacom">
+  <record model="ir.ui.view" id="addendum_body_farmacom">
+        <field name="name">cityfresko</field>
+        <field name="type">qweb</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
     <cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3" xsi:schemaLocation="http://www.farmacon.com.mx/cfd http://www.farmacon.com.mx/cfd/AddendaObservaciones.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ad="http://www.farmacon.com.mx/cfd">
       <ad:Observaciones>{{Observaciones}}</ad:Observaciones>
     </cfdi:Addenda>
-  </template>
+        </field>
+  </record>
 </odoo>

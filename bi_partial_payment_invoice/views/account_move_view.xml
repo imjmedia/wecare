@@ -2,7 +2,7 @@
 <odoo>
     <data>
         	
-        <template id="assets_backend_payment" name="account assets" inherit_id="web.assets_backend">
+        <template id="assets_backend_payment" name="account assets" inherit_id="web.assets_backend_legacy_lazy">
         	<xpath expr="." position="inside">
         		<script type="text/javascript" src="/bi_partial_payment_invoice/static/src/js/account_payment.js"></script>
         	</xpath>

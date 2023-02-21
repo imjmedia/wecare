@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="addendum_body_nadro">
+  <record model="ir.ui.view" id="addendum_body_nadro">
+        <field name="name">cityfresko</field>
+        <field name="type">qweb</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
     <Addenda>
       {% for l in o.invoice_line_ids %} {%if l.product_id.default_code !=false%} {% set datosLista = l.product_id.default_code%} {%else%} {% set datosLista = ''%} {%endif%}
       <DatosNadro>
@@ -28,5 +32,6 @@
       </DatosNadro>
       {% endfor %}
     </Addenda>
-  </template>
+        </field>
+  </record>
 </odoo>

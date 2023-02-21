@@ -26,7 +26,7 @@ class AccountMoveAddendum(models.Model):
     )
     template_internal = fields.Char(
         inverse="_inverse_template_internal",
-        readonly=True,
+
     )
     field_ids = fields.One2many(
         comodel_name="account.move.addendum.field",
@@ -41,7 +41,7 @@ class AccountMoveAddendum(models.Model):
 
     def reload_from_file(self):
         if self.template_internal:
-            self.raw_template = self.env.ref(self.template_internal).render()
+            self.raw_template = self.env['ir.ui.view']._render_template(self.template_internal)
             self.raw_template = (
                 self.raw_template.replace("<Addenda", "<cfdi:Addenda")
                 .replace("</Addenda>", "</cfdi:Addenda>")
