@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="addendum_body_isseg">
+  <record model="ir.ui.view" id="addendum_body_isseg">
+        <field name="name">cityfresko</field>
+        <field name="type">qweb</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
     <cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
       {%set orden =''%}
       {%set compra = ''%}
@@ -13,5 +17,6 @@
       {{orden}}
       {{compra}}
     </cfdi:Addenda>
-  </template>
+        </field>
+  </record>
 </odoo>

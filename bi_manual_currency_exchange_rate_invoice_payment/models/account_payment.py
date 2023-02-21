@@ -2,7 +2,7 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models,api, _
-
+from odoo.exceptions import UserError
 
 class account_payment(models.TransientModel):
     _inherit ='account.payment.register'
@@ -371,7 +371,7 @@ class AccountPayment(models.Model):
         self.ensure_one()
         write_off_line_vals = write_off_line_vals or {}
 
-        if not self.journal_id.payment_debit_account_id or not self.journal_id.payment_credit_account_id:
+        if not self.journal_id.company_id.account_journal_payment_debit_account_id or not self.journal_id.company_id.account_journal_payment_credit_account_id:
             raise UserError(_(
                 "You can't create a new payment without an outstanding payments/receipts accounts set on the %s journal."
             ) % self.journal_id.display_name)
@@ -440,7 +440,7 @@ class AccountPayment(models.Model):
                 'debit': balance < 0.0 and -balance or 0.0,
                 'credit': balance > 0.0 and balance or 0.0,
                 'partner_id': self.partner_id.id,
-                'account_id': self.journal_id.payment_debit_account_id.id if balance < 0.0 else self.journal_id.payment_credit_account_id.id,
+                'account_id': self.journal_id.company_id.account_journal_payment_debit_account_id.id if balance < 0.0 else self.journal_id.company_id.account_journal_payment_credit_account_id.id,
             },
             # Receivable / Payable.
             {

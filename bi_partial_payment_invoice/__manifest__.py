@@ -3,7 +3,7 @@
 
 {
     'name' : 'Invoice Partial Payment Reconciliation',
-    'version' : '14.0.0.0',
+    'version' : '15.0.0.0',
     'category' : 'Sales',
     'depends' : ['base', 
         'account', 'sale', 'sale_management', 
@@ -36,4 +36,5 @@
     'installable': True,
     "live_test_url":'https://youtu.be/8mCirowgP1o',
     "images":['static/description/Banner.png'],
+    'license': 'LGPL-3',
 }

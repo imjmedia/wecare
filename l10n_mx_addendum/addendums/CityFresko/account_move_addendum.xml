@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-    <record id="addendum_cityfresko" model="account.move.addendum">
-        <field name="name">City Fresko</field>
-        <field name="is_jinja">True</field>
-        <field name="manual">True</field>
-        <field name="template_internal">l10n_mx_addendum.addendum_body_cityfresko</field>
-    </record>
+    <data noupdate="1">
+        <record id="addendum_cityfresko" model="account.move.addendum">
+            <field name="name">City Fresko</field>
+            <field name="is_jinja" eval="True"/>
+            <field name="manual" eval="True"/>
+            <field name="template_internal">l10n_mx_addendum.addendum_body_cityfresko</field>
+        </record>
+    </data>
 </odoo>

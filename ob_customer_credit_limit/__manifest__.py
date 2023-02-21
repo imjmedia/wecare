@@ -10,7 +10,7 @@
     'license': 'AGPL-3',
     'category': 'Sales',
     'images': ['static/description/customer_credit_limit.png'],
-    'version': '14.0.1.0.0',
+    'version': '15.0.1.0.0',
     'support': 'odoobeing@gmail.com',
     'depends': ['sale_management'],
     'data': [
