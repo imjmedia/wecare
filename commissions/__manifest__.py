@@ -34,6 +34,7 @@
         'security/ir.model.access.csv',
         'views/sale_commission_view.xml',
         'views/res_user_view.xml',
+        'views/product_pricelist.xml',
         'data/ir_sequence.xml',
         'data/ir_config_parameter.xml',
         'views/sale_order_view.xml',

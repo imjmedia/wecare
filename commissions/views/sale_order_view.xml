@@ -8,10 +8,10 @@
             <field name="type">form</field>
             <field name="arch" type="xml">
                 <field name="date_order" position="after">
-                    <field name="dont_calculate"/>
-                    <field name="net_margin"/>
-                    <field name="net_margin_por"/>
-                    <field name="gross_margin"/>
+                    <!-- <field name="dont_calculate"/> -->
+                    <!-- <field name="net_margin"/> -->
+                    <!-- <field name="net_margin_por"/> -->
+                    <!-- <field name="gross_margin"/> -->
                 </field>
             </field>
         </record>
