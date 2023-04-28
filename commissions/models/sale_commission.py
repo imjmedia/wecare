@@ -80,7 +80,55 @@ class SaleCommission(models.Model):
         self.state = 'draft'
 
     def action_commission(self):
+        cont_line = 0
+        val_margin = 0
         for obj_commision in self:
+            if obj_commision.date_to and obj_commision.date_from:
+                payments_ids = self.env['account.payment'].search([('state', '=', 'posted'), ('payment_type', '=', 'inbound')])
+                pagos_filtered = payments_ids.filtered(lambda e: obj_commision.date_from <= e.date <= obj_commision.date_to)
+                commission_type = self.env['ir.config_parameter'].sudo().get_param('commission_type')
+                obj_commision.commission_lines.unlink()
+                for pago in pagos_filtered:
+                    for factura in pago.reconciled_invoice_ids:
+                        sales_ids = self.env['sale.order'].search(['|', ('name', '=', factura.invoice_origin), ('origin', 'like', factura.invoice_origin)])
+                        if sales_ids:
+                            for order in sales_ids.filtered(lambda e: e.user_id.id == obj_commision.commercial_id.id):
+                                if not order.dont_calculate:
+                                    if commission_type == 'net':
+                                        commision_val = order.net_margin
+                                    else:
+                                        commision_val = order.gross_margin
+                                    commission_calc = order.pricelist_id.type_id.comision
+                                    amount = commision_val * float(commission_calc) / 100
+                                    if amount:
+                                        vals = {
+                                            'user_id': obj_commision.commercial_id.id,
+                                            'amount': amount,
+                                            'parent_id': obj_commision.id,
+                                            'benefit_net': commision_val,
+                                            'margin_net': order.net_margin_por,
+                                            'invoice_id': factura.id,
+                                            'payment_id': pago.id,
+                                            'order_id': order.id,
+                                            'partner_id': order.partner_id.id,
+                                            'sale_amount': order.amount_untaxed
+
+                                        }
+                                        comi_obj = self.env['sale.commission.line'].search([('invoice_id', '=', factura.id)])
+                                        if not comi_obj:
+                                            self.env['sale.commission.line'].create(vals)
+                                            cont_line += 1
+                                        val_margin += order.net_margin_por
+                                        obj_commision.benefit_total += commision_val
+                                        if cont_line > 0:
+                                            obj_commision.margin_total = val_margin / cont_line
+                                            obj_commision.amount_total += amount
+                                            obj_commision.sale_total += order.amount_untaxed
+
+
+
+        """
+        for obj_commision in self: #método original
             val_margin = 0
             cont_line = 0
             obj_commision.benefit_total = 0
@@ -91,7 +139,6 @@ class SaleCommission(models.Model):
             commission_calc = self.env['ir.config_parameter'].sudo().get_param('commission_value')
             if commission_type and commission_calc and obj_commision.commercial_id and obj_commision.date_to and obj_commision.date_from:
                 invoices_ids = self.env['account.move'].search([('state', 'not in', ['draft', 'cancel']), ('move_type', 'in', ['out_invoice', 'out_refund'])])
-                #payments_ids = self.env['account.payment'].search([('state', 'not in', ['draft', 'cancel']), ('move_type', 'in', ['out_invoice', 'out_refund'])])
                 invoices_filtered = invoices_ids.filtered(lambda e: obj_commision.date_from <= e.invoice_date <= obj_commision.date_to)
                 self.env['sale.commission.line'].search([('parent_id', '=', obj_commision.id)]).unlink()
                 if invoices_filtered:
@@ -127,7 +174,7 @@ class SaleCommission(models.Model):
                                                     'benefit_net': commision_val,
                                                     'margin_net': order.net_margin_por,
                                                     'invoice_id': invoice.id,
-                                                    'user_id': order.user_id.id,
+                                                    #'user_id': order.user_id.id,
                                                     'order_id': order.id,
                                                     'partner_id': order.partner_id.id,
                                                     'sale_amount': order.amount_untaxed
@@ -141,7 +188,7 @@ class SaleCommission(models.Model):
                                                 if cont_line > 0:
                                                     obj_commision.margin_total = val_margin / cont_line
                                                     obj_commision.amount_total += amount
-                                                    obj_commision.sale_total += order.amount_untaxed
+                                                    obj_commision.sale_total += order.amount_untaxed """
 
 
 class SaleCommissionLine(models.Model):
@@ -162,5 +209,6 @@ class SaleCommissionLine(models.Model):
     partner_id = fields.Many2one('res.partner', string='Client', track_visibility='onchange')
     order_id = fields.Many2one('sale.order', string='SO', track_visibility='onchange')
     currency_id = fields.Many2one('res.currency', compute='_get_company_currency', readonly=True, string="Currency", help='Utility field to express amount currency')
-    payment_id=fields.Many2one('account.move')
+    payment_id=fields.Many2one('account.payment')
+    pago_amount = fields.Float('Monto de pago')
 

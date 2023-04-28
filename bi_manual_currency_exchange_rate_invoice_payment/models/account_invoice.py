@@ -17,7 +17,7 @@ class account_invoice(models.Model):
 
     manual_currency_rate_active = fields.Boolean('Apply Manual Exchange')
     manual_currency_rate = fields.Float('Tarifa', digits=(12,6), compute="cambio", default=0.0)
-    tipo_de_cambio = fields.Float(string="Tipo de Cambio", digits=(12, 2), default=0.0)
+    tipo_de_cambio = fields.Float(string="Tipo de Cambio", digits=(12, 4), default=0.0)
 
 
 # # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
