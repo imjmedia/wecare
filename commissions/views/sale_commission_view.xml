@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <odoo>
+    <data>
+        <record id="view_form_sale_commission" model="ir.ui.view">
+            <field name="name">view.form.sale.commission</field>
+            <field name="model">sale.commission</field>
+            <field name="arch" type="xml">
+                <form string="Sale Commission">
+                    <header>
+                        <button name="action_commission" type="object" string="Search Commission" class="oe_highlight" states="draft"/>
+                        <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" states="draft"/>
+                        <button name="action_paid" type="object" string="To pay" class="oe_highlight" states="done"/>
+                        <button name="action_cancel" type="object" string="Cancel" states="done,paid" class="btn-secondary"/>
+                        <button name="action_draft" type="object" string="Draft" states="cancel" class="btn-secondary"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="1"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="date_from" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="date_to" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                                <field name="commercial_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}" options='{"no_create": True}'/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="user_id" readonly="1" force_save="1"/>
+                                <field name="entry_date" readonly="1" force_save="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Commission">
+                                <field name="commission_lines" readonly="1">
+                                    <tree editable="bottom" create="0" decoration-danger="amount &lt; 0">
+                                        <field name="invoice_id"/>
+                                        <field name="order_id"/>
+                                        <field name="partner_id"/>
+                                        <field name="user_id" string="Commercial" invisible="1"/>
+                                        <field name="sale_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="benefit_net" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="margin_net"/>
+                                        <field name="amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="commission_total">
+                                    <field name="sale_total" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <field name="benefit_total" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <field name="margin_total" readonly="1"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="amount_total"/>
+                                    </div>
+                                    <field name="amount_total"  readonly="1" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_sale_commission" model="ir.ui.view">
+             <field name="name">view.tree.sale.commission</field>
+             <field name="model">sale.commission</field>
+             <field name="arch" type="xml">
+                <tree decoration-danger="state in ['draft']" decoration-info="state in ['paid']" decoration-muted="state in ['cancel']">
+                    <field name="name"/>
+                    <field name="commercial_id"/>
+                    <field name="user_id"/>
+                    <field name="entry_date"/>
+                    <field name="date_from"/>
+                    <field name="date_to"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_search_sale_commission" model="ir.ui.view">
+          <field name="name">view.search.sale.commission</field>
+          <field name="model">sale.commission</field>
+          <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="commercial_id"/>
+                <field name="user_id"/>
+                <field name="entry_date"/>
+                <field name="date_from"/>
+                <field name="date_to"/>
+                <field name="state"/>
+                <filter string="My commissions" domain="[('commercial_id', '=', uid)]" name="my_commission"/>
+                <filter string="Draft" domain="[('state', '=', 'draft')]" name="draft"/>
+                <filter string="Open" domain="[('state', '=', 'done')]" name="done"/>
+                <filter string="Paid" domain="[('state', '=', 'paid')]" name="paid"/>
+                <filter string="Cancelled" domain="[('state', '=', 'cancel')]" name="cancel"/>
+            </search>
+          </field>
+        </record>
+
+        <record id="action_sale_commission" model="ir.actions.act_window">
+            <field name="name">Sale Commission</field>
+            <field name="res_model">sale.commission</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'search_default_my_commission':1}</field>
+        </record>
+
+
+        <record id="action_sale_commission_user" model="ir.actions.act_window">
+            <field name="name">Sale Commission</field>
+            <field name="res_model">sale.commission</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('commercial_id', '=', uid)]</field>
+        </record>
+
+        <menuitem id="menu_sale_commission" name="Commission" parent="sale.sale_order_menu" sequence="31" action="action_sale_commission" groups="group_sale_commission_admin"/>
+        <menuitem id="menu_sale_commission_user" name="Commission" parent="sale.sale_order_menu" sequence="32" action="action_sale_commission_user" groups="group_sale_commission_user"/>
+    </data>
+</odoo>
