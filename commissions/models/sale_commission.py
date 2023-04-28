@@ -90,7 +90,7 @@ class SaleCommission(models.Model):
                 obj_commision.commission_lines.unlink()
                 for pago in pagos_filtered:
                     for factura in pago.reconciled_invoice_ids:
-                        sales_ids = self.env['sale.order'].search(['|', ('name', '=', factura.invoice_origin), ('origin', 'like', factura.invoice_origin)])
+                        sales_ids = factura.invoice_line_ids.mapped('sale_line_ids.order_id')
                         if sales_ids:
                             for order in sales_ids.filtered(lambda e: e.user_id.id == obj_commision.commercial_id.id):
                                 if not order.dont_calculate:
