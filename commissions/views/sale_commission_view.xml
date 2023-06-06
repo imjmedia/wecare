@@ -34,25 +34,42 @@
                             <page string="Commission">
                                 <field name="commission_lines" readonly="1">
                                     <tree editable="bottom" create="0" decoration-danger="amount &lt; 0">
+                                        <field name="payment_id"/>
+                                        <field name="payment_date"/>
                                         <field name="invoice_id"/>
                                         <field name="order_id"/>
-                                        <field name="partner_id"/>
+                                        <field name="partner_id"/>                                        
                                         <field name="user_id" string="Commercial" invisible="1"/>
                                         <field name="sale_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                                        <field name="benefit_net" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                                        <field name="margin_net"/>
+                                        <!-- <field name="benefit_net" widget='monetary' options="{'currency_field': 'currency_id'}"/> -->
+                                        <field name="margin_net" string="%Comm" />
                                         <field name="amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                                         <field name="currency_id" invisible="1"/>
                                     </tree>
                                 </field>
                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="commission_total">
-                                    <field name="sale_total" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                                    <field name="benefit_total" readonly="1" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                                    <field name="margin_total" readonly="1"/>
                                     <div class="oe_subtotal_footer_separator oe_inline o_td_label">
-                                        <label for="amount_total"/>
+                                        <label for="sale_total"/>
                                     </div>
-                                    <field name="amount_total"  readonly="1" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <field name="sale_total"  readonly="1" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                            </page>
+                             <page string="Resumen">
+                                <field name="commission_resume" readonly="1">
+                                    <tree editable="bottom" create="0" decoration-danger="amount &lt; 0">
+                                        <field name="partner_id"/>                                        
+                                        <field name="user_id" string="Commercial" invisible="1"/>
+                                        <field name="amount_max" string="Limite" />
+                                        <field name="amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                        <!-- <field name="benefit_net" widget='monetary' options="{'currency_field': 'currency_id'}"/> -->
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                                <group class="oe_subtotal_footer oe_right" colspan="2" name="commission_total_resume">
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="sale_total"/>
+                                    </div>
+                                    <field name="sale_total"  readonly="1" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                                 </group>
                             </page>
                         </notebook>

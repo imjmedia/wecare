@@ -49,6 +49,7 @@ class SaleCommission(models.Model):
     benefit_total = fields.Float('Total benefit')
     margin_total = fields.Float('Total margin (%)')
     sale_total = fields.Float('Total')
+    commission_resume = fields.One2many('sale.commission.resume', 'parent_id', string='Resumen Lines')
 
     @api.model
     def create(self, vals):
@@ -82,115 +83,111 @@ class SaleCommission(models.Model):
     def action_commission(self):
         cont_line = 0
         val_margin = 0
+        resumen_montos={}   
         for obj_commision in self:
+            obj_commision.margin_total = 0
+            obj_commision.amount_total = 0
+            obj_commision.sale_total = 0    
             if obj_commision.date_to and obj_commision.date_from:
                 payments_ids = self.env['account.payment'].search([('state', '=', 'posted'), ('payment_type', '=', 'inbound')])
                 pagos_filtered = payments_ids.filtered(lambda e: obj_commision.date_from <= e.date <= obj_commision.date_to)
+                _logger.info(pagos_filtered)
+                #_logger.info('Pago %s, origin %s' % (invoice.name, origin))
                 commission_type = self.env['ir.config_parameter'].sudo().get_param('commission_type')
                 obj_commision.commission_lines.unlink()
                 for pago in pagos_filtered:
+                    _logger.info('-------Pago %s, Id Pago %s' %(pago.display_name, pago.id))
+                    #_logger.info(pago.reconciled_invoice_ids)
+                    cliente_id = pago.partner_id.id
+                    #amount_paid= pago.amount
+                    _logger.info(pago.reconciled_invoice_ids)
                     for factura in pago.reconciled_invoice_ids:
-                        sales_ids = factura.invoice_line_ids.mapped('sale_line_ids.order_id')
+                        #sales_ids = factura.invoice_line_ids.mapped('sale_line_ids.order_id')
+                        _logger.info('Factura %s' % (factura.name))
+                        #_logger.info(factura._get_reconciled_payments())
+                        parciales = factura._get_reconciled_info_JSON_values()
+                        _logger.info('Parciales %s' % (parciales))
+                        for pagos in parciales:  #Obtener solo el pago de la factura 
+                            _logger.info(pagos.get('name'))
+                            _logger.info(pagos.get('account_payment_id'))
+                            if pago.id==pagos.get('account_payment_id'):
+                                _logger.info(pagos.get('amount'))
+                                amount_paid=pagos.get('amount')
+                        #_logger.info(factura._get_reconciled_statement_lines())
+                        #_logger.info(factura._get_reconciled_invoices())
+                        #_logger.info(factura._get_reconciled_invoices_partials())
+                        sales_ids = self.env['sale.order'].search(['|', ('name', '=', factura.invoice_origin), ('origin', 'like', factura.invoice_origin)])
+                        #_logger.info(sales_ids)
                         if sales_ids:
                             for order in sales_ids.filtered(lambda e: e.user_id.id == obj_commision.commercial_id.id):
-                                if not order.dont_calculate:
-                                    if commission_type == 'net':
-                                        commision_val = order.net_margin
-                                    else:
-                                        commision_val = order.gross_margin
-                                    commission_calc = order.pricelist_id.type_id.comision
-                                    amount = commision_val * float(commission_calc) / 100
-                                    if amount:
-                                        vals = {
-                                            'user_id': obj_commision.commercial_id.id,
-                                            'amount': amount,
-                                            'parent_id': obj_commision.id,
-                                            'benefit_net': commision_val,
-                                            'margin_net': order.net_margin_por,
-                                            'invoice_id': factura.id,
-                                            'payment_id': pago.id,
-                                            'order_id': order.id,
-                                            'partner_id': order.partner_id.id,
-                                            'sale_amount': order.amount_untaxed
+                                if commission_type == 'net':
+                                    commision_val = order.net_margin
+                                else:
+                                    commision_val = order.gross_margin
+                                commission_calc = order.pricelist_id.type_id.comision                                
+                                montonoiva = round(amount_paid/1.16,2)
+                                amount =  round(montonoiva * float(commission_calc) / 100,2)
+                                _logger.info('Monto Pagado %s, MontoSinIVA %s, MontoCom %s' %(amount_paid,montonoiva,amount))
+                                _logger.info('Comision %s' %(order.pricelist_id.type_id.comision))
+                                if amount:
+                                    vals = {
+                                        'user_id': obj_commision.commercial_id.id,
+                                        'amount': amount,
+                                        'parent_id': obj_commision.id,
+                                        'benefit_net': commision_val,
+                                        'margin_net': order.pricelist_id.type_id.comision,
+                                        'invoice_id': factura.id,
+                                        'payment_id': pago.id,
+                                        'payment_date': pago.date, 
+                                        'order_id': order.id,
+                                        'partner_id': order.partner_id.id,
+                                        'sale_amount': montonoiva
 
-                                        }
-                                        comi_obj = self.env['sale.commission.line'].search([('invoice_id', '=', factura.id)])
-                                        if not comi_obj:
-                                            self.env['sale.commission.line'].create(vals)
-                                            cont_line += 1
-                                        val_margin += order.net_margin_por
-                                        obj_commision.benefit_total += commision_val
-                                        if cont_line > 0:
-                                            obj_commision.margin_total = val_margin / cont_line
-                                            obj_commision.amount_total += amount
-                                            obj_commision.sale_total += order.amount_untaxed
+                                    }
+                                    # comi_obj = self.env['sale.commission.line'].search([('invoice_id', '=', factura.id)])
+                                    # if not comi_obj:
+                                    self.env['sale.commission.line'].create(vals)
+                                    cont_line += 1
+                                    val_margin += order.net_margin_por
+                                    obj_commision.benefit_total += commision_val
+                                    if cont_line > 0:
+                                        obj_commision.margin_total = val_margin / cont_line
+                                        obj_commision.amount_total += montonoiva
+                                        obj_commision.sale_total += amount
 
-
-
-        """
-        for obj_commision in self: #método original
-            val_margin = 0
-            cont_line = 0
-            obj_commision.benefit_total = 0
-            obj_commision.margin_total = 0
-            obj_commision.amount_total = 0
-            obj_commision.sale_total = 0
-            commission_type = self.env['ir.config_parameter'].sudo().get_param('commission_type')
-            commission_calc = self.env['ir.config_parameter'].sudo().get_param('commission_value')
-            if commission_type and commission_calc and obj_commision.commercial_id and obj_commision.date_to and obj_commision.date_from:
-                invoices_ids = self.env['account.move'].search([('state', 'not in', ['draft', 'cancel']), ('move_type', 'in', ['out_invoice', 'out_refund'])])
-                invoices_filtered = invoices_ids.filtered(lambda e: obj_commision.date_from <= e.invoice_date <= obj_commision.date_to)
-                self.env['sale.commission.line'].search([('parent_id', '=', obj_commision.id)]).unlink()
-                if invoices_filtered:
-                    for invoice in invoices_filtered:
-                        factor = 0
-                        if invoice.move_type == 'out_invoice':
-                            origin = invoice.invoice_origin
-                            factor = 1
-                        if invoice.move_type == 'out_refund':
-                            invoices_id = self.env['account.move'].search([('number', '=', invoice.invoice_origin)], limit=1)
-                            if invoices_id:
-                                origin = invoice.invoice_origin
-                                factor = -1
-                        if factor != 0:
-                            if origin:
-                                _logger.info('Invoice %s, origin %s' % (invoice.name, origin))
-                                sales_ids = self.env['sale.order'].search(['|', ('name', '=', origin), ('origin', 'like', origin)])
-                                if sales_ids:
-                                    for order in sales_ids.filtered(lambda e: e.user_id.id == obj_commision.commercial_id.id):
-                                        if not order.dont_calculate:
-                                            if commission_type == 'net':
-                                                commision_val = order.net_margin
-                                            else:
-                                                commision_val = order.gross_margin
-                                            if order.user_id.commission_user_rate > 0:
-                                                commission_calc = order.user_id.commission_user_rate
-                                            amount = commision_val * float(commission_calc) / 100 * factor
-                                            if amount:
-                                                vals = {
-                                                    'user_id': obj_commision.commercial_id.id,
-                                                    'amount': amount,
-                                                    'parent_id': obj_commision.id,
-                                                    'benefit_net': commision_val,
-                                                    'margin_net': order.net_margin_por,
-                                                    'invoice_id': invoice.id,
-                                                    #'user_id': order.user_id.id,
-                                                    'order_id': order.id,
-                                                    'partner_id': order.partner_id.id,
-                                                    'sale_amount': order.amount_untaxed
-                                                }
-                                                comi_obj = self.env['sale.commission.line'].search([('invoice_id', '=', invoice.id)])
-                                                if not comi_obj:
-                                                    self.env['sale.commission.line'].create(vals)
-                                                    cont_line += 1
-                                                val_margin += order.net_margin_por
-                                                obj_commision.benefit_total += commision_val
-                                                if cont_line > 0:
-                                                    obj_commision.margin_total = val_margin / cont_line
-                                                    obj_commision.amount_total += amount
-                                                    obj_commision.sale_total += order.amount_untaxed """
+                    if cliente_id in resumen_montos:
+                        resumen_montos[cliente_id] += pago.amount
+                    else:
+                        resumen_montos[cliente_id] = pago.amount
+                        _logger.info(resumen_montos)
 
 
+        # Sumatoria agrupada por partner_id
+
+        obj_commision.commission_resume.unlink()
+        partner_totals = {}
+
+        for com_line in self.env['sale.commission.line'].search([('parent_id', '=', obj_commision.id)]):
+            partner_id = com_line.partner_id.id
+            amount = com_line.amount
+            if partner_id in partner_totals:
+                partner_totals[partner_id] += round(amount,2)
+            else:
+                partner_totals[partner_id] = round(amount,2)
+            if partner_totals[partner_id] > 30000:
+                partner_totals[partner_id]=30000
+        
+        _logger.info(partner_totals)
+        _logger.info('Sumatoria agrupada por partner_id:')
+        
+        for partner_id, total in partner_totals.items():
+            partner = self.env['res.partner'].browse(partner_id)
+            _logger.info('Partner: %s, Total: %s' % (partner.name, total)) 
+            
+        # Crear registros en SaleCommissionResume
+        _logger.info(obj_commision.id)
+        resume_records = self.env['sale.commission.resume'].create_resume_records(partner_totals, obj_commision)
+    
 class SaleCommissionLine(models.Model):
     _name = 'sale.commission.line'
     _description = 'Sale Commission Line'
@@ -210,5 +207,39 @@ class SaleCommissionLine(models.Model):
     order_id = fields.Many2one('sale.order', string='SO', track_visibility='onchange')
     currency_id = fields.Many2one('res.currency', compute='_get_company_currency', readonly=True, string="Currency", help='Utility field to express amount currency')
     payment_id=fields.Many2one('account.payment')
+    payment_date = fields.Date(string='Payment Date')
     pago_amount = fields.Float('Monto de pago')
+
+
+    
+class SaleCommissionResume(models.Model):
+    _name = 'sale.commission.resume'
+    _description = 'Sale Commission Lines Resume'
+    _rec_name = "parent_id"
+
+    def _get_company_currency(self):
+        self.currency_id = self.env.user.company_id.currency_id
+
+    parent_id = fields.Many2one('sale.commission')
+    user_id = fields.Many2one('res.users')
+    amount = fields.Float('Commission')
+    amount_max =fields.Float('Amount Max')
+    partner_id = fields.Many2one('res.partner', string='Client')
+    currency_id = fields.Many2one('res.currency', compute='_get_company_currency', readonly=True, string="Currency", help='Utility field to express amount currency')
+    #payment_id=fields.Many2one('account.payment')
+    #pago_amount = fields.Float('Monto de pago')
+
+    def create_resume_records(self, partner_totals, obj_commision):
+        resume_records = []
+        for partner_id, total in partner_totals.items():
+            partner = self.env['res.partner'].browse(partner_id)
+            resume_record = self.create({
+                'parent_id':  obj_commision.id,
+                'user_id': obj_commision.commercial_id.user_id.id,
+                'amount': total,
+                'partner_id': partner.id,
+                'amount_max':30000,
+            })
+            resume_records.append(resume_record)
+        return resume_records
 
