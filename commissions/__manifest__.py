@@ -38,6 +38,7 @@
         'data/ir_sequence.xml',
         'data/ir_config_parameter.xml',
         'views/sale_order_view.xml',
+        'views/res_partner.xml',
     ],
     'images': [
        'static/description/screenshot_commision.png'

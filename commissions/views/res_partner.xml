@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_commission_partners_inherit_form_view" model="ir.ui.view">
+            <field name="name">view.commission.partners.inherit.form.view</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                <page string="Commission">
+                    <group>
+                        <group>
+                             <field name="partner_corp_id" domain="[('parent_id', '=', False)]"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

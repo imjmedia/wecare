@@ -91,32 +91,60 @@ class SaleCommission(models.Model):
             if obj_commision.date_to and obj_commision.date_from:
                 payments_ids = self.env['account.payment'].search([('state', '=', 'posted'), ('payment_type', '=', 'inbound')])
                 pagos_filtered = payments_ids.filtered(lambda e: obj_commision.date_from <= e.date <= obj_commision.date_to)
-                _logger.info(pagos_filtered)
+                #_logger.info(pagos_filtered)
                 #_logger.info('Pago %s, origin %s' % (invoice.name, origin))
                 commission_type = self.env['ir.config_parameter'].sudo().get_param('commission_type')
                 obj_commision.commission_lines.unlink()
+                
+                #Primer ciclo para determinar el monto de los pagos de corporativo.
+                resumen_corpo={}
                 for pago in pagos_filtered:
-                    _logger.info('-------Pago %s, Id Pago %s' %(pago.display_name, pago.id))
+                    if pago.partner_id.partner_corp_id:
+                        partner_id = pago.partner_id.partner_corp_id.id
+                        if partner_id in resumen_corpo:
+                            resumen_corpo[partner_id]['total'] += pago.amount
+                        else:
+                            resumen_corpo[partner_id] = {'total': pago.amount}
+                #_logger.info('Resumen Montos %s' %(resumen_corpo))
+                
+                for partner_id, valores in resumen_corpo.items():
+                    partner = self.env['res.partner'].browse(partner_id)
+                    total = valores['total']
+                    com = 0
+                    if total > 1000000:
+                        com = 1
+                    elif total > 500000:
+                        com = 1.5
+                    elif total > 0:
+                        com = 2
+                    valores['com'] = com
+                 #   _logger.info('Partner: %s, Total: %s, Com: %s' % (partner.name, total, com))
+
+                
+                for pago in pagos_filtered:
+                    #_logger.info('-------Pago %s, Id Pago %s' %(pago.display_name, pago.id))
                     #_logger.info(pago.reconciled_invoice_ids)
                     cliente_id = pago.partner_id.id
+                    corp_id= pago.partner_id.partner_corp_id.id
                     #amount_paid= pago.amount
-                    _logger.info(pago.reconciled_invoice_ids)
+                    #_logger.info(pago.reconciled_invoice_ids)
                     for factura in pago.reconciled_invoice_ids:
                         #sales_ids = factura.invoice_line_ids.mapped('sale_line_ids.order_id')
-                        _logger.info('Factura %s' % (factura.name))
+                        #_logger.info('Factura %s' % (factura.name))
                         #_logger.info(factura._get_reconciled_payments())
                         parciales = factura._get_reconciled_info_JSON_values()
-                        _logger.info('Parciales %s' % (parciales))
+                        #_logger.info('Parciales %s' % (parciales))
                         for pagos in parciales:  #Obtener solo el pago de la factura 
-                            _logger.info(pagos.get('name'))
-                            _logger.info(pagos.get('account_payment_id'))
+                            #_logger.info(pagos.get('name'))
+                            #_logger.info(pagos.get('account_payment_id'))
                             if pago.id==pagos.get('account_payment_id'):
-                                _logger.info(pagos.get('amount'))
+                                #_logger.info(pagos.get('amount'))
                                 amount_paid=pagos.get('amount')
                         #_logger.info(factura._get_reconciled_statement_lines())
                         #_logger.info(factura._get_reconciled_invoices())
                         #_logger.info(factura._get_reconciled_invoices_partials())
-                        sales_ids = self.env['sale.order'].search(['|', ('name', '=', factura.invoice_origin), ('origin', 'like', factura.invoice_origin)])
+                        if factura.invoice_origin:
+                            sales_ids = self.env['sale.order'].search(['|', ('name', '=', factura.invoice_origin), ('origin', 'like', factura.invoice_origin)])
                         #_logger.info(sales_ids)
                         if sales_ids:
                             for order in sales_ids.filtered(lambda e: e.user_id.id == obj_commision.commercial_id.id):
@@ -127,8 +155,9 @@ class SaleCommission(models.Model):
                                 commission_calc = order.pricelist_id.type_id.comision                                
                                 montonoiva = round(amount_paid/1.16,2)
                                 amount =  round(montonoiva * float(commission_calc) / 100,2)
-                                _logger.info('Monto Pagado %s, MontoSinIVA %s, MontoCom %s' %(amount_paid,montonoiva,amount))
-                                _logger.info('Comision %s' %(order.pricelist_id.type_id.comision))
+                                #_logger.info('Monto Pagado %s, MontoSinIVA %s, MontoCom %s' %(amount_paid,montonoiva,amount))
+                                #_logger.info('Comision %s' %(order.pricelist_id.type_id.comision))
+                                #_logger.info('Pago_id %s' %(pago.id))
                                 if amount:
                                     vals = {
                                         'user_id': obj_commision.commercial_id.id,
@@ -141,6 +170,7 @@ class SaleCommission(models.Model):
                                         'payment_date': pago.date, 
                                         'order_id': order.id,
                                         'partner_id': order.partner_id.id,
+                                        'partner_corp_id':order.partner_id.partner_corp_id.id,
                                         'sale_amount': montonoiva
 
                                     }
@@ -159,7 +189,7 @@ class SaleCommission(models.Model):
                         resumen_montos[cliente_id] += pago.amount
                     else:
                         resumen_montos[cliente_id] = pago.amount
-                        _logger.info(resumen_montos)
+                        #_logger.info(resumen_montos)
 
 
         # Sumatoria agrupada por partner_id
@@ -168,7 +198,10 @@ class SaleCommission(models.Model):
         partner_totals = {}
 
         for com_line in self.env['sale.commission.line'].search([('parent_id', '=', obj_commision.id)]):
-            partner_id = com_line.partner_id.id
+            if com_line.partner_id.partner_corp_id.id:
+                partner_id = com_line.partner_id.partner_corp_id.id
+            else:
+                partner_id = com_line.partner_id.id
             amount = com_line.amount
             if partner_id in partner_totals:
                 partner_totals[partner_id] += round(amount,2)
@@ -185,7 +218,6 @@ class SaleCommission(models.Model):
             _logger.info('Partner: %s, Total: %s' % (partner.name, total)) 
             
         # Crear registros en SaleCommissionResume
-        _logger.info(obj_commision.id)
         resume_records = self.env['sale.commission.resume'].create_resume_records(partner_totals, obj_commision)
     
 class SaleCommissionLine(models.Model):
@@ -204,6 +236,7 @@ class SaleCommissionLine(models.Model):
     sale_amount = fields.Float('Amount')
     invoice_id = fields.Many2one('account.move')
     partner_id = fields.Many2one('res.partner', string='Client', track_visibility='onchange')
+    partner_corp_id = fields.Many2one('res.partner', string='Corporation', track_visibility='onchange')
     order_id = fields.Many2one('sale.order', string='SO', track_visibility='onchange')
     currency_id = fields.Many2one('res.currency', compute='_get_company_currency', readonly=True, string="Currency", help='Utility field to express amount currency')
     payment_id=fields.Many2one('account.payment')
