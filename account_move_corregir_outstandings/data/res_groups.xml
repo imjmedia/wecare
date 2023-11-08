@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record id="group_usar_plantilla_sw" model="res.groups">
+            <field name="name">Usar Plantilla SW</field>
+        </record>
+    </data>
+</openerp>
