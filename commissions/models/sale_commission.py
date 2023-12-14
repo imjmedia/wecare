@@ -106,10 +106,11 @@ class SaleCommission(models.Model):
                         else:
                             resumen_corpo[partner_id] = {'total': pago.amount}
                 #_logger.info('Resumen Montos %s' %(resumen_corpo))
-                
+                com_corp = {}  #diccionario que guardara el id corporativo y su comisión segun la tabla
                 for partner_id, valores in resumen_corpo.items():
                     partner = self.env['res.partner'].browse(partner_id)
                     total = valores['total']
+                    valores['partner_id'] = partner.id
                     com = 0
                     if total > 1000000:
                         com = 1
@@ -118,7 +119,11 @@ class SaleCommission(models.Model):
                     elif total > 0:
                         com = 2
                     valores['com'] = com
-                 #   _logger.info('Partner: %s, Total: %s, Com: %s' % (partner.name, total, com))
+                    valores[partner_id] = com
+                    com_corp[partner_id] = com
+                    #_logger.info('Partner: %s, Total: %s, Com: %s' % (partner.name, total, com))
+                    #_logger.info('Valores: %s' % (valores))
+                    #_logger.info('com_corp: %s' % (com_corp))
 
                 
                 for pago in pagos_filtered:
@@ -152,10 +157,18 @@ class SaleCommission(models.Model):
                                     commision_val = order.net_margin
                                 else:
                                     commision_val = order.gross_margin
-                                commission_calc = order.pricelist_id.type_id.comision                                
-                                montonoiva = round(amount_paid/1.16,2)
-                                amount =  round(montonoiva * float(commission_calc) / 100,2)
-                                #_logger.info('Monto Pagado %s, MontoSinIVA %s, MontoCom %s' %(amount_paid,montonoiva,amount))
+                                if corp_id: # En caso de ser corporativo toma la comisión corporativa
+                                    partner_corp = self.env['res.partner'].browse(corp_id)
+                                    #_logger.info('Comision Corpo: %s' % (com_corp[(partner_corp.id)]))
+                                    commission_calc = com_corp[(partner_corp.id)]                              
+                                    montonoiva = round(amount_paid/1.16,2)
+                                    amount =  round(montonoiva * float(commission_calc) / 100,2)
+                                else:
+                                    commission_calc = order.pricelist_id.type_id.comision                                
+                                    montonoiva = round(amount_paid/1.16,2)
+                                    amount =  round(montonoiva * float(commission_calc) / 100,2)
+                                
+                                #_logger.info('Monto Pagado %s, MontoSinIVA %s, Comm %s,MontoCom %s' %(amount_paid,montonoiva,commission_calc,amount))
                                 #_logger.info('Comision %s' %(order.pricelist_id.type_id.comision))
                                 #_logger.info('Pago_id %s' %(pago.id))
                                 if amount:
@@ -164,7 +177,7 @@ class SaleCommission(models.Model):
                                         'amount': amount,
                                         'parent_id': obj_commision.id,
                                         'benefit_net': commision_val,
-                                        'margin_net': order.pricelist_id.type_id.comision,
+                                        'margin_net': commission_calc,
                                         'invoice_id': factura.id,
                                         'payment_id': pago.id,
                                         'payment_date': pago.date, 
@@ -203,6 +216,7 @@ class SaleCommission(models.Model):
             else:
                 partner_id = com_line.partner_id.id
             amount = com_line.amount
+            
             if partner_id in partner_totals:
                 partner_totals[partner_id] += round(amount,2)
             else:
