@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id='ir_cron_corregir_polizas_outs' model='ir.cron'>
+            <field name='name'>Pólizas: Corregir polizas por migración</field>
+            <field name='model_id' ref='model_account_move_line'/>
+            <field name='state'>code</field>
+            <field name='code'>model.regenerar_polizas_outstanding()</field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name='numbercall'>0</field>
+            <field name="doall" eval="False"/>
+        </record>
+    </data>
+</odoo>

@@ -38,7 +38,8 @@
                                         <field name="payment_date"/>
                                         <field name="invoice_id"/>
                                         <field name="order_id"/>
-                                        <field name="partner_id"/>                                        
+                                        <field name="partner_id"/>  
+                                        <field name="partner_corp_id"/>  
                                         <field name="user_id" string="Commercial" invisible="1"/>
                                         <field name="sale_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                                         <!-- <field name="benefit_net" widget='monetary' options="{'currency_field': 'currency_id'}"/> -->
