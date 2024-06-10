@@ -1,0 +1,3 @@
+id,name,technical_name,addendum_id:id
+addendum_field_isseg_CompraPiso,Compra de piso,CompraPiso,l10n_mx_addendum.addendum_cityfresko
+addendum_field_isseg_OrdenCowmpra,Orden de compra CEDIS,OrdenCompra,l10n_mx_addendum.addendum_cityfresko

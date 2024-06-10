@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="addendum_city_fresko_field_referenceIdentification" model="account.move.addendum.field">
+        <field name="name">referenceIdentification</field>
+        <field name="technical_name">referenceIdentification</field>
+        <field name="addendum_id" ref="l10n_mx_addendum.addendum_city_fresko"/>
+    </record>
+    <record id="addendum_city_fresko_field_ReferenceDate" model="account.move.addendum.field">
+        <field name="name">ReferenceDate</field>
+        <field name="technical_name">ReferenceDate</field>
+        <field name="addendum_id" ref="l10n_mx_addendum.addendum_city_fresko"/>
+    </record>
+    <record id="addendum_city_fresko_field_referenceIdentification" model="account.move.addendum.field">
+        <field name="name">referenceIdentification</field>
+        <field name="technical_name">referenceIdentification</field>
+        <field name="addendum_id" ref="l10n_mx_addendum.addendum_city_fresko"/>
+    </record>
+    <record id="addendum_city_fresko_field_gln" model="account.move.addendum.field">
+        <field name="name">gln</field>
+        <field name="technical_name">gln</field>
+        <field name="addendum_id" ref="l10n_mx_addendum.addendum_city_fresko"/>
+    </record>
+    <record id="addendum_city_fresko_field_alternatePartyIdentification" model="account.move.addendum.field">
+        <field name="name">alternatePartyIdentification</field>
+        <field name="technical_name">alternatePartyIdentification</field>
+        <field name="addendum_id" ref="l10n_mx_addendum.addendum_city_fresko"/>
+    </record>
+    <record id="addendum_city_fresko_field_rateOfChange" model="account.move.addendum.field">
+        <field name="name">rateOfChange</field>
+        <field name="technical_name">rateOfChange</field>
+        <field name="addendum_id" ref="l10n_mx_addendum.addendum_city_fresko"/>
+    </record>
+</odoo>

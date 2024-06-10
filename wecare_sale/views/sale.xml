@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="x_sale_order_form_inherit_wecare" model="ir.ui.view">
+        <field name="name">x_sale_order_form_inherit_wecare</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree[1]/field[@name='name']" position="after">
+	            <field name="x_units_per_uom"/>
+                <field name="x_price_per_unit"/>
+	        </xpath>
+        </field>
+    </record>
+</odoo>

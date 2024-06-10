@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <record model="ir.ui.view" id="addendum_body_klyns">
+        <field name="name">cityfresko</field>
+        <field name="type">qweb</field>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+    <cfdi:Addenda xmlns:cfdi="http://www.sat.gob.mx/cfd/3">
+    <cfdi:Klyns>
+    {%if FolioPedido != false and FolioPedido|length>0%}
+      {{'<cfdi:Pedido Folio="' + FolioPedido +'"/>'}}
+    {%else%}
+      {{'<cfdi:Pedido Folio=""/>'}}    
+    {%endif%}
+    </cfdi:Klyns>
+  </cfdi:Addenda>
+        </field>
+</record>
+</odoo>
