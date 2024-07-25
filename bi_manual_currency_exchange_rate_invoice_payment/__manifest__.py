@@ -2,7 +2,7 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 {
     "name" : "Currency Exchange Rate on Invoice and Payment in Odoo",
-    "version" : "15.0.0.3",
+    "version" : "17.0.1.0",
     "depends" : ['base','account'],
     "author": "BrowseInfo",
     "summary": "Apps apply manual currency rate on invoice apply manual currency rate on payment apply custom currency rate on invoice custom currency rate on payment custom Currency Exchange Rate on Invoice custom Currency Exchange Rate on payment custom accounting rate",
