@@ -7,14 +7,14 @@ from odoo.exceptions import UserError
 class account_payment(models.TransientModel):
     _inherit ='account.payment.register'
 
-    @api.onchange('tipo_de_cambio')
-    def cambio(self):
+    @api.depends('tipo_de_cambio')
+    def _compute_cambio(self):
         self.manual_currency_rate = 0
         if self.tipo_de_cambio:
             self.manual_currency_rate = (1 / self.tipo_de_cambio)
 
     manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
-    manual_currency_rate = fields.Float(string='Tarifa', digits=(12,6), compute='cambio',store=True)
+    manual_currency_rate = fields.Float(string='Tarifa', digits=(12,6), compute='_compute_cambio',store=True)
     tipo_de_cambio = fields.Float(string="Tipo de Cambio", digits=(12,2), default=0.0)
 
     @api.model
@@ -32,8 +32,6 @@ class account_payment(models.TransientModel):
             'manual_currency_rate':invoices.manual_currency_rate
             })
         return rec
-
-
 
     @api.depends('source_amount', 'source_amount_currency', 'source_currency_id', 'company_id', 'currency_id', 'payment_date', 'manual_currency_rate')
     def _compute_amount(self):
@@ -71,20 +69,18 @@ class account_payment(models.TransientModel):
         return res
 
 
-
-
 class AccountPayment(models.Model):
     _inherit = "account.payment"
     _description = "Payments"
 
-    @api.onchange('tipo_de_cambio')
-    def cambio(self):
+    @api.depends('tipo_de_cambio')
+    def _compute_cambio(self):
         self.manual_currency_rate = 0.0
         if self.tipo_de_cambio:
             self.manual_currency_rate = (1/self.tipo_de_cambio)
 
     manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
-    manual_currency_rate = fields.Float(string='Tarifa', default=0.0, digits=(12,6), compute='cambio')
+    manual_currency_rate = fields.Float(string='Tarifa', default=0.0, digits=(12,6), compute='_compute_cambio')
     tipo_de_cambio = fields.Float(string="Tipo de Cambio", digits=(12, 2))
 
     @api.model

@@ -2,9 +2,7 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.tools.misc import formatLang, format_date, get_lang
 
-import json
 
 class account_invoice(models.Model):
     _inherit ='account.move'
@@ -17,7 +15,6 @@ class account_invoice(models.Model):
 
     manual_currency_rate_active = fields.Boolean('Apply Manual Exchange')
     manual_currency_rate = fields.Float('Tarifa', digits=(12,6), compute="cambio", default=0.0)
-
     tipo_de_cambio = fields.Float(string="Tipo de Cambio", digits=(12, 4), default=0.0)
 
 
