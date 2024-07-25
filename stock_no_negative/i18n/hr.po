@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-21 14:44+0000\n"
-"PO-Revision-Date: 2023-11-21 14:44+0000\n"
+"POT-Creation-Date: 2023-11-21 14:49+0000\n"
+"PO-Revision-Date: 2023-11-21 14:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: \n"
@@ -29,7 +29,7 @@ msgstr " lote {}"
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr "Permitir Stock Negativo"
+msgstr "Dozvoli negativnu zalihu"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
@@ -38,18 +38,15 @@ msgid ""
 "category. The options doesn't apply to products attached to sub-categories "
 "of this category."
 msgstr ""
-"Permitir niveles de stock negativos para los productos en stock adjuntos a "
-"esta categoría. Las opciones no se aplican a los productos adjuntos a "
-"subcategorías de esta categoría."
+"Dozvoli negativna stanja uskladištivih proizvoda pridruženih ovoj "
+"kategoriji. Opcije ne se odnose na proizvode iz pordeđenih kategorija ovoj."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
 msgid ""
 "Allow negative stock levels for the stockable products attached to this "
 "location."
-msgstr ""
-"Permitir niveles de stock negativos para los productos en stock ubicados en "
-"esta ubicación."
+msgstr "Dozvoli negativnu zalihu za uskladištive proizvode na ovoj lokaciji."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
@@ -60,30 +57,29 @@ msgid ""
 "stock moves will be blocked if the stock level becomes negative with the "
 "stock move."
 msgstr ""
-"Si esta opción no está activa en este producto ni en su categoría de "
-"producto y este producto es un producto almacenable, entonces la validación "
-"de los movimientos de stock relacionados se bloqueará si el nivel de stock "
-"se vuelve negativo con el movimiento de stock."
+"Ako ova opcija nije aktivna na ovom proizvodu niti na kategoriji, i ovo je "
+"uskladištivi proizvod, tada će potvrđivanje skladišnih kretanja biti "
+"blokirano ako tim kretanjem zaliha ulazi u minus."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_location
 msgid "Inventory Locations"
-msgstr "Ubicaciones de inventario"
+msgstr "Skladišne lokacije"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr "Categoría de producto"
+msgstr "Kategorija proizvoda"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
 msgid "Quants"
-msgstr "Quants"
+msgstr "Količine"
 
 #. module: stock_no_negative
 #. odoo-python
@@ -95,6 +91,7 @@ msgid ""
 "location '{complete_name}' and negative stock is not allowed for this "
 "product and/or location."
 msgstr ""
-"No se puede validar esta operación de stock porque el nivel de stock del "
-"producto '%s'%s se volvería negativo (%s) en la ubicación de stock '%s' y no "
-"se permite stock negativo para este producto y/o ubicación."
+"Nije moguće potvrditi ovu skladišnu operaciju jer bi količine proizvoda "
+"'{name}'{name_lot} na stanju postale negativne ({q_quantity}) na skladišnoj "
+"lokaciji '{complete_name}' a negativna zaliha nije dozvoljena za taj "
+"proizvod i/ili lokaciju."

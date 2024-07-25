@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-21 14:44+0000\n"
-"PO-Revision-Date: 2023-11-21 14:44+0000\n"
+"POT-Creation-Date: 2023-11-21 14:50+0000\n"
+"PO-Revision-Date: 2023-11-21 14:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: \n"
@@ -21,7 +21,7 @@ msgstr ""
 #: code:addons/stock_no_negative/models/stock_quant.py:0
 #, python-format
 msgid " lot {}"
-msgstr " lote {}"
+msgstr ""
 
 #. module: stock_no_negative
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_category__allow_negative_stock
@@ -29,7 +29,7 @@ msgstr " lote {}"
 #: model:ir.model.fields,field_description:stock_no_negative.field_product_template__allow_negative_stock
 #: model:ir.model.fields,field_description:stock_no_negative.field_stock_location__allow_negative_stock
 msgid "Allow Negative Stock"
-msgstr "Permitir Stock Negativo"
+msgstr "Negative Lagerbestände erlauben"
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_category__allow_negative_stock
@@ -38,9 +38,9 @@ msgid ""
 "category. The options doesn't apply to products attached to sub-categories "
 "of this category."
 msgstr ""
-"Permitir niveles de stock negativos para los productos en stock adjuntos a "
-"esta categoría. Las opciones no se aplican a los productos adjuntos a "
-"subcategorías de esta categoría."
+"Negative Lagerbestände für lagerbare Produkte dieser Kategorie erlauben. "
+"Diese Option gilt nicht für Produkte, die zu Unterkategorien dieser "
+"Kategorie gehören."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_stock_location__allow_negative_stock
@@ -48,8 +48,8 @@ msgid ""
 "Allow negative stock levels for the stockable products attached to this "
 "location."
 msgstr ""
-"Permitir niveles de stock negativos para los productos en stock ubicados en "
-"esta ubicación."
+"Negative Lagerbestände für die lagerfähigen Produkte erlauben, die mit "
+"diesem Ort verbunden sind."
 
 #. module: stock_no_negative
 #: model:ir.model.fields,help:stock_no_negative.field_product_product__allow_negative_stock
@@ -60,30 +60,30 @@ msgid ""
 "stock moves will be blocked if the stock level becomes negative with the "
 "stock move."
 msgstr ""
-"Si esta opción no está activa en este producto ni en su categoría de "
-"producto y este producto es un producto almacenable, entonces la validación "
-"de los movimientos de stock relacionados se bloqueará si el nivel de stock "
-"se vuelve negativo con el movimiento de stock."
+"Wenn diese Option weder für dieses Produkt noch für seine Produktkategorie "
+"aktiviert ist und es sich bei diesem Produkt um ein lagerfähiges Produkt "
+"handelt, dann wird die Validierung der damit verbundenen Lagerbewegungen "
+"blockiert, wenn der Lagerbestand durch die Lagerbewegung negativ wird."
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_location
 msgid "Inventory Locations"
-msgstr "Ubicaciones de inventario"
+msgstr "Lagerorte"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_product_category
 msgid "Product Category"
-msgstr "Categoría de producto"
+msgstr "Produktkategorie"
 
 #. module: stock_no_negative
 #: model:ir.model,name:stock_no_negative.model_stock_quant
 msgid "Quants"
-msgstr "Quants"
+msgstr "Quanten"
 
 #. module: stock_no_negative
 #. odoo-python
@@ -95,6 +95,7 @@ msgid ""
 "location '{complete_name}' and negative stock is not allowed for this "
 "product and/or location."
 msgstr ""
-"No se puede validar esta operación de stock porque el nivel de stock del "
-"producto '%s'%s se volvería negativo (%s) en la ubicación de stock '%s' y no "
-"se permite stock negativo para este producto y/o ubicación."
+"Diese Aktion kann nicht ausgeführt werden, da der Lagerbestand von "
+"'{name}'{name_lot} im Lager '{complete_name}' negativ werden würde "
+"({q_quantity}). Negative Lagerbestände sind für dieses Produkt oder in "
+"diesem Lager nicht möglich."
