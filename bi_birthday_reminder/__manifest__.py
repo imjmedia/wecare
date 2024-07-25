@@ -2,7 +2,7 @@
 # Part of BrowseInfo. See LICENSE file for full copyright and licensing details.
 {
     'name' : "Send Customer Birthday Wishes",
-    'version' : "15.0.0.1",
+    'version' : "17.0.1.0",
     'category' : "Extra Tools",
     'license': 'OPL-1',
     'summary': 'Send Birthday Greetings Email to Partner/Customer',
