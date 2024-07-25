@@ -2,7 +2,7 @@
 
 {
     'name': 'Odoo/Wecare',
-    'version': '1.0',
+    'version': '17.1.0',
     'summary': 'Modificación a Odoo para implementación de Pago de Inventario IMJ',
     'description': """
     Modificación a Odoo para implementación de Pago de Inventario IMJ 
