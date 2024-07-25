@@ -3,7 +3,7 @@
 {
     "name": "Corregir polizas outstanding por migracion",
     "version": "1.0",
-    'author': "InuX",
+    'author': "Morfosys",
     'website': "www.google.com",
     'category': '',
     "description": """
