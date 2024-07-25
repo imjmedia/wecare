@@ -17,9 +17,9 @@
   "name"                 :  "Odoo Rest Api",
   "summary"              :  """The module create RESTful API for Odoo and allows you to access and modify data using HTTP requests to manage fetch and manage data from the Odoo.""",
   "category"             :  "Extra Tools",
-  "version"              :  "1.0.1",
+  "version"              :  "17.1.0",
   "author"               :  "Webkul Software Pvt. Ltd.",
-  "license"              :  "Other proprietary",
+  "license"              :  "AGPL-3",
   "website"              :  "https://store.webkul.com/Odoo-REST-API.html",
   "description"          :  """Odoo Rest Api
 Add record to database
