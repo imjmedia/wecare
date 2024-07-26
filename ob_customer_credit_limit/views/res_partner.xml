@@ -17,8 +17,8 @@
                 <group name="container_row_credit">
                     <group string="Límite de Credito" colspan="2">
                         <field name="credit_check"/>
-                        <field name="credit_warning" attrs="{'invisible': [('credit_check', '=', False)]}"/>
-                        <field name="credit_blocking" attrs="{'invisible': [('credit_check', '=', False)]}"/>
+                        <field name="credit_warning" invisible="credit_check == False"/>
+                        <field name="credit_blocking" invisible="credit_check == False"/>
                     </group>
                 </group>
             </xpath>
