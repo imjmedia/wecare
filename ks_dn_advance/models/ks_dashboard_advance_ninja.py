@@ -30,6 +30,10 @@ class KsDashboardNinjaAdvance(models.Model):
 
          item["ks_data_calculation_type"] = rec.ks_data_calculation_type
          item['ks_list_view_layout'] = rec.ks_list_view_layout
+         item['ks_is_external_api']= rec.ks_is_external_api,
+         item['ks_url']= rec.ks_url,
+         item['ks_api_header'] = rec.ks_api_header
+         # item['data_source'] = rec.data_source
 
          return item
 
@@ -46,7 +50,26 @@ class KsDashboardNinjaAdvance(models.Model):
                 DEFAULT_SERVER_DATETIME_FORMAT) if rec.ks_query_start_date else False
         item['ks_query_end_date'] = rec.ks_query_end_date.strftime(
                 DEFAULT_SERVER_DATETIME_FORMAT) if rec.ks_query_end_date else False
-
+        item['ks_is_external_db'] = rec.ks_is_external_db
+        item['ks_host'] = rec.ks_host
+        item['ks_port'] = rec.ks_port
+        item['ks_db_name'] = rec.ks_db_name
+        item['ks_db_password'] =rec.ks_db_password
+        item['ks_db_user']=rec.ks_db_user
+        item['ks_external_db_type'] = rec.ks_external_db_type
+        ks_api_data_lines = []
+        for res in rec.ks_api_data_lines:
+            ks_api_data_line = {
+                'name': res.name,
+                'ttype': res.ttype,
+                'ks_dashboard_datatype_id': rec.id,
+            }
+            ks_api_data_lines.append(ks_api_data_line)
+        item['ks_is_external_api']= rec.ks_is_external_api,
+        item['ks_url'] = rec.ks_url,
+        item['ks_api_header'] = rec.ks_api_header
+        # item['data_source'] = rec.data_source
+        item['ks_api_data_lines'] = ks_api_data_lines if ks_api_data_lines else False
         return item
 
     @api.model
@@ -71,6 +94,7 @@ class KsDashboardNinjaAdvance(models.Model):
         ks_action_lines = item['ks_action_liness'].copy() if item.get('ks_action_liness', False) else False
         ks_dn_header_line = item['ks_dn_header_line'].copy() if item.get('ks_dn_header_line', False) else False
         ks_multiplier_lines = item['ks_multiplier_lines'].copy() if item.get('ks_multiplier_lines', False) else False
+        ks_api_data_lines = item['ks_api_data_lines'].copy() if item.get('ks_api_data_lines', False) else False
 
         # Creating dashboard items
         item = self.ks_prepare_item(item)
@@ -88,6 +112,9 @@ class KsDashboardNinjaAdvance(models.Model):
             del item['ks_dn_header_line']
         if 'ks_multiplier_lines' in item:
             del item['ks_multiplier_lines']
+        if 'ks_api_data_lines' in item:
+            del item['ks_api_data_lines']
+
 
 
         ks_item = self.env['ks_dashboard_ninja.item'].create(item)
@@ -137,6 +164,10 @@ class KsDashboardNinjaAdvance(models.Model):
                     rec['ks_multiplier_fields'] = ks_multiplier_field_id.id
                     rec['ks_dashboard_item_id'] = ks_item.id
                     self.env['ks_dashboard_item.multiplier'].create(rec)
+        if ks_api_data_lines and len(ks_api_data_lines) != 0:
+            for rec in ks_api_data_lines:
+                rec['ks_dashboard_datatype_id'] = ks_item.id
+                self.env['ks.dashboard.api'].create(rec)
 
         return ks_item
 
@@ -151,6 +182,16 @@ class KsDashboardNinjaAdvance(models.Model):
         if 'ks_file_format' in ks_dashboard_file_read and ks_dashboard_file_read[
             'ks_file_format'] == 'ks_dashboard_ninja_export_file':
             ks_dashboard_data = ks_dashboard_file_read['ks_dashboard_data']
+            for i in range(len(ks_dashboard_data)):
+                if 'ks_set_interval' in ks_dashboard_data[i].keys() and ks_dashboard_data[i].get('ks_item_data', False):
+                    # del ks_dashboard_data[i]['ks_set_interval']
+                    for j in range(len(ks_dashboard_data[i].get('ks_item_data', False))):
+                        if 'ks_update_items_data' in ks_dashboard_data[i].get('ks_item_data', False)[j].keys():
+                            del ks_dashboard_data[i].get('ks_item_data', False)[j]['ks_update_items_data']
+                        if 'ks_auto_update_type' in ks_dashboard_data[i].get('ks_item_data', False)[j].keys():
+                            del ks_dashboard_data[i].get('ks_item_data', False)[j]['ks_auto_update_type']
+                        if 'ks_show_live_pop_up' in ks_dashboard_data[i].get('ks_item_data', False)[j].keys():
+                            del ks_dashboard_data[i].get('ks_item_data', False)[j]['ks_show_live_pop_up']
         else:
             raise ValidationError(_("Current Json File is not properly formatted according to Dashboard Ninja Model."))
 

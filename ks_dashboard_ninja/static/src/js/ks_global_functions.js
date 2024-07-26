@@ -1,11 +1,11 @@
-odoo.define('ks_dashboard_ninja.KsGlobalFunction', function(require) {
-    "use strict";
+/** @odoo-module **/
 
-    var session = require('web.session');
-    var field_utils = require('web.field_utils');
+import { getCurrency } from "@web/core/currency";
+import { formatFloat,formatInteger } from "@web/views/fields/formatters";
 
-    return {
-        ksNumIndianFormatter: function(num, digits) {
+export const globalfunction = {
+    ksNumIndianFormatter(num, digits){
+
             var negative;
             var si = [{
                 value: 1,
@@ -46,7 +46,7 @@ odoo.define('ks_dashboard_ninja.KsGlobalFunction', function(require) {
             }
 
         },
-        ksNumFormatter: function(num, digits) {
+    ksNumFormatter(num, digits) {
             var negative;
             var si = [{
                     value: 1,
@@ -94,9 +94,9 @@ odoo.define('ks_dashboard_ninja.KsGlobalFunction', function(require) {
                 return (num / si[i].value).toFixed(digits).replace(rx, "$1") + si[i].symbol;
             }
         },
-
-        ks_monetary: function(value, currency_id) {
-            var currency = session.get_currency(currency_id);
+    ks_monetary(value, currency_id) {
+           ///get currency changed ////
+            var currency = getCurrency(currency_id);
             if (!currency) {
                 return value;
             }
@@ -106,11 +106,11 @@ odoo.define('ks_dashboard_ninja.KsGlobalFunction', function(require) {
                 return currency.symbol + ' ' + value;
             }
         },
-
-        _onKsGlobalFormatter: function(ks_record_count, ks_data_format, ks_precision_digits){
+    _onKsGlobalFormatter(ks_record_count, ks_data_format, ks_precision_digits){
             var self = this;
             if (ks_data_format == 'exact'){
-                return field_utils.format.float(ks_record_count, Float64Array,{digits:[0,ks_precision_digits]});
+                return formatFloat(ks_record_count, {digits: [0, ks_precision_digits]})
+//                return field_utils.format.float(ks_record_count, Float64Array,{digits:[0,ks_precision_digits]});
             }else{
                 if (ks_data_format == 'indian'){
                     return self.ksNumIndianFormatter( ks_record_count, 1);
@@ -121,8 +121,7 @@ odoo.define('ks_dashboard_ninja.KsGlobalFunction', function(require) {
                 }
             }
         },
-
-        ksNumColombianFormatter: function(num, digits, ks_precision_digits) {
+     ksNumColombianFormatter(num, digits, ks_precision_digits) {
             var negative;
             var si = [{
                     value: 1,
@@ -168,7 +167,8 @@ odoo.define('ks_dashboard_ninja.KsGlobalFunction', function(require) {
             if (si[i].symbol === 'M'){
 //                si[i].value = 1000000;
                 num = parseInt(num) / 1000000
-                num = field_utils.format.integer(num, Float64Array)
+                // changes
+                num = formatInteger(num)
                 if (negative) {
                     return "-" + num + si[i].symbol;
                 } else {
@@ -176,9 +176,11 @@ odoo.define('ks_dashboard_ninja.KsGlobalFunction', function(require) {
                 }
                 }else{
                     if (num % 1===0){
-                    num = field_utils.format.integer(num, Float64Array)
+                    // changes
+                    num = formatInteger(num)
                     }else{
-                        num = field_utils.format.float(num, Float64Array, {digits:[0,ks_precision_digits]});
+//                        num = field_utils.format.float(num, Float64Array, {digits:[0,ks_precision_digits]});
+                        num = formatFloat(num, {digits: [0, ks_precision_digits]})
                     }
                     if (negative) {
                         return "-" + num;
@@ -187,7 +189,9 @@ odoo.define('ks_dashboard_ninja.KsGlobalFunction', function(require) {
                     }
                 }
 
-        },
-    }
+        }
 
-});
+}
+return {
+    globalfunction:globalfunction
+}

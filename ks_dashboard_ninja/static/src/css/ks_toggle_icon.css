@@ -104,3 +104,47 @@ border-top: 1px solid #dcdada;
 .ks_quick_edit_footer > .ks_discard {
         border-color: #dee2e6;
 }
+
+
+  @media(min-width: 768px){
+     .ks_dashboard_item_hover .ks_dashboard_item_header_hover > .dn-setting-panel{
+         visibility: hidden;
+     }
+     .ks_dashboard_item_hover:hover .ks_dashboard_item_header_hover > .dn-setting-panel{
+        visibility: visible;
+     }
+
+ }
+  @media(max-width: 768px){
+     .ks_dashboard_header {
+        height: 145px !important;
+    }
+    .ks_dashboard_top_menu{
+
+      margin-top: -6px;
+
+}
+}
+ @media(max-width: 767.8px){
+     .ks_dashboard_item_name{
+        font-size: 16px;
+     }
+     .ks_dashboard_item_hover .ks_dashboard_item_header_hover > .dn-setting-panel button {
+         background: transparent;
+     }
+
+     a.dropdown-item.ks_dashboard_item_chart_info.d-none {
+            display: block !important;
+        }
+    .ks_dashboard_item_fa_con {
+        display: none !important;
+    }
+
+}
+
+.ks_chart_inner_min_width {
+        min-width: 14rem;
+}
+.ks_info_display {
+display: block !important;
+}

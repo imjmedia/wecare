@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+    <t t-name="ks_carousel">
+        <div class="d-none ks_float_tv" t-ref="carousel">
+                <div class="tv-modal-overlay"></div>
+                <button class="btn  ks_stop_tv_dashboard  mr-2" aria-expanded="false" t-on-click="ksStopTvDashboard">
+                    <span class="fa fa-times"/>
+                </button>
+                <div class="owl-carousel owl-theme ">
+                    <t t-foreach="graph" t-as="item" t-key="item_index">
+                        <Ksdashboardgraph item="item" dashboard_data="ks_dashboard_data" ksdatefilter="props.ksdatefilter" pre_defined_filter="props.pre_defined_filter" custom_filter="props.custom_filter"/>
+                    </t>
+                    <t t-foreach="kpi_item" t-as="kpi" t-key="kpi_index">
+                         <div class="d-flex align-items-center justify-content-center h-100 ks_tv_item ks-tv-kpi">
+                            <t t-foreach="kpi" t-as="item" t-key="item_index">
+                               <Ksdashboardkpiview item="item" dashboard_data="ks_dashboard_data" ksdatefilter="props.ksdatefilter" pre_defined_filter="props.pre_defined_filter" custom_filter="props.custom_filter"/>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-foreach="tile_item" t-as="tile" t-key="tile_index">
+                        <div class="d-flex align-items-center justify-content-center flex-column h-100 ks_tv_item ks-tv-kpi">
+                            <t t-foreach="tile" t-as="item" t-key="item_index">
+                                <div class="d-flex align-items-center ks-tv-item">
+                                    <t t-foreach="item" t-as="item_tile" t-key="item_tile['id']">
+                                        <Ksdashboardtile item="item_tile" dashboard_data="ks_dashboard_data" ksdatefilter="props.ksdatefilter" pre_defined_filter="props.pre_defined_filter" custom_filter="props.custom_filter"/>
+                                    </t>
+                                </div>
+                            </t>
+                        </div>
+                    </t>
+                    <t t-foreach="to_do" t-as="item_todo" t-key="item_index">
+                        <Ksdashboardtodo item="item_todo" dashboard_data="ks_dashboard_data"/>
+                    </t>
+                </div>
+            </div>
+    </t>
+
+</template>
