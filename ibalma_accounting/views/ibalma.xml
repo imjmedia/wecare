@@ -31,7 +31,7 @@
         <field name="arch" type="xml">
             <xpath expr="//div[@name='address']" position="inside">
                 <div class="mt16" t-if="o.user_id">
-                    AGENT: <span t-field="o.user_id"/>
+                    AGENTE: <span t-field="o.user_id"/>
                 </div>
             </xpath>
         </field>

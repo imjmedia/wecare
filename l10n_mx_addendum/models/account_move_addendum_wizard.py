@@ -20,17 +20,8 @@ class AccountMoveAddendumWizard(models.TransientModel):
             ]
         )
 
-    move_id = fields.Many2one(
-        comodel_name="account.move",
-        default=_get_move_id,
-        readonly=True,
-    )
-    field_value_ids = fields.Many2many(
-        string="fields",
-        comodel_name="account.move.addendum.field.value",
-        relation="move_field_value_rel",
-        default=compute_field_value_ids,
-    )
+    move_id = fields.Many2one(string='Póliza', comodel_name="account.move", default=_get_move_id, readonly=True)
+    field_value_ids = fields.Many2many(string="Campos", comodel_name="account.move.addendum.field.value", relation="move_field_value_rel", default=compute_field_value_ids)
 
     def generate_addendum_manual(self):
         self.ensure_one()

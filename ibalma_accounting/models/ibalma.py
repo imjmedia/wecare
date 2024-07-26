@@ -13,9 +13,9 @@ class Cuenta(models.Model):
         for inv in self:
             order = inv.mapped('invoice_line_ids.sale_line_ids.order_id')
             if order:
-                inv['x_sale_order_id'] = order[0]
+                inv.x_sale_order_id = order[0]
             else:
-                inv['x_sale_order_id'] = False
+                inv.x_sale_order_id = False
 
 class Pago(models.Model):
     _inherit = ['account.payment']
