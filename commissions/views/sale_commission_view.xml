@@ -20,9 +20,9 @@
                         </div>
                         <group>
                             <group>
-                                <field name="date_from" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                                <field name="date_to" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                                <field name="commercial_id" required="1" attrs="{'readonly': [('state', '!=', 'draft')]}" options='{"no_create": True}'/>
+                                <field name="date_from" required="1" readonly="state != 'draft'"/>
+                                <field name="date_to" required="1" readonly="state != 'draft'"/>
+                                <field name="commercial_id" required="1" readonly="state != 'draft'" options='{"no_create": True}'/>
                                 <field name="currency_id" invisible="1"/>
                             </group>
                             <group>
@@ -40,19 +40,19 @@
                                         <field name="order_id"/>
                                         <field name="partner_id"/>  
                                         <field name="partner_corp_id"/>  
-                                        <field name="user_id" string="Commercial" invisible="1"/>
+                                        <field name="user_id" string="Commercial" column_invisible="1"/>
                                         <field name="sale_amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                                         <!-- <field name="benefit_net" widget='monetary' options="{'currency_field': 'currency_id'}"/> -->
                                         <field name="margin_net" string="%Comm" />
                                         <field name="amount" widget='monetary' options="{'currency_field': 'currency_id'}"/>
-                                        <field name="currency_id" invisible="1"/>
+                                        <field name="currency_id" column_invisible="1"/>
                                     </tree>
                                 </field>
                                 <group class="oe_subtotal_footer oe_right" colspan="2" name="commission_total">
                                     <div class="oe_subtotal_footer_separator oe_inline o_td_label">
                                         <label for="sale_total"/>
                                     </div>
-                                    <field name="sale_total"  readonly="1" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+                                    <field name="sale_total" readonly="1" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
                                 </group>
                             </page>
                              <page string="Resumen">
