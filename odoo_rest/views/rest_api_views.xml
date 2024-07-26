@@ -1,10 +1,10 @@
 <odoo>
-        <!-- odoorestapi: views -->
+    <!-- odoorestapi: vistas -->
     <record id="odoorestapi_view_form" model="ir.ui.view">
         <field name="name">odoorestapi_view.form</field>
         <field name="model">rest.api</field>
         <field name="arch" type="xml">
-            <form string="Webservice Account">
+            <form>
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="toggle_active" type="object" class="oe_stat_button" icon="fa-archive">
@@ -32,18 +32,18 @@
                     <group>
                         <field name="availabilty"/>
                     </group>
-                        <separator string="Set the resource permissions for this key:" colspan="4" attrs="{'invisible': [('availabilty', 'in', ['all'])]}"/>
-                        <field name="resource_ids" mode="tree" attrs="{'invisible': [('availabilty', 'in', ['all'])]}">
-                            <tree string="Resources" editable="bottom">
-                                <field name="model_id" options="{'no_create': True}"/>
+                    <group>
+                        <field name="resource_ids" mode="tree" options="{'no_create': True}">
+                            <tree>
+                                <field name="model_id"/>
                                 <field name="read_ok"/>
                                 <field name="write_ok"/>
                                 <field name="create_ok"/>
                                 <field name="unlink_ok"/>
                             </tree>
                         </field>
-                        <field name="description" class="oe_inline" placeholder="For Internal purpose Only"/>
-                        <div class="oe_clear"/>
+                    </group>
+                    <field name="description" placeholder="For Internal purpose Only"/>
                 </sheet>
             </form>
         </field>
@@ -53,7 +53,7 @@
         <field name="name">odoorestapi_view.tree</field>
         <field name="model">rest.api</field>
         <field name="arch" type="xml">
-            <tree string="Webservice Accounts">
+            <tree>
                 <field name="name"/>
                 <field name="description"/>
                 <field name="active"/>
@@ -61,12 +61,11 @@
         </field>
     </record>
 
-        <!-- odoorestapi : actions -->
+    <!-- odoorestapi : acciones -->
     <record id="odoorestapi_action" model="ir.actions.act_window">
         <field name="name">REST WEBSERVICE ACCOUNT</field>
         <field name="res_model">rest.api</field>
         <field name="view_mode">tree,form</field>
-        <!-- <field name="view_type">form</field> -->
         <field name="view_id" ref="odoorestapi_view_tree"/>
         <field name="help" type="html">
           <p class="oe_view_nocontent_create">
@@ -77,5 +76,4 @@
 
     <menuitem name="Web-Services" id="odoorestapi_main_menu" parent="base.menu_custom" sequence="1"/>
     <menuitem id="odoorestapi_menu" name="Webservice Accounts" parent="odoorestapi_main_menu" action="odoorestapi_action" sequence="1"/>
-
 </odoo>

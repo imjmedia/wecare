@@ -3,7 +3,7 @@ from odoo.models import BaseModel
 from odoo import api
 from odoo.http import request
 from odoo import api, fields, models, _, SUPERUSER_ID
-from odoo.exceptions import AccessDenied, AccessError, UserError, ValidationError
+from odoo.exceptions import MissingError
 import logging
 _logger = logging.getLogger(__name__)
 
@@ -12,7 +12,7 @@ class BaseModel(models.AbstractModel):
 
     def _read_format(self, fnames, load='_classic_read'):
 
-        if request.context.get("odoo_rest_api"):
+        if request and request.context and request.context.get("odoo_rest_api"):
             data = [(record, {'id': record._ids[0]}) for record in self]
             use_name_get = (load == '_classic_read')
             for name in fnames:
