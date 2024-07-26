@@ -7,15 +7,9 @@ from odoo.exceptions import ValidationError
 class AccountMove(models.Model):
     _inherit = "account.move"
 
-    addendum_id = fields.Many2one(
-        related="partner_id.addendum_id",
-    )
-    addendum_manual = fields.Boolean(
-        related="partner_id.addendum_id.manual",
-    )
-    addendum_generated = fields.Boolean(
-        copy=False,
-    )
+    addendum_id = fields.Many2one(related="partner_id.addendum_id", string="Addenda")
+    addendum_manual = fields.Boolean(related="partner_id.addendum_id.manual", string="Addenda Manual")
+    addendum_generated = fields.Boolean('Addenda Generada', copy=False)
 
     def write_addendum(self, attachment, addendum_content):
         datas_decoded = base64.b64decode(attachment.datas)
@@ -37,9 +31,7 @@ class AccountMove(models.Model):
             if self.addendum_id.is_jinja
             else self.addendum_id.raw_template
         )
-        addendum_content = template.replace('<?xml version="1.0" encoding="UTF-8"?>\n', "").replace(
-            '<?xml version="1.0" encoding="UTF-8"?>', ""
-        )
+        addendum_content = template.replace('<?xml version="1.0" encoding="UTF-8"?>\n', "").replace('<?xml version="1.0" encoding="UTF-8"?>', "")
         return addendum_content
 
     def get_last_modified_attachment(self, name):

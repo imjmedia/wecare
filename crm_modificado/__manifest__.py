@@ -13,7 +13,7 @@
     'author': "IT Reingenierias S de RL",
     'website': "http://www.itreingenierias.com",
     'category': 'Sales',
-    'version': '17.0.1',
+    'version': '17.0.1.0',
 
     # any module necessary for this one to work correctly
     'depends': [

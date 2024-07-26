@@ -10,28 +10,12 @@ class AccountMoveAddendum(models.Model):
     _name = "account.move.addendum"
     _description = "Addendum"
 
-    name = fields.Char(
-        required=True,
-        index=True,
-    )
-    manual = fields.Boolean(
-        help="Mark as `True` to create the Addendum manually instead o automatically in the generation of XML."
-    )
-    is_jinja = fields.Boolean(
-        default=True,
-        help="Mark as `True` if the Addendum is dynamic, use Jinja to create the template.",
-    )
-    raw_template = fields.Text(
-        help="Addendum template to be use in the XML generation.",
-    )
-    template_internal = fields.Char(
-        inverse="_inverse_template_internal",
-
-    )
-    field_ids = fields.One2many(
-        comodel_name="account.move.addendum.field",
-        inverse_name="addendum_id",
-    )
+    name = fields.Char('Nombre', required=True, index=True)
+    manual = fields.Boolean('Manual', help="Mark as `True` to create the Addendum manually instead o automatically in the generation of XML.")
+    is_jinja = fields.Boolean('Es Jinja', default=True, help="Mark as `True` if the Addendum is dynamic, use Jinja to create the template.")
+    raw_template = fields.Text('Plantilla', help="Addendum template to be use in the XML generation.")
+    template_internal = fields.Char('Plantilla Interna', inverse="_inverse_template_internal")
+    field_ids = fields.One2many(string='Campos', comodel_name="account.move.addendum.field", inverse_name="addendum_id")
 
     def _inverse_template_internal(self):
         for addendum in self:

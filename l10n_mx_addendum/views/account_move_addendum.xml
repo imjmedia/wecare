@@ -7,7 +7,7 @@
             <form>
                 <header>
                     <field name="template_internal" invisible="1"/>
-                    <button name="reload_from_file" type="object" string="Reload from File" attrs="{'invisible': [('template_internal', '=', False)]}"/>
+                    <button name="reload_from_file" type="object" string="Reload from File" invisible="template_internal == False"/>
                 </header>
                 <sheet>
                     <group>

@@ -9,15 +9,7 @@
                 <field name="addendum_id" invisible="1"/>
                 <field name="addendum_manual" invisible="1"/>
                 <field name="addendum_generated" invisible="1"/>
-                <button name="%(account_move_addendum_wizard)d" type="action" string="Generate Addendum" attrs="{
-                    'invisible': [
-                        '|',
-                        '|',
-                        ('addendum_manual', '=', False),
-                        ('addendum_id', '=', False),
-                        ('addendum_generated', '=', True),
-                    ]
-                }"/>
+                <button name="%(account_move_addendum_wizard)d" type="action" string="Generate Addendum" invisible="addendum_manual == False or addendum_id == False or addendum_generated == True"/>
             </header>
         </field>
     </record>
