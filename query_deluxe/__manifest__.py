@@ -20,7 +20,7 @@
 
             'report/print_pdf.xml',
 
-            'datas/data.xml'
+            #'datas/data.xml'
             ],
 
         'images': ['static/description/banner.gif']
