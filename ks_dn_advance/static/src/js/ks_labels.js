@@ -1,89 +1,68 @@
-odoo.define('ks_dashboard_ninja_list.ks_labels', function (require) {
-    "use strict";
+/** @odoo-module */
 
-    var registry = require('web.field_registry');
-    var AbstractField = require('web.AbstractField');
-    var core = require('web.core');
-    var field_utils = require('web.field_utils');
-    var session = require('web.session');
-    var utils = require('web.utils');
+import { registry } from "@web/core/registry";
+const { useEffect, useRef,onWillUpdateProps, Component,onMounted} = owl;
 
-    var QWeb = core.qweb;
 
-    var KsLabels = AbstractField.extend({
-        resetOnAnyFieldChange: true,
-        supportedFieldTypes: ['char'],
+export class KsXLabels extends Component{
+        setup() {
+            const self = this;
+            this.select_label = useRef("select_label")
+            useEffect(()=>{this.mount()})
+        }
+    get ks_columns_list(){
+        var self = this;
+        var field = this.props.record.data;
+        var ks_query_result = JSON.parse(field.ks_query_result);
+        if (ks_query_result.header.length){
+            self.ks_check_for_labels();
+            var ks_columns_list =  self.ks_columns
+        }else{
+            var ks_columns_list = false
+        }
+        return ks_columns_list
+    }
 
-        events: _.extend({}, AbstractField.prototype.events, {
-            'change select': 'ks_toggle_icon_input_click',
-        }),
-        init: function(){
-            this.ks_columns = {};
-            this._super.apply(this, arguments);
-        },
+    mount(){
+        var self = this;
+        if (this.select_label.el){
+        if (self.props.record.data.ks_xlabels=="") {
+            $(this.select_label.el).val(false)
+        }else{
+            $(this.select_label.el).val(this.props.record.data.ks_xlabels)
+       }
+       if (this.props.readonly == true) {
+        $(this.select_label.el).find('.ks_label_select').addClass('ks_not_click');
+       }
+       }
+    }
 
-        _renderEdit : function(){
+
+        get value(){
             var self = this;
-            self.$el.empty();
-            var field = self.recordData;
-
-            if(field.ks_query_result && field.ks_dashboard_item_type !== 'ks_kpi'){
-                var ks_query_result = JSON.parse(field.ks_query_result);
-                if (ks_query_result.header.length){
-                    self.ks_check_for_labels();
-                    var $view = $(QWeb.render('ks_select_labels',{
-                        ks_columns_list: self.ks_columns,
-                        mode: self.mode,
-                    }));
-
-                    if (self.value) {
-                        $view.val(self.value);
-                    }
-                    this.$el.append($view)
-
-                    if (this.mode === 'readonly') {
-                        this.$el.find('.ks_label_select').addClass('ks_not_click');
-                    }
-                } else {
-                    this.$el.append("No Data Available");
-                }
-            } else {
-               this.$el.append("Please Enter the Appropriate Query for this");
-            }
-        },
-        _renderReadonly : function(){
-            var self = this;
-            self.$el.empty();
-            var field = self.recordData;
+            var field = self.props.record.data;
 
             if(field.ks_query_result){
                 var ks_query_result = JSON.parse(field.ks_query_result);
-                if (field.ks_dashboard_item_type !== 'ks_kpi' && ks_query_result.records.length){
-                    self.ks_check_for_labels();
-                    var $view = $(QWeb.render('ks_select_labels',{
-                        ks_columns_list: self.ks_columns,
-                        value: self.ks_columns[self.value],
-                        mode: self.mode,
-                    }));
-                    self.$el.append($view);
-                } else {
-                    this.$el.append("No Data Available");
-                }
-            } else {
-               this.$el.append("Please Enter the Appropriate Query for this")
+                var value= self.ks_columns[self.value]
+            }else{
+                var value = false
             }
-        },
+            return value
 
-        ks_toggle_icon_input_click: function(e){
+        }
+        ks_toggle_icon_input_click(e){
             var self = this;
-            self._setValue(e.currentTarget.value);
-        },
+            if (e.target.id==""){
+                this.props.record.update({ [this.props.name]: e.target.value })
+            }
+        }
 
-        ks_check_for_labels: function(){
+        ks_check_for_labels(){
             var self = this;
             self.ks_columns = {false:false};
-            var query_result = JSON.parse(self.recordData.ks_query_result);
-            if (self.name === "ks_ylabels"){
+            var query_result = JSON.parse(self.props.record.data.ks_query_result);
+            if (self.props.name === "ks_ylabels"){
                 query_result.header.forEach(function(key){
                     if(typeof(query_result[0][key]) === "number") {
                         self.ks_columns[key] = self.ks_title(key.replace("_", " "));
@@ -94,9 +73,9 @@ odoo.define('ks_dashboard_ninja_list.ks_labels', function (require) {
                     self.ks_columns[key] = self.ks_title(key.replace("_", " "));
                 });
             }
-        },
+        }
 
-        ks_title: function(str) {
+        ks_title(str) {
             var split_str = str.toLowerCase().split(' ');
             for (var i = 0; i < split_str.length; i++) {
                 split_str[i] = split_str[i].charAt(0).toUpperCase() + split_str[i].substring(1);
@@ -104,9 +83,11 @@ odoo.define('ks_dashboard_ninja_list.ks_labels', function (require) {
             }
             return str;
         }
-    });
-    registry.add('ks_labels', KsLabels);
+}
 
-    return KsLabels
+KsXLabels.template = "ks_select_labels";
+export const KsXLabelsfield={
+    component:KsXLabels
+}
 
-});
+registry.category("fields").add('ks_x_labels', KsXLabelsfield);

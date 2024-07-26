@@ -5,6 +5,7 @@ from odoo import api, fields, models
 
 class KSCreateDashboardWizard(models.TransientModel):
     _name = 'ks.dashboard.wizard'
+    _description = 'Dashboard Creation Wizard'
 
     name = fields.Char(string="Dashboard Name", required=True)
     ks_menu_name = fields.Char(string="Menu Name", required=True)
@@ -12,7 +13,7 @@ class KSCreateDashboardWizard(models.TransientModel):
                                      domain="['|',('action','=',False),('parent_id','=',False)]",
                                      string="Show Under Menu", required=True,
                                      default=lambda self: self.env['ir.ui.menu'].search(
-                                         [('name', '=', 'My Dashboard')]))
+                                         [('name', '=', 'My Dashboard')])[0])
     ks_sequence = fields.Integer(string="Sequence")
     ks_template = fields.Many2one('ks_dashboard_ninja.board_template',
                                   default=lambda self: self.env.ref('ks_dashboard_ninja.ks_blank',
@@ -37,11 +38,12 @@ class KSCreateDashboardWizard(models.TransientModel):
             'ks_dashboard_top_menu_id': self.ks_top_menu_id.id,
         })
         context = {'ks_reload_menu': True, 'ks_menu_id': ks_create_record.ks_dashboard_menu_id.id}
-        return {
-            'type': 'ir.actions.client',
-            'name': "Dashboard Ninja",
-            'res_model': 'ks_dashboard_ninja.board',
-            'params': {'ks_dashboard_id': ks_create_record.id},
-            'tag': 'ks_dashboard_ninja',
-            'context': self.with_context(context)._context
-        }
+        return {'type': 'ir.actions.client', 'tag': 'reload'}
+        # return {
+        #     'type': 'ir.actions.client',
+        #     'name': "Dashboard Ninja",
+        #     'res_model': 'ks_dashboard_ninja.board',
+        #     'params': {'ks_dashboard_id': ks_create_record.id},
+        #     'tag': 'ks_dashboard_ninja',
+        #     # 'context': self.with_context(context)._context
+        # }

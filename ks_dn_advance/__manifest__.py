@@ -94,29 +94,49 @@ Best Odoo Dashboard Apps
 
 	'currency': 'EUR',
 
-	'price': '104.3',
+	'price': '149',
 
 	'website': 'https://store.ksolves.com/',
 
 	'maintainer': 'Ksolves India Ltd.',
 
-	'live_test_url': 'https://dn15demo.kappso.com/web/demo_login',
+	'live_test_url': 'https://dnadvance17.ksolves.net/',
 
-	'category': 'Tools',
+	'category': 'Services',
 
-	'version': '15.0.1.1.1',
+	'version': '17.0.1.0.0',
 
 	'support': 'sales@ksolves.com',
 
-	'images': ['static/description/DN and DNA Banner.gif'],
+	'images': ['static/description/dn_advance_v16_optimize.gif'],
 
-	'depends': ['ks_dashboard_ninja'],
+	'depends': ['ks_dashboard_ninja','mail'],
 
-	'data': ['views/ks_dashboard_ninja_item_view_inherit.xml',
+	'external_dependencies': {'python': ['mysql-connector']},
+
+	'data': ['security/ir.model.access.csv',
+		'views/ks_dashboard_ninja_item_view_inherit.xml',
 			 'views/ks_dashboard_form_view_inherit.xml',
 			 'views/ks_mail_template.xml'],
+	'module_type':'official',
 
-	'assets': {'web.assets_backend': ['ks_dn_advance/static/src/css/ks_tv_dashboard.css', 'ks_dn_advance/static/lib/css/owl.carousel.min.css','ks_dn_advance/static/src/js/ks_dn_kpi_preview.js', 'ks_dn_advance/static/src/js/ks_labels.js', 'ks_dn_advance/static/src/js/ks_ylabels.js', 'ks_dn_advance/static/src/js/ks_dashboard_ninja_tv_graph_preview.js', 'ks_dn_advance/static/src/js/ks_dashboard_ninja_tv_list_preview.js', 'ks_dn_advance/static/src/js/ks_tv_dashboard.js', 'ks_dn_advance/static/lib/js/owl.carousel.min.js', 'ks_dn_advance/static/lib/js/print.min.js', 'ks_dn_advance/static/lib/js/pdf.min.js'], 'web.assets_frontend': ['ks_dn_advance/static/src/css/ks_tv_dashboard.css', 'ks_dn_advance/static/src/js/ks_website_dashboard.js'], 'web.assets_qweb': ['ks_dn_advance/static/src/xml/**/*']},
+	'assets': {'web.assets_backend': ['ks_dn_advance/static/src/css/ks_tv_dashboard.css',
+									  'ks_dn_advance/static/lib/css/owl.carousel.min.css',
+									  # 'ks_dn_advance/static/src/js/ks_dn_kpi_preview.js',
+									  'ks_dn_advance/static/src/js/ks_labels.js',
+									  'ks_dn_advance/static/src/js/ks_ylabels.js',
+									  # 'ks_dn_advance/static/src/js/ks_dashboard_ninja_tv_graph_preview.js',
+									  'ks_dn_advance/static/src/js/ks_dashboard_ninja_tv_list_preview.js',
+									  'ks_dn_advance/static/src/js/ks_advance_dashboard.js',
+									  'ks_dn_advance/static/lib/js/owl.carousel.min.js',
+									  'ks_dn_advance/static/lib/js/print.min.js',
+									  'ks_dn_advance/static/lib/js/pdf.min.js',
+									  'ks_dn_advance/static/src/js/carousel.js',
+									  'ks_dn_advance/static/src/xml/**/*'],
+			   'web.assets_frontend': ['ks_dn_advance/static/src/css/ks_tv_dashboard.css',
+									   # 'ks_dn_advance/static/src/js/ks_website_dashboard.js'
+									   ],
+			   'web.assets_qweb': ['ks_dn_advance/static/src/xml/**/*']},
 
 	'uninstall_hook': 'ks_dna_uninstall_hook',
 }

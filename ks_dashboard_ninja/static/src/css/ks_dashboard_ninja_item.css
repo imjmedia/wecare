@@ -30,7 +30,6 @@
 .ks_image_widget_icon_container{
     background : transparent;
     border: none;
-    margin: 5px;
     cursor: pointer;
 }
 
@@ -185,4 +184,7 @@
     color: #666666 !important;
     background-color: rgba(0, 0, 0, 0.26) !important;
 
+}
+.ks_map_card_body{
+    z-index:1;
 }

@@ -1,15 +1,18 @@
 import base64
 import logging
-from odoo import api, fields, models,_
+from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+
 _logger = logging.getLogger(__name__)
+
 
 class KsDashboardNInjaImport(models.TransientModel):
     _name = 'ks_dashboard_ninja.import'
     _description = 'Import Dashboard'
 
     ks_import_dashboard = fields.Binary(string="Upload Dashboard", attachment=True)
-    ks_top_menu_id = fields.Many2one('ir.ui.menu', string="Show Under Menu", required=True,
+    ks_top_menu_id = fields.Many2one('ir.ui.menu', string="Show Under Menu", domain="[('parent_id','=',False)]",
+                                     required=True,
                                      default=lambda self: self.env['ir.ui.menu'].search(
                                          [('name', '=', 'My Dashboard')]))
 
