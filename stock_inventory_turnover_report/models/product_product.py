@@ -2,7 +2,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl.html).
 
 from dateutil.relativedelta import relativedelta
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class Product(models.Model):
@@ -40,6 +40,7 @@ class Product(models.Model):
                 - moves_return.get(x.id, 0))
             for x in self}
 
+    @api.depends('qty_available', 'qty_available')
     def _compute_inventory_turn_report(self):
         month = relativedelta(month=1)
         today = fields.Date.today()
@@ -85,40 +86,40 @@ class Product(models.Model):
                 0.0 if not prod.months_of_inventory_12m else
                 12 / prod.months_of_inventory_12m)
 
-    total_cost = fields.Float(
+    total_cost = fields.Float(string="Costo Total",
         compute="_compute_inventory_turn_report",
         help="= Qty. on hand x Current Cost")
     qty_available_6m = fields.Float(
-        name="Qty. 6m Ago",
+        string="Qty. 6m Ago",
         compute="_compute_inventory_turn_report",
         help="Qty. on hand 6 months ago")
     qty_gotten_6m = fields.Float(
-        name="Qty. Gotten 6m",
+        string="Qty. Gotten 6m",
         compute="_compute_inventory_turn_report",
         help="Qty. Procured or Produced in the the last 6 months")
-    qty_consumed_6m = fields.Float(
+    qty_consumed_6m = fields.Float(string="Consumido en 6m",
         compute="_compute_inventory_turn_report",
         help="Qty. consumed in the the last 6 months")
-    months_of_inventory_6m = fields.Float(
+    months_of_inventory_6m = fields.Float(string="Inventario en 6m",
         compute="_compute_inventory_turn_report",
         help="Months of Inventory, in the last 6 months")
-    inventory_turns_6m = fields.Float(
+    inventory_turns_6m = fields.Float(string="Ciclos de inv. en 6m",
         compute="_compute_inventory_turn_report",
         help="Inventory Turns / Cycles in the last 6 months")
     qty_available_12m = fields.Float(
-        name="Qty. 12m ago",
+        string="Qty. 12m ago",
         compute="_compute_inventory_turn_report",
         help="= Qty. on hand 12 months ago")
     qty_gotten_12m = fields.Float(
-        name="Qty. Gotten 12m",
+        string="Qty. Gotten 12m",
         compute="_compute_inventory_turn_report",
         help="Qty. Procured or Produced in the the last 12 months")
-    qty_consumed_12m = fields.Float(
+    qty_consumed_12m = fields.Float(string="Consumido en 12m",
         compute="_compute_inventory_turn_report",
         help="Qty. consumed in the the last 12 months")
-    months_of_inventory_12m = fields.Float(
+    months_of_inventory_12m = fields.Float(string="Meses de inv. en 6m",
         compute="_compute_inventory_turn_report",
         help="Months of Inventory, in the last 12 months")
-    inventory_turns_12m = fields.Float(
+    inventory_turns_12m = fields.Float(string="Ciclos de inv. en 12m",
         compute="_compute_inventory_turn_report",
         help="Inventory Turns / Cycles in the last 12 months")
