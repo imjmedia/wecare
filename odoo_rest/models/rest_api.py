@@ -30,9 +30,11 @@ class RestAPI(models.Model):
 		model_exists = self.env['ir.model'].sudo().search([('model','=',model_name)])
 		if not model_exists:
 			response['success'] = False
+			response['responseCode'] = 401
 			response['message'] = "Model(%s) doen`t exists !!!"%model_name
 		elif self.availabilty == "all":
 			response['success']= True
+			response['responseCode'] = 200
 			response['message']= "Allowed all Models Permission: %s"%self.availabilty
 			response['model_id'] = model_exists.id
 			response['permisssions'].update({'read':True,'write':True,'delete':True,'create':True})
@@ -41,11 +43,13 @@ class RestAPI(models.Model):
 			resource_allowed = self.env['rest.api.resources'].sudo().search([('api_id','=',self.id),('model_id','=',model_exists.id)])
 			if resource_allowed:
 				response['success'] = True
+				response['responseCode'] = 200
 				response['message'] = "Allowed %s Models Permission: %s" % (model_exists.name, self.availabilty)
 				response['model_id'] = model_exists.id
 				response['permisssions'].update({'read': resource_allowed.read_ok, 'write': resource_allowed.write_ok, 'delete': resource_allowed.unlink_ok, 'create': resource_allowed.create_ok})
 			else:
 				response['success'] = False
+				response['responseCode'] = 403
 				response['message'] = "Sorry,you don`t have enough permission to access this Model(%s). Please consult with your Administrator."%model_name
 		return response
 
@@ -54,26 +58,26 @@ class RestAPI(models.Model):
 		context = context or {}
 		response = {'success':False, 'message':'Unknown Error !!!'}
 		if not api_key:
-			response['responseCode'] = 0
+			response['responseCode'] = 401
 			response['message'] = 'Invalid/Missing Api Key !!!'
 			return response
 		try:
 			# Get Conf
 			Obj_exists = self.sudo().search([('api_key','=',api_key)])
 			if not Obj_exists:
-				response['responseCode'] = 1
+				response['responseCode'] = 401
 				response['message'] = "API Key is invalid !!!"
 			else:
 				response['success'] = True
-				response['responseCode'] = 2
+				response['responseCode'] = 200
 				response['message'] = 'Login successfully.'
 				response['confObj'] = Obj_exists
 		except Exception as e:
-			response['responseCode'] = 3
+			response['responseCode'] = 401
 			response['message'] = "Login Failed: %r"%e.message or e.name
 		return response
 
-	name = fields.Char('Name', required=1)
+	name = fields.Char('Name', required=True)
 	description = fields.Text('Extra Information', help="Quick description of the key", translate=True)
 	# api_key = fields.Char(string='API Secret key', default=_default_unique_key(32), required=1)
 	api_key = fields.Char(string='API Secret key')
@@ -82,7 +86,7 @@ class RestAPI(models.Model):
 	availabilty = fields.Selection([
         ('all', 'All Resources'),
         ('specific', 'Specific Resources')], 'Available for', default='all',
-        help="Choose resources to be available for this key.", required=1)
+        help="Choose resources to be available for this key.", required=True)
 
 	def generate_secret_key(self):
 		self.api_key = _default_unique_key(32)
