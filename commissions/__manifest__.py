@@ -20,7 +20,7 @@
 
 {
     'name': 'Sale Commissions',
-    'version': '15.0.1.0.0',
+    'version': '17.0.1.0',
     'summary': 'Sales commissions for commercials WeCare',
     'description': """Sales commissions for commercials WeCare.""",
     'license': 'AGPL-3',

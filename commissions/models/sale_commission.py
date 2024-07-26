@@ -7,13 +7,13 @@ from odoo.exceptions import UserError, ValidationError
 import logging
 _logger = logging.getLogger(__name__)
 
-class PricelistConmission(models.Model):
+class ProductPricelist(models.Model):
     _inherit = ['product.pricelist']
 
-    type_id = fields.Many2one('product.pricelist_type', string="Tipos de Lista", track_visibility='onchange')
+    type_id = fields.Many2one('product.pricelist_type', string="Tipos de Lista", tracking=True)
                             
 
-class PricelistPrice(models.Model):
+class ProductPricelistType(models.Model):
     _description = "Pricelist types"    
     _name = 'product.pricelist_type'
     
@@ -33,10 +33,10 @@ class SaleCommission(models.Model):
 
     name = fields.Char('Code', translate=True, default="New", copy=False)
     entry_date = fields.Datetime('Date', default=fields.Datetime.now)
-    user_id = fields.Many2one('res.users', string='Responsible', track_visibility='onchange', default=lambda self: self.env.user)
-    commercial_id = fields.Many2one('res.users', string='Commercial', track_visibility='onchange')
-    date_from = fields.Date(string='Date From', default=fields.Date.context_today, track_visibility='onchange')
-    date_to = fields.Date(string='Date To', default=fields.Date.context_today, track_visibility='onchange')
+    user_id = fields.Many2one('res.users', string='Responsible', tracking=True, default=lambda self: self.env.user)
+    commercial_id = fields.Many2one('res.users', string='Commercial', tracking=True)
+    date_from = fields.Date(string='Date From', default=fields.Date.context_today, tracking=True)
+    date_to = fields.Date(string='Date To', default=fields.Date.context_today, tracking=True)
     commission_lines = fields.One2many('sale.commission.line', 'parent_id', string='Lines')
     state = fields.Selection([
         ('draft', 'Draft'),
@@ -249,9 +249,9 @@ class SaleCommissionLine(models.Model):
     margin_net = fields.Float('Margin (%)')
     sale_amount = fields.Float('Amount')
     invoice_id = fields.Many2one('account.move')
-    partner_id = fields.Many2one('res.partner', string='Client', track_visibility='onchange')
-    partner_corp_id = fields.Many2one('res.partner', string='Corporation', track_visibility='onchange')
-    order_id = fields.Many2one('sale.order', string='SO', track_visibility='onchange')
+    partner_id = fields.Many2one('res.partner', string='Client', tracking=True)
+    partner_corp_id = fields.Many2one('res.partner', string='Corporation', tracking=True)
+    order_id = fields.Many2one('sale.order', string='SO', tracking=True)
     currency_id = fields.Many2one('res.currency', compute='_get_company_currency', readonly=True, string="Currency", help='Utility field to express amount currency')
     payment_id=fields.Many2one('account.payment')
     payment_date = fields.Date(string='Payment Date')
