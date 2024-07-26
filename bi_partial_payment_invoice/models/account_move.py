@@ -32,10 +32,8 @@ class AccountMoveInherit(models.Model):
     _inherit = 'account.move'
 
     ref_text = fields.Text(string='Voucher Reference')
-    report_user_id = fields.Many2one('res.users', string='Responsible', 
-        required=False, compute="compute_user_date")
-    report_date = fields.Date(required=False, string="Date",
-        index=True, copy=False, compute="compute_user_date")
+    report_user_id = fields.Many2one('res.users', string='Responsible', required=False, compute="compute_user_date")
+    report_date = fields.Date(required=False, string="Date", index=True, copy=False, compute="compute_user_date")
 
     def compute_user_date(self):
         for record in self:

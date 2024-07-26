@@ -30,15 +30,11 @@
                         <group>
                             <group>
                                 <field name="amount_residual"/>
-                                <field name="amount_residual_currency" attrs="{
-                                    'invisible' : [('currency_id','=',False)]
-                                    }"/>
+                                <field name="amount_residual_currency" invisible ="currency_id == False"/>
                             </group>
                             <group>
                                 <field name="remain_amount"/>
-                                <field name="remain_amount_currency" attrs="{
-                                    'invisible' : [('currency_id','=',False)]
-                                    }"/>
+                                <field name="remain_amount_currency" invisible="currency_id == False"/>
                             </group>
                         </group>
                         <notebook>
@@ -56,9 +52,8 @@
                                         <field name="amount_total" invisible="1"/>
                                         <field name="amount_residual" force_save="1"/>
                                         <field name="amount_residual_currency" force_save="1"/>
-                                        <field name="amount_to_pay" attrs="{
-                                        'readonly': [('is_comapany','!=',False)]}" force_save="1"/>
-                                        <field name="curr_amount_to_pay" attrs="{'readonly':[('is_comapany','=',False)]}"  force_save="1"/>
+                                        <field name="amount_to_pay" readonly="is_comapany != False" force_save="1"/>
+                                        <field name="curr_amount_to_pay" readonly="is_comapany == False" force_save="1"/>
                                     </tree>
                                 </field>
                             </page>
