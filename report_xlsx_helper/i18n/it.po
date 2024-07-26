@@ -4,17 +4,17 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.0\n"
+"Project-Id-Version: Odoo Server 17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: 2022-06-15 18:05+0000\n"
-"Last-Translator: jabelchi <jabelchi@gmail.com>\n"
+"PO-Revision-Date: 2024-02-12 10:46+0000\n"
+"Last-Translator: mymage <stefano.consolaro@mymage.it>\n"
 "Language-Team: none\n"
-"Language: ca\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.3.2\n"
+"X-Generator: Weblate 4.17\n"
 
 #. module: report_xlsx_helper
 #. odoo-python
@@ -24,28 +24,27 @@ msgid ""
 "%(__name__)s, _write_line : programming error detected while processing "
 "col_specs_section %(col_specs_section)s, column %(col)s"
 msgstr ""
-"%(__name__)s, _write_line : error de programació detectat en processar "
-"col_specs_section %(col_specs_section)s, columna %(col)s"
+"%(__name__)s, _write_line : rilevato errore di programmazione "
+"nell'elaborazione di col_specs_section %(col_specs_section)s, colonna %(col)s"
 
 #. module: report_xlsx_helper
 #. odoo-python
 #: code:addons/report_xlsx_helper/models/ir_actions_report.py:0
 #, python-format
 msgid "%s model was not found"
-msgstr "No s'ha trobat el model %s"
+msgstr "Il modello %s non è stato trovato"
 
 #. module: report_xlsx_helper
 #. odoo-python
 #: code:addons/report_xlsx_helper/report/report_xlsx_abstract.py:0
 #, python-format
 msgid ", cellvalue %s"
-msgstr ""
+msgstr ", valore cella %s"
 
 #. module: report_xlsx_helper
 #: model:ir.model,name:report_xlsx_helper.model_report_report_xlsx_abstract
-#, fuzzy
 msgid "Abstract XLSX Report"
-msgstr "Informe XLSX abstracte"
+msgstr "Report XLSX astratto"
 
 #. module: report_xlsx_helper
 #. odoo-python
@@ -54,12 +53,11 @@ msgstr "Informe XLSX abstracte"
 msgid ""
 "Programming Error:\n"
 "\n"
-"Excel Sheet name '%(name)s' contains unsupported special characters: "
-"'%(special_chars)s'."
+"Excel Sheet name '%(name)s' contains unsupported special characters: '%(special_chars)s'."
 msgstr ""
-"Error de programació:\n"
+"Errore programmazione:\n"
 "\n"
-"El full Excel amb nom '%(name)s' contè caràcters especials no soportats: "
+"Il foglio Excel nome '%(name)s' contene caratteri non supportati: "
 "'%(special_chars)s'."
 
 #. module: report_xlsx_helper
@@ -71,10 +69,10 @@ msgid ""
 "\n"
 "Excel Sheet name '%(name)s' should not exceed %(max_chars)s characters."
 msgstr ""
-"Error de programació:\n"
+"Errore programmazione:\n"
 "\n"
-"El full d'Excel de nom '%(name)s' no hauria d'excedir els %(max_chars)s "
-"caràcters."
+"Il foglio Excel nome '%(name)s' non dovrebbe superare i %(max_chars)s "
+"caratteri."
 
 #. module: report_xlsx_helper
 #. odoo-python
@@ -85,10 +83,10 @@ msgid ""
 "\n"
 "The '%s' column is not defined in the worksheet column specifications."
 msgstr ""
-"Error de programació:\n"
+"Errore programmazione:\n"
 "\n"
-"La columna '%s' no està definida a les especificacions de columna del full "
-"de càlcul."
+"La colonna '%s' non è definita nelle specifiche delle colonne del foglio di "
+"lavoro."
 
 #. module: report_xlsx_helper
 #. odoo-python
@@ -99,10 +97,10 @@ msgid ""
 "\n"
 "The '%s' column is not defined the worksheet column specifications."
 msgstr ""
-"Error de programació:\n"
+"Errore programmazione:\n"
 "\n"
-"La columna '%s' no està definida a les especificacions de columna del full "
-"de càlcul."
+"La colonna '%s' non è definita nelle specifiche delle colonne del foglio di "
+"lavoro."
 
 #. module: report_xlsx_helper
 #. odoo-python
@@ -113,17 +111,17 @@ msgid ""
 "\n"
 "The 'title' parameter is mandatory when calling the '_write_ws_title' method."
 msgstr ""
-"Error de programació:\n"
+"Errore programmazione:\n"
 "\n"
-"El paràmetre 'títol' és obligatori si es crida el mètode '_write_ws_title'."
+"Il parametro 'title' è obbligatorio quando si chiama il metodo "
+"'_write_ws_title'."
 
 #. module: report_xlsx_helper
 #: model:ir.model,name:report_xlsx_helper.model_ir_actions_report
 msgid "Report Action"
-msgstr "Acció d'informe"
+msgstr "Azione resoconto"
 
 #. module: report_xlsx_helper
 #: model:ir.model,name:report_xlsx_helper.model_report_report_xlsx_helper_test_partner_xlsx
-#, fuzzy
 msgid "Test Partner XLSX Report"
-msgstr "Informe XLSX partner prova"
+msgstr "Test resoconto XLSX partner"
