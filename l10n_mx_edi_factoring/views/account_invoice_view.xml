@@ -9,7 +9,7 @@
                 <attribute name="context">{'default_invoice_ids': [(4, active_id, None)]}</attribute>
             </xpath>
             <xpath expr="//field[@name='l10n_mx_edi_payment_method_id']" position="before">
-                <field name="l10n_mx_edi_factoring_id" attrs="{'invisible':['|', ('state', 'not in', ['posted']), ('move_type','!=','out_invoice')]}" domain="[('id','!=',partner_id)]"/>
+                <field name="l10n_mx_edi_factoring_id" invisible="state != 'posted' or move_type != 'out_invoice'" domain="[('id','!=',partner_id)]"/>
             </xpath>
         </field>
     </record>
