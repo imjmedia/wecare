@@ -48,7 +48,7 @@
         </field>
     </record>
 
-    <template id="report_invoice_document_mx_inherit_ibalma" inherit_id="l10n_mx_edi.report_invoice_document_mx">
+    <template id="report_invoice_document_mx_inherit_ibalma" inherit_id="l10n_mx_edi.report_invoice_document">
         <xpath expr="//h2[1]" position="after">
             <t t-if="o.l10n_mx_edi_cfdi_uuid">
                 <div class="mx-box">
@@ -187,108 +187,110 @@
                 </div>
             </t>
         </xpath>
-        <xpath expr="//t[@t-if='o.move_id.l10n_mx_edi_cfdi_uuid']//table[hasclass('table', 'table-sm')][2]" position="after">
-            <style>
-                .mx-box{
-                    page-break-inside:avoid;
-                }
-                .mx-label{
-                    text-align:right;padding:3px 5px;
-                }
-                .mx-info{
-                    text-align:left;padding:3px 5px;
-                }
-                .p-add{
-                    margin:1;
-                }
-            </style>
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <!--IdDocumento-->
-                        <th>Document Id</th>
-                        <!--USO DEL CFDI-->
-                        <!--This has to go here because it is on inv-->
-                        <th>USAGE of CFDI</th>
-                        <!--Serie Folio-->
-                        <th>Invoice Number</th>
-                        <!--MonedaDR-->
-                        <th>DR Currency</th>
-                        <!--MetodoDePagoDR-->
-                        <th>DR Payment Method</th>
-                        <!--ImpSaldoAnt-->
-                        <th class="text-right">Invoice Amount</th>
-                        <!--ImpPagado-->
-                        <th class="text-right">Payment Amount</th>
-                        <!--ImpSaldoInsoluto-->
-                        <th class="text-right">Remaining Balance</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr t-foreach="o.reconciled_invoice_ids" t-as="inv">
-                        <td><span t-field="inv.l10n_mx_edi_cfdi_uuid"/></td>
-                        <td><span t-field="inv.l10n_mx_edi_usage"/></td>
-                        <td><span t-field="inv.name"/></td>
-                        <td><span t-field="inv.currency_id"/></td>
-                        <td>PPD</td>
-                        <td class="text-right"><span t-field="inv.amount_total"/></td>
-                        <td class="text-right"><span t-field="o.amount"/></td>
-                        <td class="text-right"><span t-esc="inv.amount_total - o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></td>
-                    </tr>
-                </tbody>
-            </table>
-            <table class="table table-sm">
-                <thead>
-                    <tr>
-                        <!--CLAVE PROD O SERV-->
-                        <th>PROD OR SERV KEY</th>
-                        <!--DESCRIPCION-->
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><span t-field="o.x_linea_cp.unspsc_code_id.code"/></td>
-                        <td>Payment</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div>
-                <table class="mx-box">
+        <xpath expr="//table[@name='invoices']" position="before">
+            <t t-if="cfdi and cfdi['cfdi_node']">
+                <style>
+                    .mx-box{
+                        page-break-inside:avoid;
+                    }
+                    .mx-label{
+                        text-align:right;padding:3px 5px;
+                    }
+                    .mx-info{
+                        text-align:left;padding:3px 5px;
+                    }
+                    .p-add{
+                        margin:1;
+                    }
+                </style>
+                <table class="table table-sm">
                     <thead>
-                        <!--FechaPago-->
                         <tr>
-                            <td class="mx-label"><b>Payment Date</b></td>
-                            <td class="mx-info"><span t-field="o.date"/></td>
-                        </tr>
-                        <!--FormaDePagoP-->
-                        <tr>
-                            <td class="mx-label"><b>Payment Method RD</b></td>
-                            <td class="mx-info"><span t-field="o.l10n_mx_edi_payment_method_id"/> <t t-if="o.l10n_mx_edi_payment_method_id.code">(<span t-field="o.l10n_mx_edi_payment_method_id.code"/>)</t></td>
-                        </tr>
-                        <!--MonedaP-->
-                        <tr>
-                            <td class="mx-label"><b>Currency</b></td>
-                            <td class="mx-info"><span t-field="o.currency_id"/></td>
-                        </tr>
-                        <!--Monto-->
-                        <tr>
-                            <td class="mx-label"><b>Amount</b></td>
-                            <td class="mx-info"><span t-field="o.amount"/></td>
-                        </tr>
-                        <!--NumOperacion-->
-                        <tr>
-                            <td class="mx-label"><b>Operation Number</b></td>
-                            <td class="mx-info"><span t-field="o.x_num_operacion"/></td>
-                        </tr>
-                        <!--NomBancoOrdExt-->
-                        <tr>
-                            <td class="mx-label"><b>Bank Number Order Extension</b></td>
-                            <td class="mx-info"><span t-field="o.x_nombre_banco_ordext"/></td>
+                            <!--IdDocumento-->
+                            <th>Document Id</th>
+                            <!--USO DEL CFDI-->
+                            <!--This has to go here because it is on inv-->
+                            <th>USAGE of CFDI</th>
+                            <!--Serie Folio-->
+                            <th>Invoice Number</th>
+                            <!--MonedaDR-->
+                            <th>DR Currency</th>
+                            <!--MetodoDePagoDR-->
+                            <th>DR Payment Method</th>
+                            <!--ImpSaldoAnt-->
+                            <th class="text-right">Invoice Amount</th>
+                            <!--ImpPagado-->
+                            <th class="text-right">Payment Amount</th>
+                            <!--ImpSaldoInsoluto-->
+                            <th class="text-right">Remaining Balance</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr t-foreach="o.reconciled_invoice_ids" t-as="inv">
+                            <td><span t-field="inv.l10n_mx_edi_cfdi_uuid"/></td>
+                            <td><span t-field="inv.l10n_mx_edi_usage"/></td>
+                            <td><span t-field="inv.name"/></td>
+                            <td><span t-field="inv.currency_id"/></td>
+                            <td>PPD</td>
+                            <td class="text-right"><span t-field="inv.amount_total"/></td>
+                            <td class="text-right"><span t-field="o.amount"/></td>
+                            <td class="text-right"><span t-esc="inv.amount_total - o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/></td>
+                        </tr>
+                    </tbody>
                 </table>
-            </div>
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <!--CLAVE PROD O SERV-->
+                            <th>PROD OR SERV KEY</th>
+                            <!--DESCRIPCION-->
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span t-field="o.x_linea_cp.unspsc_code_id.code"/></td>
+                            <td>Payment</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <table class="mx-box">
+                        <thead>
+                            <!--FechaPago-->
+                            <tr>
+                                <td class="mx-label"><b>Payment Date</b></td>
+                                <td class="mx-info"><span t-field="o.date"/></td>
+                            </tr>
+                            <!--FormaDePagoP-->
+                            <tr>
+                                <td class="mx-label"><b>Payment Method RD</b></td>
+                                <td class="mx-info"><span t-field="o.l10n_mx_edi_payment_method_id"/> <t t-if="o.l10n_mx_edi_payment_method_id.code">(<span t-field="o.l10n_mx_edi_payment_method_id.code"/>)</t></td>
+                            </tr>
+                            <!--MonedaP-->
+                            <tr>
+                                <td class="mx-label"><b>Currency</b></td>
+                                <td class="mx-info"><span t-field="o.currency_id"/></td>
+                            </tr>
+                            <!--Monto-->
+                            <tr>
+                                <td class="mx-label"><b>Amount</b></td>
+                                <td class="mx-info"><span t-field="o.amount"/></td>
+                            </tr>
+                            <!--NumOperacion-->
+                            <tr>
+                                <td class="mx-label"><b>Operation Number</b></td>
+                                <td class="mx-info"><span t-field="o.x_num_operacion"/></td>
+                            </tr>
+                            <!--NomBancoOrdExt-->
+                            <tr>
+                                <td class="mx-label"><b>Bank Number Order Extension</b></td>
+                                <td class="mx-info"><span t-field="o.x_nombre_banco_ordext"/></td>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </t>
             <br/>
         </xpath>
     </template>
