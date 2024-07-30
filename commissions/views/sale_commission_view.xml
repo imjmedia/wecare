@@ -7,11 +7,11 @@
             <field name="arch" type="xml">
                 <form string="Sale Commission">
                     <header>
-                        <button name="action_commission" type="object" string="Search Commission" class="oe_highlight" states="draft"/>
-                        <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" states="draft"/>
-                        <button name="action_paid" type="object" string="To pay" class="oe_highlight" states="done"/>
-                        <button name="action_cancel" type="object" string="Cancel" states="done,paid" class="btn-secondary"/>
-                        <button name="action_draft" type="object" string="Draft" states="cancel" class="btn-secondary"/>
+                        <button name="action_commission" type="object" string="Search Commission" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_confirm" type="object" string="Confirm" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_paid" type="object" string="To pay" class="oe_highlight" invisible="state != 'done'"/>
+                        <button name="action_cancel" type="object" string="Cancel" invisible="state not in ['done','paid']" class="btn-secondary"/>
+                        <button name="action_draft" type="object" string="Draft" invisible="state != 'cancel'" class="btn-secondary"/>
                         <field name="state" widget="statusbar"/>
                     </header>
                     <sheet>
