@@ -23,7 +23,7 @@ class AccountPayment(models.Model):
 
         invoices = self.env['account.move'].browse(active_ids).filtered(
             lambda move: move.is_invoice(include_receipts=True) and
-            move.l10n_mx_edi_cfdi_request == 'on_invoice')
+            move.l10n_mx_edi_is_cfdi_needed == True)
         if not invoices:
             return rec
         # If come from an unique invoice nothing to special to set,
@@ -37,7 +37,7 @@ class AccountPayment(models.Model):
 
     def action_post(self):
         """Assign the factoring in the invoices related"""
-        for record in self.filtered(lambda r: r.l10n_mx_edi_cfdi_request == 'on_payment'):
+        for record in self.filtered(lambda r: r.l10n_mx_edi_is_cfdi_needed == True):
             record.reconciled_invoice_ids.write({
                 'l10n_mx_edi_factoring_id': record.l10n_mx_edi_factoring_id.id,
             })
@@ -61,7 +61,7 @@ class AccountRegisterPayments(models.TransientModel):
         # If come from an unique invoice nothing to special to set,
         # the factoring will be the one in the partner if set.
         invoice = self.env['account.move'].browse(active_ids)
-        if not invoice.filtered(lambda i: i.l10n_mx_edi_cfdi_request == 'on_invoice'):
+        if not invoice.filtered(lambda i: i.l10n_mx_edi_is_cfdi_needed == True):
             return rec
         factoring = invoice.mapped('l10n_mx_edi_factoring_id').ids
         if not factoring and rec.get('partner_id'):
@@ -70,7 +70,7 @@ class AccountRegisterPayments(models.TransientModel):
         rec['l10n_mx_edi_factoring_id'] = factoring[0] if factoring else ''
         return rec
 
-    def _create_payment_vals_from_wizard(self):
-        res = super(AccountRegisterPayments, self)._create_payment_vals_from_wizard()
+    def _create_payment_vals_from_wizard(self, batch_result):
+        res = super(AccountRegisterPayments, self)._create_payment_vals_from_wizard(batch_result)
         res['l10n_mx_edi_factoring_id'] = self.l10n_mx_edi_factoring_id.id
         return res

@@ -62,8 +62,8 @@ class account_payment(models.TransientModel):
                 wizard.payment_difference = amount_payment_currency - wizard.amount
 
 
-    def _create_payment_vals_from_wizard(self):
-        res = super(account_payment, self)._create_payment_vals_from_wizard()
+    def _create_payment_vals_from_wizard(self, batch_result):
+        res = super(account_payment, self)._create_payment_vals_from_wizard(batch_result)
         if self.manual_currency_rate_active:
             res.update({'manual_currency_rate_active': self.manual_currency_rate_active, 'manual_currency_rate': self.manual_currency_rate})
         return res
@@ -356,7 +356,7 @@ class AccountPayment(models.Model):
 
         return all_move_vals
 
-    def _prepare_move_line_default_vals(self, write_off_line_vals=None):
+    def _prepare_move_line_default_vals(self, write_off_line_vals=None, force_balance=None):
         ''' Prepare the dictionary to create the default account.move.lines for the current payment.
         :param write_off_line_vals: Optional dictionary to create a write-off account.move.line easily containing:
             * amount:       The amount to be added to the counterpart amount.
