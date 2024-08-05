@@ -46,7 +46,7 @@ class AccontPayment(models.Model):
 
 
 
-    def _prepare_move_line_default_vals(self, write_off_line_vals=None):
+    def _prepare_move_line_default_vals(self, write_off_line_vals=None, force_balance=None):
         ''' Prepare the dictionary to create the default account.move.lines for the current payment.
         :param write_off_line_vals: Optional dictionary to create a write-off account.move.line easily containing:
             * amount:       The amount to be added to the counterpart amount.
@@ -159,7 +159,7 @@ class AccontPayment(models.Model):
                 })
             return line_vals_list
         else:
-            return super(AccontPayment, self)._prepare_move_line_default_vals(False)
+            return super(AccontPayment, self)._prepare_move_line_default_vals(False, force_balance)
 
 class AccountBankStatementLine(models.Model):
     _inherit = "account.bank.statement.line"
