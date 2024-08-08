@@ -8,7 +8,7 @@
         <field name="inherit_id" ref="base.view_company_form"/>
         <field name="arch" type="xml">
             <!-- Adding so_double_validation and so_double_validation_amount fields after the favicon field -->
-            <xpath expr="//field[@name='favicon']" position="after">
+            <xpath expr="//field[@name='color']" position="after">
                 <field name="so_double_validation"/>
                 <field name="so_double_validation_amount"/>
             </xpath>

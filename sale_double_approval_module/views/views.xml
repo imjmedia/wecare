@@ -9,7 +9,7 @@
     <field name="inherit_id" ref="base.res_config_settings_view_form"/>
     <field name="arch" type="xml">
         <data>
-            <xpath expr="//group[@name='sales_settings_group']" position="inside">
+            <xpath expr="//block[@id='pricing_setting_container']" position="inside">
                 <group name="sale_order_approval_setting_container"
                        groups="base.group_multi_company"
                        string="Sale Order Approval">
@@ -28,27 +28,32 @@
 
     <!-- Sale Order Form View Customization -->
     <record id="view_order_form_inherit_new" model="ir.ui.view">
-        <field name="name">sale.order.inherited.new</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
-        <field name="arch" type="xml">
-            <!-- Adding Approve and Cancel buttons for the 'to_approve' state -->
-            <xpath expr="//button[@name='action_quotation_send']" position="after">
-                <button name="button_approve" string="Approve" groups="sales_team.group_sale_manager" type="object" class="btn-info o_disabled_button" t-if="state == 'to_approve'"/>
-                <button name="action_refuse" string="Cancel" groups="sales_team.group_sale_manager" type="object" class="btn-warning o_disabled_button" t-if="state == 'to_approve'"/>
-            </xpath>
+    <field name="name">sale.order.inherited.new</field>
+    <field name="model">sale.order</field>
+    <field name="inherit_id" ref="sale.view_order_form"/>
+    <field name="arch" type="xml">
+        <!-- Adding Approve and Cancel buttons for the 'to_approve' state -->
+        <xpath expr="//button[@name='action_quotation_send']" position="after">
+            <button name="button_approve" string="Approve" groups="sales_team.group_sale_manager" type="object" class="btn-info o_disabled_button">
+                <field name="state" widget="statusbar" class="oe_statusbar oe_statusbar_enabled" statusbar_visible="to_approve"/>
+            </button>
+            <button name="action_refuse" string="Cancel" groups="sales_team.group_sale_manager" type="object" class="btn-warning o_disabled_button">
+                <field name="state" widget="statusbar" class="oe_statusbar oe_statusbar_enabled" statusbar_visible="to_approve"/>
+            </button>
+        </xpath>
 
-            <!-- Updating the state field's statusbar visibility -->
-            <xpath expr="//field[@name='state']" position="attributes">
-                <attribute name="statusbar_visible">to_approve,draft,sent,sale</attribute>
-            </xpath>
+        <!-- Updating the state field's statusbar visibility -->
+        <xpath expr="//field[@name='state']" position="attributes">
+            <attribute name="statusbar_visible">to_approve,draft,sent,sale</attribute>
+        </xpath>
 
-            <!-- Modifying the visibility of the Confirm button based on the state -->
-            <xpath expr="//button[@name='action_confirm']" position="attributes">
-                <attribute name="t-attf-class">btn btn-primary o_disabled_button#{state not in ['sent'] ? ' o_invisible' : ''}</attribute>
-            </xpath>
-        </field>
-    </record>
+        <!-- Modifying the visibility of the Confirm button based on the state -->
+        <xpath expr="//button[@name='action_confirm']" position="attributes">
+            <attribute name="class">btn btn-primary o_disabled_button o_invisible</attribute>
+            <attribute name="modifiers">{"invisible": [["state", "=", "sent"]]}</attribute>
+        </xpath>
+    </field>
+</record>
 
     <!-- Action Server to Approve Multiple Sale Orders -->
     <record id="action_approve_sale_orders" model="ir.actions.server">
