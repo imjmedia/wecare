@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ResConfigSettings Customization for Sale Order Approval -->
+    <record id="res_config_settings_sale_custom" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.sale.approval</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="25"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@data-key='sale_management']//div[@id='pricing_setting_container']" position="after">
+                <h2>Sale Order Approval</h2>
+                <div class="row mt16 o_settings_container" name="sale_order_approval_setting_container">
+                    <div class="col-12 col-lg-6 o_setting_box" id="sale_order_approval">
+                        <div class="o_setting_left_pane">
+                            <field name="sale_order_approval"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="sale_order_approval"/>
+                            <span class="fa fa-lg fa-building-o" title="Values set here are company-specific." aria-label="Values set here are company-specific." groups="base.group_multi_company" role="img"/>
+                            <div class="text-muted">
+                                Request managers to approve orders above a minimum amount
+                            </div>
+                            <div class="content-group" attrs="{'invisible': [('sale_order_approval', '=', False)]}">
+                                <div class="row mt16">
+                                    <label for="sale_order_min_amount" class="col-lg-4 o_light_label"/>
+                                    <field name="sale_order_min_amount"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Sale Order Form View Customization -->
+    <record id="view_order_form_inherit_new" model="ir.ui.view">
+        <field name="name">sale.order.inherited.new</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <!-- Adding Approve and Cancel buttons for the 'to_approve' state -->
+            <xpath expr="//button[@name='action_quotation_send']" position="after">
+                <button name="button_approve" string="Approve" groups="sales_team.group_sale_manager" type="object" states="to_approve" class="btn-info"/>
+                <button name="action_refuse" string="Cancel" groups="sales_team.group_sale_manager" type="object" states="to_approve" class="btn-warning"/>
+            </xpath>
+
+            <!-- Updating the state field's statusbar visibility -->
+            <xpath expr="//field[@name='state']" position="attributes">
+                <attribute name="statusbar_visible">to_approve,draft,sent,sale</attribute>
+            </xpath>
+
+            <!-- Modifying the visibility of the Confirm button based on the state -->
+            <xpath expr="//button[@name='action_confirm']" position="attributes">
+                <attribute name="attrs">{'invisible': [('state', 'not in', ['sent'])]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Action Server to Approve Multiple Sale Orders -->
+    <record id="action_approve_sale_orders" model="ir.actions.server">
+        <field name="name">Approve Orders</field>
+        <field name="model_id" ref="sale.model_sale_order"/>
+        <field name="binding_model_id" ref="sale.model_sale_order"/>
+        <field name="binding_view_types">form,list</field>
+        <field name="state">code</field>
+        <field name="code">action = records.button_approve()</field>
+    </record>
+
+</odoo>
