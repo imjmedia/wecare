@@ -42,8 +42,8 @@
         <field name="arch" type="xml">
             <!-- Adding Approve and Cancel buttons for the 'to_approve' state -->
             <xpath expr="//button[@name='action_quotation_send']" position="after">
-                <button name="button_approve" string="Approve" groups="sales_team.group_sale_manager" type="object" states="to_approve" class="btn-info"/>
-                <button name="action_refuse" string="Cancel" groups="sales_team.group_sale_manager" type="object" states="to_approve" class="btn-warning"/>
+                <button name="button_approve" string="Approve" groups="sales_team.group_sale_manager" type="object" class="btn-info o_disabled_button" t-if="state == 'to_approve'"/>
+                <button name="action_refuse" string="Cancel" groups="sales_team.group_sale_manager" type="object" class="btn-warning o_disabled_button" t-if="state == 'to_approve'"/>
             </xpath>
 
             <!-- Updating the state field's statusbar visibility -->
@@ -53,7 +53,7 @@
 
             <!-- Modifying the visibility of the Confirm button based on the state -->
             <xpath expr="//button[@name='action_confirm']" position="attributes">
-                <attribute name="attrs">{'invisible': [('state', 'not in', ['sent'])]}</attribute>
+                <attribute name="t-attf-class">btn btn-primary o_disabled_button#{state not in ['sent'] ? ' o_invisible' : ''}</attribute>
             </xpath>
         </field>
     </record>
