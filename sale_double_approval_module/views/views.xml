@@ -21,7 +21,7 @@
                             <div class="text-muted">
                                 Request managers to approve orders above a minimum amount
                             </div>
-                            <div class="content-group" attrs="{'invisible': [('sale_order_approval', '=', False)]}">
+                            <div t-if="sale_order_approval">
                                 <div class="row mt16">
                                     <label for="sale_order_min_amount" class="col-lg-4 o_light_label"/>
                                     <field name="sale_order_min_amount"/>
