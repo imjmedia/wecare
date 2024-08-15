@@ -39,9 +39,10 @@ class SaleOrderInherit(models.Model):
         # Solo se ejecuta la lógica si hay registros que aprobar
         if orders_to_approve:
             orders_to_approve.write({
-                'state': 'sale',
+                'state': 'draft',
                 'date_order': fields.Datetime.now(),
             })
+            orders_to_approve.action_confirm()
         
         return {}
 
