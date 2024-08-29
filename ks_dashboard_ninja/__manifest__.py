@@ -78,7 +78,7 @@ Dashboard Ninja v16.0,
 	'live_test_url': 'https://dashboardninja17.ksolves.net/',
 
 	'category': 'Services',
-	'version': '17.0.1.7.0',
+	'version': '17.0.1.7.1',
 
 	'support': 'sales@ksolves.com',
 
