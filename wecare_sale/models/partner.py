@@ -6,7 +6,7 @@ class ResPartner(models.Model):
     _name = 'res.partner'
     _inherit = 'res.partner'
 
-    @api.depends_context('company')
+    @api.depends_context('company') #test
     def _credit_debit_get(self):
         if not self.ids:
             self.debit = False
