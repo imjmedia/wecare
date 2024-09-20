@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="res_user_form">
+            <field name="name">Users Preferences</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='messaging']" position="before">
+                    <group string="Printers" name="printing" col="2" groups="printnode_base_lite.printnode_security_group_user">
+                        <field name="printnode_enabled" />
+                        <field name="printnode_printer" />
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_users_form_preferences" model="ir.ui.view">
+            <field name="name">res.users.preferences.form</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif" />
+            <field name="arch" type="xml">
+                <notebook position="inside">
+                    <page string="Direct Print Settings">
+                        <group string="Printers" name="printing" col="2" groups="printnode_base_lite.printnode_security_group_user">
+                            <field name="printnode_enabled" readonly="0" />
+                            <field name="printnode_printer" readonly="0" required="printnode_enabled == True" />                            
+                        </group>
+                    </page>
+                </notebook>
+            </field>
+        </record>
+
+    </data>
+</odoo>
