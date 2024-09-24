@@ -375,7 +375,10 @@ class AccountPayment(models.Model):
             ) % self.journal_id.display_name)
 
         # Compute amounts.
-        write_off_amount = write_off_line_vals.get('amount', 0.0)
+        write_off_line_vals_list = write_off_line_vals or []
+        write_off_amount_currency = sum(x['amount_currency'] for x in write_off_line_vals_list)
+        write_off_balance = sum(x['balance'] for x in write_off_line_vals_list)
+        write_off_amount = sum(x['amount'] for x in write_off_line_vals_list)
 
         if self.payment_type == 'inbound':
             # Receive money.
