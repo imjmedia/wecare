@@ -459,6 +459,7 @@ class AccountPayment(models.Model):
             # Write-off line.
             for l in write_off_line_vals:
                 name_off = l.get('name',default_line_name)
+                account_off = l.get('account_id',False)
                 break
             line_vals_list.append({
                 'name': name_off,
@@ -467,7 +468,7 @@ class AccountPayment(models.Model):
                 'debit': write_off_balance < 0.0 and -write_off_balance or 0.0,
                 'credit': write_off_balance > 0.0 and write_off_balance or 0.0,
                 'partner_id': self.partner_id.id,
-                'account_id': write_off_line_vals.get('account_id'),
+                'account_id': account_off,
             })
         return line_vals_list
 
