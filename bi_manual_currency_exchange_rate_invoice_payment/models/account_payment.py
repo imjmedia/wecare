@@ -9,9 +9,10 @@ class account_payment(models.TransientModel):
 
     @api.depends('tipo_de_cambio')
     def _compute_cambio(self):
-        self.manual_currency_rate = 0
-        if self.tipo_de_cambio:
-            self.manual_currency_rate = (1 / self.tipo_de_cambio)
+        for p in self:
+            p.manual_currency_rate = 0
+                if p.tipo_de_cambio:
+                p.manual_currency_rate = (1 / p.tipo_de_cambio)
 
     manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
     manual_currency_rate = fields.Float(string='Tarifa', digits=(12,6), compute='_compute_cambio',store=True)
@@ -75,9 +76,10 @@ class AccountPayment(models.Model):
 
     @api.depends('tipo_de_cambio')
     def _compute_cambio(self):
-        self.manual_currency_rate = 0.0
-        if self.tipo_de_cambio:
-            self.manual_currency_rate = (1/self.tipo_de_cambio)
+        for p in self:
+            p.manual_currency_rate = 0.0
+            if p.tipo_de_cambio:
+                p.manual_currency_rate = (1/p.tipo_de_cambio)
 
     manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
     manual_currency_rate = fields.Float(string='Tarifa', default=0.0, digits=(12,6), compute='_compute_cambio')
