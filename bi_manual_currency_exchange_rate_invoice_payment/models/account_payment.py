@@ -11,7 +11,7 @@ class account_payment(models.TransientModel):
     def _compute_cambio(self):
         for p in self:
             p.manual_currency_rate = 0
-                if p.tipo_de_cambio:
+            if p.tipo_de_cambio:
                 p.manual_currency_rate = (1 / p.tipo_de_cambio)
 
     manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
