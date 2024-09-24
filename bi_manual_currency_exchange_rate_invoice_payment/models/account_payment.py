@@ -457,8 +457,11 @@ class AccountPayment(models.Model):
         ]
         if write_off_balance:
             # Write-off line.
+            for l in write_off_line_vals:
+                name_off = l.get('name',default_line_name)
+                break
             line_vals_list.append({
-                'name': write_off_line_vals.get('name') or default_line_name,
+                'name': name_off,
                 'amount_currency': -write_off_amount_currency,
                 'currency_id': currency_id,
                 'debit': write_off_balance < 0.0 and -write_off_balance or 0.0,
