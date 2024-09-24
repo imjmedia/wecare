@@ -378,7 +378,7 @@ class AccountPayment(models.Model):
         write_off_line_vals_list = write_off_line_vals or []
         write_off_amount_currency = sum(x['amount_currency'] for x in write_off_line_vals_list)
         write_off_balance = sum(x['balance'] for x in write_off_line_vals_list)
-        write_off_amount = sum(x['amount'] for x in write_off_line_vals_list)
+        write_off_amount = sum(x['amount_currency'] for x in write_off_line_vals_list)
 
         if self.payment_type == 'inbound':
             # Receive money.
