@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="shipping_label_tree" model="ir.ui.view">
+            <field name="name">shipping.label.tree</field>
+            <field name="model">shipping.label</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Shipping Label Tree" create="false"></tree>
+            </field>
+        </record>
+
+        <record id="shipping_labels_action" model="ir.actions.act_window">
+            <field name="name">Shipping Labels</field>
+            <field name="res_model">shipping.label</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="shipping_label_tree" />
+            <field name="context">{'search_default_active_labels': 1}</field>
+            <field name="help" type="html">
+                <p>
+                    <img class="d-block m-auto pb-4" style="width:150px;" src="printnode_base_lite/static/description/icon-pro.png" />
+                    Exclusive PRO Feature
+                </p>
+                <p>
+                    Sorry, this feature is locked in the Lite version.
+                    Upgrade to PRO to access all exclusive features and benefits.
+                </p>
+                <p>
+                    <a class="btn btn-primary" role="button" target="_blank" href="https://apps.odoo.com/apps/modules/17.0/printnode_base/">
+                        Upgrade to PRO Now
+                    </a>
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_shipping_labels"
+                  name="Shipping Labels"
+                  parent="menu_printnode"
+                  sequence="34"
+                  action="shipping_labels_action"
+        />
+
+    </data>
+</odoo>

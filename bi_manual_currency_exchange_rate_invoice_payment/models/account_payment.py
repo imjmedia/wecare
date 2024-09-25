@@ -9,9 +9,10 @@ class account_payment(models.TransientModel):
 
     @api.depends('tipo_de_cambio')
     def _compute_cambio(self):
-        self.manual_currency_rate = 0
-        if self.tipo_de_cambio:
-            self.manual_currency_rate = (1 / self.tipo_de_cambio)
+        for p in self:
+            p.manual_currency_rate = 0
+            if p.tipo_de_cambio:
+                p.manual_currency_rate = (1 / p.tipo_de_cambio)
 
     manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
     manual_currency_rate = fields.Float(string='Tarifa', digits=(12,6), compute='_compute_cambio',store=True)
@@ -75,9 +76,10 @@ class AccountPayment(models.Model):
 
     @api.depends('tipo_de_cambio')
     def _compute_cambio(self):
-        self.manual_currency_rate = 0.0
-        if self.tipo_de_cambio:
-            self.manual_currency_rate = (1/self.tipo_de_cambio)
+        for p in self:
+            p.manual_currency_rate = 0.0
+            if p.tipo_de_cambio:
+                p.manual_currency_rate = (1/p.tipo_de_cambio)
 
     manual_currency_rate_active = fields.Boolean('¿Tipo de Cambio Manual?', store=True)
     manual_currency_rate = fields.Float(string='Tarifa', default=0.0, digits=(12,6), compute='_compute_cambio')
@@ -373,7 +375,10 @@ class AccountPayment(models.Model):
             ) % self.journal_id.display_name)
 
         # Compute amounts.
-        write_off_amount = write_off_line_vals.get('amount', 0.0)
+        write_off_line_vals_list = write_off_line_vals or []
+        write_off_amount_currency = sum(x['amount_currency'] for x in write_off_line_vals_list)
+        write_off_balance = sum(x['balance'] for x in write_off_line_vals_list)
+        write_off_amount = sum(x['amount_currency'] for x in write_off_line_vals_list)
 
         if self.payment_type == 'inbound':
             # Receive money.
@@ -452,14 +457,18 @@ class AccountPayment(models.Model):
         ]
         if write_off_balance:
             # Write-off line.
+            for l in write_off_line_vals:
+                name_off = l.get('name',default_line_name)
+                account_off = l.get('account_id',False)
+                break
             line_vals_list.append({
-                'name': write_off_line_vals.get('name') or default_line_name,
+                'name': name_off,
                 'amount_currency': -write_off_amount_currency,
                 'currency_id': currency_id,
                 'debit': write_off_balance < 0.0 and -write_off_balance or 0.0,
                 'credit': write_off_balance > 0.0 and write_off_balance or 0.0,
                 'partner_id': self.partner_id.id,
-                'account_id': write_off_line_vals.get('account_id'),
+                'account_id': account_off,
             })
         return line_vals_list
 

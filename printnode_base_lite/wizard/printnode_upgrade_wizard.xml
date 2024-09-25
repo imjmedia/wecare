@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="printnode_upgrade_wizard_view" model="ir.ui.view">
+            <field name="name">printnode.upgrade.form</field>
+            <field name="model">printnode.upgrade</field>
+            <field name="arch" type="xml">
+                <form string='Direct Print Upgrade'>
+
+                    <p>
+                        <strong>Exclusive PRO Feature</strong>
+                    </p>
+                    <p>
+                        Sorry, this feature is locked in the Lite version.
+                        Upgrade to PRO to access all exclusive features and benefits.
+                    </p>
+
+                    <footer>
+                        <a class="btn btn-primary" role="button" target="_blank" href="https://apps.odoo.com/apps/modules/17.0/printnode_base/">
+                            Upgrade to PRO Now
+                        </a>
+                        <button string="Cancel" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+        <record id="printnode_upgrade_action" model="ir.actions.act_window">
+            <field name="name">Direct Print Upgrade</field>
+            <field name="res_model">printnode.upgrade</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="printnode_upgrade_wizard_view"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+
+</odoo>

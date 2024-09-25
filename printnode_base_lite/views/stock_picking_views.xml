@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_picking_form" model="ir.ui.view">
+            <field name="name">stock.picking.form</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form" />
+            <field name="arch" type="xml">
+                <xpath expr="//header/button[@name='action_open_label_type']" position="after">
+                    <button name="print_last_shipping_label"
+                            string="Print Last Shipping Label"
+                            invisible="picking_type_code != 'outgoing' or state in ('draft', 'cancel') or is_locked == False"
+                            groups="printnode_base_lite.printnode_security_group_user"
+                            type="object" />
+                </xpath>
+                <xpath expr="//page[last()]" position="after">
+                    <page string="Shipping Labels"
+                          invisible="picking_type_code != 'outgoing' or state in ('draft', 'cancel') or is_locked == False"
+                          groups="printnode_base_lite.printnode_security_group_user">
+                        <p>
+                            <strong>Exclusive Direct Print PRO Feature</strong>
+                        </p>
+                        <p>
+                            Sorry, this feature is locked in the Lite version.
+                            Upgrade to PRO to access all exclusive features and benefits.
+                        </p>
+                        <p>
+                            <a class="btn btn-primary" role="button" target="_blank" href="https://apps.odoo.com/apps/modules/17.0/printnode_base/">
+                                Upgrade to PRO Now
+                            </a>
+                        </p>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>
