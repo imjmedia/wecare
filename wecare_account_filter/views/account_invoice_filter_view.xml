@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_account_invoice_filter_inherit" model="ir.ui.view">
+        <field name="name">account.view_account_invoice_filter_inherit</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+        <field name="arch" type="xml">
+            <!-- Añadir campo "Vendedor" -->
+            <xpath expr="//filter[@name='partner']" position="after">
+                <filter name="invoice_user_id"
+                        string="Vendedor"
+                        domain="[]" 
+                        context="{'group_by': 'invoice_user_id'}"/>
+            </xpath>
+
+            <!-- Añadir campo "Folio Fiscal" -->
+            <xpath expr="//filter[@name='partner']" position="after">
+                <filter name="l10n_mx_edi_cfdi_uuid"
+                        string="Folio Fiscal"
+                        domain="[]"/>
+            </xpath>
+
+            <!-- Añadir campo "Equipo de ventas" -->
+            <xpath expr="//filter[@name='partner']" position="after">
+                <filter name="team_id"
+                        string="Equipo de ventas"
+                        domain="[]" 
+                        context="{'group_by': 'team_id'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>
