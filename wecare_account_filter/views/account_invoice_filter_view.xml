@@ -15,7 +15,7 @@
 
             <!-- Añadir campo "Folio Fiscal" -->
             <xpath expr="//field[@name='partner_id']" position="after">
-                <filter name="l10n_mx_edi_cfdi_uuid"
+                <field name="l10n_mx_edi_cfdi_uuid"
                         string="Folio Fiscal"
                         domain="[]"/>
             </xpath>
