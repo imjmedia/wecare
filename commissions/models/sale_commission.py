@@ -138,6 +138,7 @@ class SaleCommission(models.Model):
                         #_logger.info('Factura %s' % (factura.name))
                         #_logger.info(factura._get_reconciled_payments())
                         parciales = factura._compute_payments_widget_reconciled_info()
+                        amount_paid=0
                         _logger.info('Parciales %s' % (parciales))
                         if parciales:
                             for pagos in parciales:  #Obtener solo el pago de la factura 
