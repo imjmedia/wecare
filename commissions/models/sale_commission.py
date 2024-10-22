@@ -90,8 +90,9 @@ class SaleCommission(models.Model):
             obj_commision.sale_total = 0    
             if obj_commision.date_to and obj_commision.date_from:
                 payments_ids = self.env['account.payment'].search([('state', '=', 'posted'), ('payment_type', '=', 'inbound')])
+                _logger.info(payments_ids)
                 pagos_filtered = payments_ids.filtered(lambda e: obj_commision.date_from <= e.date <= obj_commision.date_to)
-                #_logger.info(pagos_filtered)
+                _logger.info(pagos_filtered)
                 #_logger.info('Pago %s, origin %s' % (invoice.name, origin))
                 commission_type = self.env['ir.config_parameter'].sudo().get_param('commission_type')
                 obj_commision.commission_lines.unlink()
@@ -105,7 +106,7 @@ class SaleCommission(models.Model):
                             resumen_corpo[partner_id]['total'] += pago.amount
                         else:
                             resumen_corpo[partner_id] = {'total': pago.amount}
-                #_logger.info('Resumen Montos %s' %(resumen_corpo))
+                _logger.info('Resumen Montos %s' %(resumen_corpo))
                 com_corp = {}  #diccionario que guardara el id corporativo y su comisión segun la tabla
                 for partner_id, valores in resumen_corpo.items():
                     partner = self.env['res.partner'].browse(partner_id)
@@ -132,11 +133,11 @@ class SaleCommission(models.Model):
                     cliente_id = pago.partner_id.id
                     corp_id= pago.partner_id.partner_corp_id.id
                     #amount_paid= pago.amount
-                    #_logger.info(pago.reconciled_invoice_ids)
+                    _logger.info('recoooo %s' %(pago.reconciled_invoice_ids))
                     for factura in pago.reconciled_invoice_ids:
-                        #sales_ids = factura.invoice_line_ids.mapped('sale_line_ids.order_id')
-                        #_logger.info('Factura %s' % (factura.name))
-                        #_logger.info(factura._get_reconciled_payments())
+                        sales_ids = factura.invoice_line_ids.mapped('sale_line_ids.order_id')
+                        _logger.info('Factura %s' % (factura.name))
+                        _logger.info(factura._get_reconciled_payments())
                         parciales = factura._compute_payments_widget_reconciled_info()
                         amount_paid=0
                         _logger.info('Parciales %s' % (parciales))
@@ -147,12 +148,15 @@ class SaleCommission(models.Model):
                                 if pago.id==pagos.get('account_payment_id'):
                                     #_logger.info(pagos.get('amount'))
                                     amount_paid=pagos.get('amount')
+                        else:
+                            for p in factura._get_reconciled_payments():
+                               amount_paid=p.amount
                         #_logger.info(factura._get_reconciled_statement_lines())
                         #_logger.info(factura._get_reconciled_invoices())
                         #_logger.info(factura._get_reconciled_invoices_partials())
                         if factura.invoice_origin:
                             sales_ids = self.env['sale.order'].search(['|', ('name', '=', factura.invoice_origin), ('origin', 'like', factura.invoice_origin)])
-                        #_logger.info(sales_ids)
+                        _logger.info('ventas %s' % (sales_ids))
                         if sales_ids:
                             for order in sales_ids.filtered(lambda e: e.user_id.id == obj_commision.commercial_id.id):
                                 if commission_type == 'net':
@@ -161,7 +165,7 @@ class SaleCommission(models.Model):
                                     commision_val = order.gross_margin
                                 if corp_id: # En caso de ser corporativo toma la comisión corporativa
                                     partner_corp = self.env['res.partner'].browse(corp_id)
-                                    #_logger.info('Comision Corpo: %s' % (com_corp[(partner_corp.id)]))
+                                    _logger.info('Comision Corpo: %s' % (com_corp[(partner_corp.id)]))
                                     commission_calc = com_corp[(partner_corp.id)]                              
                                     montonoiva = round(amount_paid/1.16,2)
                                     amount =  round(montonoiva * float(commission_calc) / 100,2)
@@ -170,7 +174,7 @@ class SaleCommission(models.Model):
                                     montonoiva = round(amount_paid/1.16,2)
                                     amount =  round(montonoiva * float(commission_calc) / 100,2)
                                 
-                                #_logger.info('Monto Pagado %s, MontoSinIVA %s, Comm %s,MontoCom %s' %(amount_paid,montonoiva,commission_calc,amount))
+                                _logger.info('Monto Pagado %s, MontoSinIVA %s, Comm %s,MontoCom %s' %(amount_paid,montonoiva,commission_calc,amount))
                                 #_logger.info('Comision %s' %(order.pricelist_id.type_id.comision))
                                 #_logger.info('Pago_id %s' %(pago.id))
                                 if amount:

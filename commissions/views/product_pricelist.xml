@@ -1,5 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
+
+    <record id="view_product_pricelist_type_tree" model="ir.ui.view">
+            <field name="name">view.product.pricelist.type.tree</field>
+            <field name="model">product.pricelist_type</field>
+            <field name="arch" type="xml">
+                <tree string="Tipos de Lista de Precios">
+                    <field name="name"/>
+                    <field name="description"/>
+                    <field name="comision"/>
+                </tree>
+            </field>
+        </record>
+    <record id="view_product_pricelist_type_form" model="ir.ui.view">
+            <field name="name">view.product.pricelist.type.form</field>
+            <field name="model">product.pricelist_type</field>
+            <field name="arch" type="xml">
+                <form string="Tipo de Lista de Precios">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="comision"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="action_product_pricelist_type" model="ir.actions.act_window">
+            <field name="name">Tipos de Lista de Precios</field>
+            <field name="res_model">product.pricelist_type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    
+    <record id="menu_product_pricelist_type" model="ir.ui.menu">
+            <field name="name">Tipos de Lista de Precios</field>
+            <field name="action" ref="action_product_pricelist_type"/>
+            <field name="parent_id" ref="sale.menu_sales_config"/>
+            <field name="sequence" type="int">20</field>
+        </record>
+    
+
     <record id="lista_de_precio" model="ir.ui.view">
         <field name="name">lista_de_precio</field>
         <field name="model">product.pricelist</field>
