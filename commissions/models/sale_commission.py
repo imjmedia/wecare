@@ -138,19 +138,21 @@ class SaleCommission(models.Model):
                         sales_ids = factura.invoice_line_ids.mapped('sale_line_ids.order_id')
                         _logger.info('Factura %s' % (factura.name))
                         _logger.info(factura._get_reconciled_payments())
-                        parciales = factura._compute_payments_widget_reconciled_info()
+                        parciales = factura.invoice_payments_widget
                         amount_paid=0
-                        _logger.info('Parciales %s' % (parciales))
+                        _logger.info('Parciales %s' % (parciales.get('content')[0].get('account_payment_id')))
+                        
+                        _logger.info('Parciales wit %s' % (factura.invoice_payments_widget))
                         if parciales:
-                            for pagos in parciales:  #Obtener solo el pago de la factura 
-                                #_logger.info(pagos.get('name'))
+                            for pagos in parciales.get('content'):  #Obtener solo el pago de la factura 
+                                _logger.info('Pagosoo  %s' % (pagos))
                                 #_logger.info(pagos.get('account_payment_id'))
                                 if pago.id==pagos.get('account_payment_id'):
                                     #_logger.info(pagos.get('amount'))
                                     amount_paid=pagos.get('amount')
-                        else:
-                            for p in factura._get_reconciled_payments():
-                               amount_paid=p.amount
+                        #else:
+                            #for p in factura._get_reconciled_payments():
+                               #amount_paid=p.amount
                         #_logger.info(factura._get_reconciled_statement_lines())
                         #_logger.info(factura._get_reconciled_invoices())
                         #_logger.info(factura._get_reconciled_invoices_partials())
